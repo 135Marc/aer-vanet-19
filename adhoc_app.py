@@ -6,7 +6,9 @@
 MYPORT = 9999
 MYGROUP_6 = 'ff02::1'
 
-table = {}
+table = {
+    "nome": "endereço"
+}
 
 import time
 import struct
@@ -26,7 +28,13 @@ def sender():
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
 
     while True:
-        pdu = '{"type": "HELLO", "ttl": 1}'
+        pdu = """
+        {
+            "nome": "nome do nodo"
+            "type": "HELLO",
+            "ttl": 1
+        }
+        """
         sock.sendto(pdu.encode('utf-8'), (MYGROUP_6, MYPORT))
         time.sleep(5)
 
@@ -51,7 +59,10 @@ def receiver():
         data, sender = s.recvfrom(1500)
         while data[-1:] == '\0': data = data[:-1] # Strip trailing \0's
         pdu = json.loads(data.decode('utf-8'))
-        print (str(sender[0]) + '  ' + pdu["type"])
+        table[pdu["nome"]] = str(sender[0])
+        print (pdu["type"])
+        print ("---------------")
+        print (table)
 
 
 if __name__ == '__main__':
