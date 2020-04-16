@@ -5,7 +5,6 @@
 
 MYPORT = 9999
 MYGROUP_6 = 'ff02::1'
-MYTTL = 1 # Increase to reach other networks
 
 table = {}
 
@@ -22,15 +21,12 @@ def main():
     y.start()
 
 def sender():
-  sock = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
-  sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
+    sock = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
+    sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
 
-  ttl_bin = struct.pack('@I', MYTTL)
-  sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_HOPS, ttl_bin)
-
-  while True:
-    sock.sendto('HELLO'.encode('utf-8'), (MYGROUP_6, MYPORT))
-    time.sleep(5)
+    while True:
+        sock.sendto('HELLO'.encode('utf-8'), (MYGROUP_6, MYPORT))
+        time.sleep(5)
 
 
 def receiver():
