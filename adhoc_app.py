@@ -52,7 +52,8 @@ def receiver():
     while True:
         data, sender = s.recvfrom(1500)
         while data[-1:] == '\0': data = data[:-1] # Strip trailing \0's
-        print (str(sender) + '  ' + data.decode('utf-8'))
+        if(data.decode('utf-8') == 'HELLO')
+            print (str(sender[0]) + '  ' + data.decode('utf-8'))
 
 
 if __name__ == '__main__':
