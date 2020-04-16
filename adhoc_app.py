@@ -59,10 +59,9 @@ def receiver():
         data, sender = s.recvfrom(1500)
         while data[-1:] == '\0': data = data[:-1] # Strip trailing \0's
         pdu = json.loads(data.decode('utf-8'))
-        table[pdu["nome"]] = str(sender[0])
+        table["nodo 1"] = str(sender[0])
         print (pdu["type"])
         print ("---------------")
-        print (table)
 
 
 if __name__ == '__main__':
