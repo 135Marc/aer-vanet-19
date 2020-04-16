@@ -50,8 +50,7 @@ def receiver():
     while True:
         data, sender = s.recvfrom(1500)
         while data[-1:] == '\0': data = data[:-1] # Strip trailing \0's
-        pdu = json.loads(data.decode('utf-8'))
-        print (str(sender[0]) + '  ' + pdu.type)
+        print (str(sender[0]) + '  ' + data.decode('utf-8'))
 
 
 if __name__ == '__main__':
