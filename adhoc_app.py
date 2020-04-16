@@ -30,7 +30,7 @@ def sender():
     while True:
         pdu = """
         {
-            "nome": "nome do nodo"
+            "nome": "nome do nodo",
             "type": "HELLO",
             "ttl": 1
         }
