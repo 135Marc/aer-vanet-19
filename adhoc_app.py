@@ -7,6 +7,8 @@ MYPORT = 9999
 MYGROUP_6 = 'ff02::1'
 MYTTL = 1 # Increase to reach other networks
 
+table = {}
+
 import time
 import struct
 import socket
@@ -50,7 +52,7 @@ def receiver():
     while True:
         data, sender = s.recvfrom(1500)
         while data[-1:] == '\0': data = data[:-1] # Strip trailing \0's
-        print (str(sender) + '  ' + repr(data))
+        print (str(sender) + '  ' + data.decode('utf-8'))
 
 
 if __name__ == '__main__':
