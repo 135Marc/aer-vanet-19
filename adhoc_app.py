@@ -59,6 +59,7 @@ def receiver():
         while data[-1:] == '\0': data = data[:-1] # Strip trailing \0's
         pdu = json.loads(data.decode('utf-8'))
         table["peer_" + str(sender[1])] = str(sender[0])
+        print (str(sender))
         print (pdu["type"])
         print ("------------")
         print (table)
