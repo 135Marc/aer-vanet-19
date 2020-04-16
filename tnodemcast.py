@@ -22,6 +22,10 @@ def main():
 def sender():
   sock = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
   sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
+
+  ttl_bin = struct.pack('@i', MYTTL)
+  s.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_HOPS, ttl_bin)
+
   while True:
     sock.sendto('HELLO'.encode('utf-8'), (MYGROUP_6, MYPORT))
     time.sleep(5)
