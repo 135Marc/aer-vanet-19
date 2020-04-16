@@ -62,6 +62,8 @@ def receiver():
         table["newpeer"] = str(sender[0])
         print (pdu["type"])
         print ("------------")
+        print (table)
+        print ("------------")
 
 
 if __name__ == '__main__':
