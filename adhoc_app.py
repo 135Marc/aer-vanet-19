@@ -60,6 +60,7 @@ def receiver():
         pdu = json.loads(data.decode('utf-8'))
         table["newpeer"+str(sender[3])] = str(sender[0])
         print (pdu["type"])
+        print (str(sender))
         print ("------------")
         print (table)
         print ("------------")
