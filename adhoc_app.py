@@ -27,9 +27,9 @@ def main():
     else:
         NAME = str(random.uniform(0, 100))
     print('Nodo: ' + NAME)
-    x = threading.Thread(target=sender, args=(NAME))
+    x = threading.Thread(target=sender, args=(NAME,))
     x.start()
-    y = threading.Thread(target=receiver, args=(NAME))
+    y = threading.Thread(target=receiver, args=(NAME,))
     y.start()
 
 def sender(name):
