@@ -8,7 +8,7 @@
 
 MYPORT = 9999
 MYGROUP_6 = 'ff02::1'
-NAME = 
+NAME = ''
 
 table = {
 }
