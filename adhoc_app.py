@@ -3,8 +3,12 @@
 # Send/receive UDP multicast packets.
 # Requires that your OS kernel supports IP multicast.
 
+#Nome do nodo:
+#> python3 adhoc_app.py NOME
+
 MYPORT = 9999
 MYGROUP_6 = 'ff02::1'
+NAME = 
 
 table = {
 }
@@ -15,14 +19,20 @@ import socket
 import sys
 import threading
 import json
+import random
 
 def main():
-    x = threading.Thread(target=sender, args=())
+    if len(sys.argv) > 1:
+        NAME = sys.argv[1]
+    else
+        NAME = str(random.uniform(0, 100))
+    print('Nodo: ' + NAME)
+    x = threading.Thread(target=sender, args=(NAME))
     x.start()
-    y = threading.Thread(target=receiver, args=())
+    y = threading.Thread(target=receiver, args=(NAME))
     y.start()
 
-def sender():
+def sender(name):
     sock = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
 
@@ -38,7 +48,7 @@ def sender():
         time.sleep(5)
 
 
-def receiver():
+def receiver(name):
     # Look up multicast group address in name server and find out IP version
     addrinfo = socket.getaddrinfo(MYGROUP_6, None)[0]
 
