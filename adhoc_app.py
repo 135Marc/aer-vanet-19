@@ -38,7 +38,8 @@ def sender(name):
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
 
     while True:
-        pdu = PDU("HELLO", 1)
+        pdu = PDU("HELLO", 2)
+        pdu.ttl = 1
         sock.sendto(codecs.encode(pdu, encoding='utf-8', error='static'), (MYGROUP_6, MYPORT))
         time.sleep(5)
 
