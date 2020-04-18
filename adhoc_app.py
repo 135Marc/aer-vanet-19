@@ -18,7 +18,7 @@ import struct
 import socket
 import sys
 import threading
-import codecs
+import pickle
 import random
 import PDU
 
@@ -39,7 +39,7 @@ def sender(name):
 
     while True:
         pdu = PDU("HELLO", 1)
-        sock.sendto(codecs.encode(pdu, encoding='utf-8', error='static'), (MYGROUP_6, MYPORT))
+        sock.sendto(pickle.dumps(pdu), (MYGROUP_6, MYPORT))
         time.sleep(5)
 
 
@@ -62,7 +62,7 @@ def receiver(name):
     while True:
         data, sender = s.recvfrom(1500)
         #while data[-1:] == '\0': data = data[:-1] # Strip trailing \0's
-        pdu = codecs.decode(data, encoding='utf-8', error='static')
+        pdu = pickle.loads(data)
         table["peer_" + str(sender[1])] = str(sender[0])
         print ('Tipo: ' + pdu.type)
         print ('TTL: ' + pdu.ttl)
