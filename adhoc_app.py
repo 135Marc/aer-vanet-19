@@ -64,8 +64,8 @@ def receiver(name):
         #while data[-1:] == '\0': data = data[:-1] # Strip trailing \0's
         pdu = pickle.loads(data)
         table["peer_" + str(sender[1])] = str(sender[0])
-        print ('Tipo: ' + pdu.type)
-        print ('TTL: ' + pdu.ttl)
+        print ('Tipo: ' + pdu.getType())
+        print ('TTL: ' + pdu.getTTL())
         print ("------------")
         print (table)
         print ("------------")
