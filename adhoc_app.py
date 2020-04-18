@@ -18,8 +18,9 @@ import struct
 import socket
 import sys
 import threading
-import json
+import codecs
 import random
+import PDU
 
 def main():
     if len(sys.argv) > 1:
@@ -37,14 +38,8 @@ def sender(name):
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
 
     while True:
-        pdu = """
-        {
-            "nome": "nome do nodo",
-            "type": "HELLO",
-            "ttl": 1
-        }
-        """
-        sock.sendto(pdu.encode('utf-8'), (MYGROUP_6, MYPORT))
+        pdu = PDU("HELLO", 1)
+        sock.sendto(codecs.encode(pdu, encoding='utf-8', error='static'), (MYGROUP_6, MYPORT))
         time.sleep(5)
 
 
@@ -67,10 +62,10 @@ def receiver(name):
     while True:
         data, sender = s.recvfrom(1500)
         while data[-1:] == '\0': data = data[:-1] # Strip trailing \0's
-        pdu = json.loads(data.decode('utf-8'))
+        pdu = codecs.decode(data, encoding='utf-8', error='static')
         table["peer_" + str(sender[1])] = str(sender[0])
-        print (str(sender))
-        print (pdu["type"])
+        print ('Tipo: ' + pdu.type)
+        print ('TTL: ' + pdu.ttl)
         print ("------------")
         print (table)
         print ("------------")
