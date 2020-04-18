@@ -61,7 +61,7 @@ def receiver(name):
     # Loop, printing any data we receive
     while True:
         data, sender = s.recvfrom(1500)
-        while data[-1:] == '\0': data = data[:-1] # Strip trailing \0's
+        #while data[-1:] == '\0': data = data[:-1] # Strip trailing \0's
         pdu = codecs.decode(data, encoding='utf-8', error='static')
         table["peer_" + str(sender[1])] = str(sender[0])
         print ('Tipo: ' + pdu.type)
