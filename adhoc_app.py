@@ -24,7 +24,7 @@ import random
 def main():
     if len(sys.argv) > 1:
         NAME = sys.argv[1]
-    else
+    else:
         NAME = str(random.uniform(0, 100))
     print('Nodo: ' + NAME)
     x = threading.Thread(target=sender, args=(NAME))
