@@ -4,7 +4,7 @@ class Table:
     rows = set()
 
     def addNode(self, nome, vizinho, endereco):
-        row = (nome, vizinho, endereço)
+        row = (nome, vizinho, endereco)
         self.rows.add(row)
 
     def printTable(self):
