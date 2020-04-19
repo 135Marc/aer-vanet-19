@@ -9,11 +9,10 @@
 MYPORT = 9999
 MYGROUP_6 = 'ff02::1'
 NAME = ''
-
-table = {
-}
+ROUTING = ''
 
 from adhoc_pdu import PDU
+from adhoc_table import Table
 import time
 import struct
 import socket
@@ -28,6 +27,8 @@ def main():
     else:
         NAME = str(random.uniform(0, 100))
     print('Nodo: ' + NAME)
+    ROUTING = Table()
+    ROUTING.addNode(NAME, NAME, '::1')
     x = threading.Thread(target=sender, args=(NAME,))
     x.start()
     y = threading.Thread(target=receiver, args=(NAME,))
@@ -38,7 +39,7 @@ def sender(name):
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
 
     while True:
-        pdu = PDU("HELLO", 1)
+        pdu = PDU(NAME, "HELLO", 1)
         sock.sendto(pickle.dumps(pdu), (MYGROUP_6, MYPORT))
         time.sleep(5)
 
@@ -63,12 +64,10 @@ def receiver(name):
         data, sender = s.recvfrom(1500)
         #while data[-1:] == '\0': data = data[:-1] # Strip trailing \0's
         pdu = pickle.loads(data)
-        table["peer_" + str(sender[1])] = str(sender[0])
+        ROUTING.addNode(pdu.getNode(), pdu.getNode(), str(sender[0]))
         print ('Tipo: ' + pdu.getType())
         print ('TTL: ' + str(pdu.getTTL()))
-        print ("------------")
-        print (table)
-        print ("------------")
+        ROUTING.printTable()
 
 
 if __name__ == '__main__':
