@@ -13,3 +13,19 @@ class Table:
         for node in self.rows:
             print(node[0] + '    |    ' + node[1] + '    |   ' + node[2])
         print('-------------------------------------')
+
+    def mergeTable(table):
+        actual_nodes = set()
+        incoming_nodes = set()
+        for node in self.rows:
+            actual_nodes.add(node[0])
+        for node in table:
+            incoming_nodes.add(node[0])
+
+        toadd_nodes = incoming_nodes - actual_nodes
+        for node in toadd_nodes:
+            for row in table:
+                if(row[0] == node) self.rows.add(row)
+
+
+            
