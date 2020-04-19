@@ -7,6 +7,9 @@ class Table:
         row = (nome, vizinho, endereco)
         self.rows.add(row)
 
+    def getRows(self):
+        return self.rows
+
     def printTable(self):
         print('-------------------------------------')
         print(self.fields[0] + ' | ' + self.fields[1] + ' | ' + self.fields[2])
@@ -19,12 +22,12 @@ class Table:
         incoming_nodes = set()
         for node in self.rows:
             actual_nodes.add(node[0])
-        for node in table:
+        for node in table.getRows():
             incoming_nodes.add(node[0])
 
         toadd_nodes = incoming_nodes - actual_nodes
         for node in toadd_nodes:
-            for row in table:
+            for row in table.getRows():
                 if(row[0] == node): 
                     self.rows.add(row)
 
