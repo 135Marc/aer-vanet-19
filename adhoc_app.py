@@ -39,6 +39,7 @@ def sender():
 
     while True:
         pdu = PDU(NAME, "HELLO", 1)
+        print(pdu.getNode())
         sock.sendto(pickle.dumps(pdu), (MYGROUP_6, MYPORT))
         time.sleep(5)
 
@@ -63,7 +64,7 @@ def receiver():
         data, sender = s.recvfrom(1500)
         #while data[-1:] == '\0': data = data[:-1] # Strip trailing \0's
         pdu = pickle.loads(data)
-        ROUTING.addNode(pdu.getNode(), pdu.getNode(), str(sender[0]))
+        ROUTING.addNode(pdu.getNode(), pdu.getNode(), str(sender[0]).split('%')[0])
         print ('Tipo: ' + pdu.getType())
         print ('TTL: ' + str(pdu.getTTL()))
         ROUTING.printTable()
