@@ -5,13 +5,13 @@ import socket
 
 def receiver(name, port, groupipv6, routing_table):
     # Look up multicast group address in name server and find out IP version
-    addrinfo = socket.getaddrinfo(MYGROUP_6, None)[0]
+    addrinfo = socket.getaddrinfo(groupipv6, None)[0]
 
     # Create a socket
     s = socket.socket(addrinfo[0], socket.SOCK_DGRAM)
 
     # Bind it to the port
-    s.bind(('', MYPORT))
+    s.bind(('', port))
 
     group_bin = socket.inet_pton(addrinfo[0], addrinfo[4][0])
     # Join group
