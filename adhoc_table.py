@@ -14,7 +14,7 @@ class Table:
             print(node[0] + '    |    ' + node[1] + '    |   ' + node[2])
         print('-------------------------------------')
 
-    def mergeTable(table):
+    def mergeTable(self, table):
         actual_nodes = set()
         incoming_nodes = set()
         for node in self.rows:
