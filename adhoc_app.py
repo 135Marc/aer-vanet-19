@@ -9,6 +9,7 @@
 import sys
 import threading
 import random
+import socket
 from adhoc_pdu import PDU
 from adhoc_table import Table
 from adhoc_sender import sender
@@ -26,9 +27,9 @@ def main():
         NAME = str(random.uniform(0, 100))
     print('Nodo: ' + NAME)
     ROUTING.addNode(NAME, NAME, '::1')
-    x = threading.Thread(target=sender, args=(NAME, MYPORT, MYGROUP_6, ROUTING,))
+    x = threading.Thread(target=sender, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING,))
     x.start()
-    y = threading.Thread(target=receiver, args=(NAME, MYPORT, MYGROUP_6, ROUTING,))
+    y = threading.Thread(target=receiver, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING,))
     y.start()
 
 if __name__ == '__main__':

@@ -1,9 +1,7 @@
 import pickle
 import struct
-import socket
 
-
-def receiver(name, port, groupipv6, routing_table):
+def receiver(socket, name, port, groupipv6, routing_table):
     # Look up multicast group address in name server and find out IP version
     addrinfo = socket.getaddrinfo(groupipv6, None)[0]
 
