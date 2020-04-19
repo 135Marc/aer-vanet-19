@@ -13,7 +13,7 @@ class Table:
     def getRows(self):
         return self.rows
 
-    def mergeTable(self, table):
+    def mergeTable(self, table, source):
         actual_nodes = set()
         incoming_nodes = set()
         for node in self.rows:
@@ -25,6 +25,7 @@ class Table:
         for node in toadd_nodes:
             for row in table.getRows():
                 if(row[0] == node): 
+                    row[1] = source
                     self.rows.add(row)
 
     def printTable(self):

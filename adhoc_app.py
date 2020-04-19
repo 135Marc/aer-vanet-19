@@ -26,7 +26,7 @@ def main():
     else:
         NAME = str(random.uniform(0, 100))
     print('Nodo: ' + NAME)
-    ROUTING.addNode(NAME, NAME, str(socket.getaddrinfo(MYGROUP_6, None)[0][4][0]))
+    ROUTING.addNode(NAME, NAME, str(socket.getaddrinfo(MYGROUP_6, MYPORT, socket.AF_INET6)[0][4][0])
     x = threading.Thread(target=sender, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING,))
     x.start()
     y = threading.Thread(target=receiver, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING,))
