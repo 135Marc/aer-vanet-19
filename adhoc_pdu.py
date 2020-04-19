@@ -11,7 +11,7 @@ class PDU:
         self.source = givenSource
         self.pdu_type = givenType 
         self.ttl = givenTTL
-        self.table = givenTable
+        self.table = Table(givenTable)
 
     def getSource(self):
         return self.source
