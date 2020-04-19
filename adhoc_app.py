@@ -29,12 +29,13 @@ def main():
     print('Nodo: ' + NAME)
     ROUTING = Table()
     ROUTING.addNode(NAME, NAME, '::1')
-    x = threading.Thread(target=sender, args=(NAME,))
+    ROUTING.printTable()
+    x = threading.Thread(target=sender, args=())
     x.start()
-    y = threading.Thread(target=receiver, args=(NAME,))
+    y = threading.Thread(target=receiver, args=())
     y.start()
 
-def sender(name):
+def sender():
     sock = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
 
@@ -44,7 +45,7 @@ def sender(name):
         time.sleep(5)
 
 
-def receiver(name):
+def receiver():
     # Look up multicast group address in name server and find out IP version
     addrinfo = socket.getaddrinfo(MYGROUP_6, None)[0]
 

@@ -11,6 +11,8 @@ class Table:
         self.enderecos.append(endereco)
 
     def printTable(self):
+        print('-------------------------------------')
         print(fields[0] + '|' + fields[1] + '|' + fields[2])
         for i in range(0, len(nomes)):
             print(nomes[i] + '|' + vizinhos[i] + '|' + enderecos[i])
+        print('-------------------------------------')
