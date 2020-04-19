@@ -3,7 +3,7 @@ class Table:
     fields = ['Nome', 'Vizinho', 'Endereço do vizinho']
     rows = set()
 
-    def __init__(self, givenTable):
+    def __init__(self, givenTable = set()):
         self.rows = givenTable.getRows().copy()
 
     def addNode(self, nome, vizinho, endereco):
