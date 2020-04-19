@@ -25,7 +25,7 @@ def receiver(name, port, groupipv6, routing_table):
         pdu = pickle.loads(data)
         print ('Tipo: ' + pdu.getType())
         print ('TTL: ' + str(pdu.getTTL()))
-        routing_table.addNode(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0])
+        #routing_table.addNode(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0])
         print('----------------Rows do pdu receiver---------------------')
         for node in pdu.getTable().getRows():
             print(node[0] + ' | ' + node[1] + ' | ' + node[2])
