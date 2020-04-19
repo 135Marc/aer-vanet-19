@@ -25,7 +25,8 @@ class Table:
         toadd_nodes = incoming_nodes - actual_nodes
         for node in toadd_nodes:
             for row in table:
-                if(row[0] == node) self.rows.add(row)
+                if(row[0] == node): 
+                    self.rows.add(row)
 
 
             
