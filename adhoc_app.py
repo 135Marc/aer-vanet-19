@@ -8,13 +8,14 @@
 
 from adhoc_pdu import PDU
 from adhoc_table import Table
+from adhoc_sender import sender
 import time
 import struct
 import socket
 import sys
 import threading
-import pickle
 import random
+import pickle
 
 MYPORT = 9999
 MYGROUP_6 = 'ff02::1'
@@ -32,15 +33,6 @@ def main():
     x.start()
     y = threading.Thread(target=receiver, args=(NAME,))
     y.start()
-
-def sender(name):
-    sock = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
-    sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
-
-    while True:
-        pdu = PDU(name, "HELLO", 1)
-        sock.sendto(pickle.dumps(pdu), (MYGROUP_6, MYPORT))
-        time.sleep(5)
 
 
 def receiver(name):
@@ -60,7 +52,7 @@ def receiver(name):
 
     # Loop, printing any data we receive
     while True:
-        data, sender = s.recvfrom(1500)
+        data, sender = s.recvfrom(4096)
         #while data[-1:] == '\0': data = data[:-1] # Strip trailing \0's
         pdu = pickle.loads(data)
         ROUTING.addNode(pdu.getNode(), pdu.getNode(), str(sender[0]).split('%')[0])
