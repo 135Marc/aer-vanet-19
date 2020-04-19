@@ -5,7 +5,7 @@ class PDU:
     source = 'NaN'
     pdu_type = "HELLO"
     ttl = 1
-    table = Table()
+    table = None
 
     def __init__(self, givenSource, givenType, givenTTL, givenTable):
         self.source = givenSource
