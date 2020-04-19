@@ -9,7 +9,6 @@
 from adhoc_pdu import PDU
 from adhoc_table import Table
 from adhoc_sender import sender
-import time
 import struct
 import socket
 import sys
