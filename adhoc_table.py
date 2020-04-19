@@ -10,6 +10,6 @@ class Table:
     def printTable(self):
         print('-------------------------------------')
         print(self.fields[0] + ' | ' + self.fields[1] + ' | ' + self.fields[2])
-        for node in self.rows):
+        for node in self.rows:
             print(node[0] + '   |   ' + node[1] + '   |   ' + node[2])
         print('-------------------------------------')
