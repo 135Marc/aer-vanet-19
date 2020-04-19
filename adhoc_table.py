@@ -20,9 +20,13 @@ class Table:
     def mergeTable(self, table):
         actual_nodes = set()
         incoming_nodes = set()
+        print('----------------Rows existentes---------------------')
         for node in self.rows:
+            print(node[0])
             actual_nodes.add(node[0])
+        print('----------------Rows recebidas---------------------')
         for node in table.getRows():
+            print(node[0])
             incoming_nodes.add(node[0])
 
         toadd_nodes = incoming_nodes - actual_nodes
