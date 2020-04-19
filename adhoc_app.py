@@ -83,7 +83,7 @@ def receiver(name):
         pdu = pickle.loads(data)
         table["peer_" + str(sender[1])] = str(sender[0])
         print ('Tipo: ' + pdu.getType())
-        print ('TTL: ' + pdu.getTTL())
+        print ('TTL: ' + str(pdu.getTTL()))
         print ("------------")
         print (table)
         print ("------------")
