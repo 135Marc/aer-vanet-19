@@ -8,7 +8,10 @@ def sender(name, port, groupipv6, routing_table):
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
 
     while True:
-        time.sleep(10)
+        time.sleep(5)
         pdu = PDU(name, "HELLO", 1, routing_table)
+        print('----------------Rows do pdu---------------------')
+        for node in pdu.getTable().getRows():
+            print(node[0] + ' | ' + node[1] + ' | ' + node[2])
         sock.sendto(pickle.dumps(pdu), (groupipv6, port))
         time.sleep(20)

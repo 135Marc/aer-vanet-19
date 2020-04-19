@@ -30,4 +30,3 @@ def receiver(name, port, groupipv6, routing_table):
         for node in pdu.getTable().getRows():
             print(node[0] + ' | ' + node[1] + ' | ' + node[2])
         routing_table.mergeTable(pdu.getTable())
-        routing_table.printTable()
