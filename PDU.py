@@ -3,6 +3,7 @@ class PDU:
 
     pdu_type = "HELLO"
     ttl = 1
+    
     def __init__(self, givenType, givenTTL):
         self.pdu_type = givenType 
         self.ttl = givenTTL
