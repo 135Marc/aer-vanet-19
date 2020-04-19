@@ -6,11 +6,6 @@
 #Nome do nodo:
 #> python3 adhoc_app.py NOME
 
-MYPORT = 9999
-MYGROUP_6 = 'ff02::1'
-NAME = ''
-ROUTING = ''
-
 from adhoc_pdu import PDU
 from adhoc_table import Table
 import time
@@ -21,15 +16,18 @@ import threading
 import pickle
 import random
 
+MYPORT = 9999
+MYGROUP_6 = 'ff02::1'
+NAME = ''
+ROUTING = Table()
+
 def main():
     if len(sys.argv) > 1:
         NAME = sys.argv[1]
     else:
         NAME = str(random.uniform(0, 100))
     print('Nodo: ' + NAME)
-    ROUTING = Table()
     ROUTING.addNode(NAME, NAME, '::1')
-    ROUTING.printTable()
     x = threading.Thread(target=sender, args=())
     x.start()
     y = threading.Thread(target=receiver, args=())
