@@ -9,7 +9,7 @@ class PDU:
         self.pdu_type = givenType 
         self.ttl = givenTTL
 
-    def getsource(self):
+    def getSource(self):
         return self.source
 
     def getType(self):
