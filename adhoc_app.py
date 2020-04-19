@@ -28,23 +28,22 @@ def main():
         NAME = str(random.uniform(0, 100))
     print('Nodo: ' + NAME)
     ROUTING.addNode(NAME, NAME, '::1')
-    x = threading.Thread(target=sender, args=())
+    x = threading.Thread(target=sender, args=(NAME,))
     x.start()
-    y = threading.Thread(target=receiver, args=())
+    y = threading.Thread(target=receiver, args=(NAME,))
     y.start()
 
-def sender():
+def sender(name):
     sock = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
 
     while True:
-        pdu = PDU(NAME, "HELLO", 1)
-        print(pdu.getNode())
+        pdu = PDU(name, "HELLO", 1)
         sock.sendto(pickle.dumps(pdu), (MYGROUP_6, MYPORT))
         time.sleep(5)
 
 
-def receiver():
+def receiver(name):
     # Look up multicast group address in name server and find out IP version
     addrinfo = socket.getaddrinfo(MYGROUP_6, None)[0]
 
