@@ -23,9 +23,9 @@ MYPORT = 9999
 MYGROUP_6 = 'ff02::1'
 NAME = ''
 ROUTING = Table()
-INTERVAL = 10
 
 def main():
+    INTERVAL = 10
     s = len(sys.argv)
     if s > 1:
         for i in range(1, s):
