@@ -12,14 +12,14 @@ class Table:
         row = (nome, vizinho, endereco)
         self.rows.add(row)
 
-    def addNeighbours(self, nome, vizinho, endereco):
+    def addNeighbour(self, nome, vizinho, endereco):
         row = (nome, vizinho, endereco)
         self.neighbours.add(row)
 
     def getRows(self):
         return self.rows
 
-    def getNeighbour(self):
+    def getNeighbours(self):
         return self.neighbours
 
     def mergeTable(self, table, source):
