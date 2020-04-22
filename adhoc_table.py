@@ -9,9 +9,12 @@ class Table:
         self.neighbours = givenNeighbours.copy()
 
     def addNode(self, nome, vizinho, endereco):
+        exists = false
         for row in self.rows:
             if (row[0] == nome) & (nome == vizinho):
-                self.rows.remove(row)
+                exists = true
+        if exists:
+            self.rows.remove(row)
         newrow = (nome, vizinho, endereco)
         self.rows.add(newrow)
 
