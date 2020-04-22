@@ -27,19 +27,8 @@ class Table:
         incoming_nodes = set()
         for node in self.rows:
             actual_nodes.add(node[0])
-
-        print('---------nos existentes------------')
-        print(self.fields[0] + ' | ' + self.fields[1] + ' | ' + self.fields[2])
-        for node in self.rows:
-            print(node[0] + '    |    ' + node[1] + '    |   ' + node[2])
-        print('-------------------------------------')
         for node in table.getNeighbours():
             incoming_nodes.add(node[0])
-        print('---------vizinhos recebidos----------')
-        print(self.fields[0] + ' | ' + self.fields[1] + ' | ' + self.fields[2])
-        for node in table.getNeighbours():
-            print(node[0] + '    |    ' + node[1] + '    |   ' + node[2])
-        print('-------------------------------------')
 
         toadd_nodes = incoming_nodes - actual_nodes
         for node in toadd_nodes:
