@@ -10,7 +10,7 @@ class Table:
 
     def addNode(self, nome, vizinho, endereco):
         for row in self.rows:
-            if row[0] == nome & nome == vizinho:
+            if (row[0] == nome) & (nome == vizinho):
                 self.rows.remove(row)
                 newrow = (nome, vizinho, endereco)
                 self.rows.add(newrow)
