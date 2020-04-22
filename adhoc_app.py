@@ -26,8 +26,9 @@ ROUTING = Table()
 INTERVAL = 10
 
 def main():
-    if len(sys.argv) > 1:
-        for i in range(1, len(sys.argv))
+    s = len(sys.argv)
+    if s > 1:
+        for i in range(1, s)
             switch(sys.argv[i])
                 case '-n':
                         NAME = sys.argv[i+1]
