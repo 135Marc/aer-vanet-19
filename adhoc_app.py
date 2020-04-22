@@ -29,14 +29,10 @@ def main():
     s = len(sys.argv)
     if s > 1:
         for i in range(1, s):
-            switch(sys.argv[i])
-                case '-n':
-                        NAME = sys.argv[i+1]
-                        break
-                case '-i':
-                        INTERVAL = int(sys.argv[i+1])
-                        break
-        NAME = sys.argv[1]
+            if(sys.argv[i] == '-n'):
+                NAME = sys.argv[i+1]
+            if(sys.argv[i] == '-i'):
+                INTERVAL = int(sys.argv[i+1])
     else:
         print('-n: nome')
         print('-i: intervalo')
