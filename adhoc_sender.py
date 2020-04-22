@@ -2,7 +2,7 @@ import pickle
 import time
 from adhoc_pdu import PDU
 
-def sender(socket, name, port, groupipv6, routing_table):
+def sender(socket, name, port, groupipv6, routing_table, interval):
     sock = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
 

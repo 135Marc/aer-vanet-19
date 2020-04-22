@@ -38,9 +38,9 @@ def main():
         print('-i: intervalo')
     print('Nodo: ' + NAME)
     ROUTING.addNode(NAME, NAME, MYGROUP_6)
-    y = threading.Thread(target=receiver, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL,))
+    y = threading.Thread(target=receiver, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING,))
     y.start()
-    x = threading.Thread(target=sender, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING,))
+    x = threading.Thread(target=sender, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL,))
     x.start()
 
 if __name__ == '__main__':
