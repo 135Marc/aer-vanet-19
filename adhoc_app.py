@@ -28,7 +28,7 @@ INTERVAL = 10
 def main():
     s = len(sys.argv)
     if s > 1:
-        for i in range(1, s)
+        for i in range(1, s):
             switch(sys.argv[i])
                 case '-n':
                         NAME = sys.argv[i+1]
