@@ -27,10 +27,10 @@ def main():
         NAME = str(random.uniform(0, 100))
     print('Nodo: ' + NAME)
     ROUTING.addNode(NAME, NAME, MYGROUP_6)
-    x = threading.Thread(target=sender, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING,))
-    x.start()
     y = threading.Thread(target=receiver, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING,))
     y.start()
+    x = threading.Thread(target=sender, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING,))
+    x.start()
 
 if __name__ == '__main__':
     main()
