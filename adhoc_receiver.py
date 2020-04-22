@@ -24,5 +24,6 @@ def receiver(socket, name, port, groupipv6, routing_table):
         print ('Tipo: ' + pdu.getType())
         print ('TTL: ' + str(pdu.getTTL()))
         routing_table.addNode(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0])
+        routing_table.addNeighbour(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0])
         routing_table.mergeTable(pdu.getTable(), pdu.getSource())
         routing_table.printTable()

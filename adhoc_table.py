@@ -2,23 +2,32 @@
 class Table:
     fields = ['Nome', 'Vizinho', 'Endereço do vizinho']
     rows = set()
+    neighbours = set()
 
-    def __init__(self, givenRows = set()):
+    def __init__(self, givenRows = set(), givenNeighbours = set()):
         self.rows = givenRows.copy()
+        self.neighbours = givenNeighbours.copy()
 
     def addNode(self, nome, vizinho, endereco):
         row = (nome, vizinho, endereco)
         self.rows.add(row)
 
+    def addNeighbours(self, nome, vizinho, endereco):
+        row = (nome, vizinho, endereco)
+        self.neighbours.add(row)
+
     def getRows(self):
         return self.rows
+
+    def getNeighbour(self):
+        return self.neighbours
 
     def mergeTable(self, table, source):
         actual_nodes = set()
         incoming_nodes = set()
         for node in self.rows:
             actual_nodes.add(node[0])
-        for node in table.getRows():
+        for node in table.getNeighbours():
             incoming_nodes.add(node[0])
 
         toadd_nodes = incoming_nodes - actual_nodes
