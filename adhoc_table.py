@@ -42,6 +42,11 @@ class Table:
         for node in self.rows:
             print(node[0] + '    |    ' + node[1] + '    |   ' + node[2])
         print('-------------------------------------')
+        print('-------------------------------------')
+        print(self.fields[0] + ' | ' + self.fields[1] + ' | ' + self.fields[2])
+        for node in self.neighbours:
+            print(node[0] + '    |    ' + node[1] + '    |   ' + node[2])
+        print('-------------------------------------')
 
 
             
