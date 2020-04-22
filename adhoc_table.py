@@ -19,6 +19,12 @@ class Table:
         self.rows.add(newrow)
 
     def addNeighbour(self, nome, vizinho, endereco):
+        exists = False
+        for row in self.neighbours:
+            if (row[0] == nome) & (nome == vizinho):
+                exists = True
+        if exists:
+            self.neighbours.remove(row)
         row = (nome, vizinho, endereco)
         self.neighbours.add(row)
 
