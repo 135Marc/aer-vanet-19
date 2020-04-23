@@ -18,13 +18,7 @@ class Table:
         newrow = (nome, vizinho, endereco)
         self.rows.add(newrow)
 
-    def addNeighbour(self, nome, vizinho, endereco):
-        rmrow = None
-        for row in self.neighbours:
-            if (row[0] == nome) & (nome == vizinho):
-                rmrow = (row[0], row[1], row[2])
-        if rmrow:
-            self.neighbours.remove(rmrow)
+    def addNeighbour(self, nome, vizinho, endereco)
         row = (nome, vizinho, endereco)
         self.neighbours.add(row)
 
