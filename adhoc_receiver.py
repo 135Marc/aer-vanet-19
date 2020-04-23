@@ -2,7 +2,7 @@ import pickle
 import time
 import struct
 
-def receiver(socket, name, port, groupipv6, routing_table):
+def receiver(socket, name, port, groupipv6, routing_table, interval):
     # Look up multicast group address in name server and find out IP version
     addrinfo = socket.getaddrinfo(groupipv6, None)[0]
 
@@ -21,10 +21,11 @@ def receiver(socket, name, port, groupipv6, routing_table):
     while True:
         data, sender = s.recvfrom(4096)
         pdu = pickle.loads(data)
-        print ('Tipo: ' + pdu.getType() + ' Origem:' + pdu.getSource())
         nodetime = time.time()
+
+        print('Tipo: ' + pdu.getType() + ' Origem: ' + pdu.getSource())
         routing_table.addNode(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], nodetime)
         routing_table.addNeighbour(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], nodetime)
         routing_table.mergeTable(pdu.getTable(), pdu.getSource(), nodetime)
-        routing_table.verifyTimes(15)
+        routing_table.verifyTimes(interval)
         routing_table.printTable()
