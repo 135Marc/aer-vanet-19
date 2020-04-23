@@ -1,3 +1,4 @@
+import time
 
 class Table:
     fields = ['Nome', 'Vizinho', 'Endereço do vizinho']
@@ -41,6 +42,16 @@ class Table:
             for row in table.getRows():
                 if(row[0] == node): 
                     self.rows.add((row[0],source,row[2]))
+
+    def verifyTimes(interval):
+        actual_time = time.time()
+        rmset = set()
+        for row in self.rows:
+            if self.rows[4] != 0:
+                if actual_time - self.rows[4] > interval:
+                    rmset.add(row)
+        self.neighbours.difference_update(rmset)
+        self.rows.difference_update(rmset)
 
     def printTable(self):
         print('-------------------------------------')
