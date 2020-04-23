@@ -55,10 +55,14 @@ class Table:
                 if(row[0] == node): 
                     self.rows.add((row[0], source, row[2], time))
 
-        #Atualizar o timestamp dos vizinhos deste nodo            
+        #Atualizar o timestamp dos vizinhos deste nodo
+        toup_nodes = set()         
         for row in self.rows:
             if row[1] == source:
-                row[3] = time
+                toup_nodes.add(row)
+        for node in toup_nodes:        
+            self.rows.remove(node)
+            self.rows.add((node[0], node[1], node[2], time))
 
     def verifyTimes(self, interval):
         actual_time = time.time()
