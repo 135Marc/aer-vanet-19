@@ -47,8 +47,8 @@ class Table:
         actual_time = time.time()
         rmset = set()
         for row in self.rows:
-            if self.rows[4] != 0:
-                if actual_time - self.rows[4] > interval:
+            if row[4] != 0:
+                if actual_time - row[4] > interval:
                     rmset.add(row)
         self.neighbours.difference_update(rmset)
         self.rows.difference_update(rmset)
