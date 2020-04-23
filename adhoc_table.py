@@ -39,7 +39,7 @@ class Table:
     def getNeighbours(self):
         return self.neighbours
 
-    def mergeTable(self, table, source, time):
+    def mergeTable(self, table, source, time, this):
         #Descobrir nodos de nivel dois que ainda não existem
         actual_nodes = set()
         incoming_nodes = set()
@@ -48,6 +48,7 @@ class Table:
         for node in table.getNeighbours():
             incoming_nodes.add(node[0]) 
         toadd_nodes = incoming_nodes - actual_nodes
+        toadd.remove(this)
 
         #Adicionar nodos de nivel dois que ainda não existem
         for node in toadd_nodes:
