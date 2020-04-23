@@ -41,7 +41,7 @@ class Table:
         for node in toadd_nodes:
             for row in table.getRows():
                 if(row[0] == node): 
-                    self.rows.add((row[0],source,row[2], time))
+                    self.rows.add((row[0], source, row[2], time))
 
     def verifyTimes(self, interval):
         actual_time = time.time()

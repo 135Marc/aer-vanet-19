@@ -28,5 +28,5 @@ def receiver(socket, name, port, groupipv6, routing_table):
         routing_table.addNode(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], nodetime)
         routing_table.addNeighbour(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], nodetime)
         routing_table.mergeTable(pdu.getTable(), pdu.getSource(), nodetime)
-        #routing_table.verifyTimes(11)
+        routing_table.verifyTimes(15)
         routing_table.printTable()
