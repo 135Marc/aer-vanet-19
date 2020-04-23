@@ -48,7 +48,7 @@ class Table:
         for node in table.getNeighbours():
             incoming_nodes.add(node[0]) 
         toadd_nodes = incoming_nodes - actual_nodes
-        toadd.remove(this)
+        toadd_nodes.remove(this)
 
         #Adicionar nodos de nivel dois que ainda não existem
         for node in toadd_nodes:
