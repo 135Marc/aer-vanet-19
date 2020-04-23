@@ -25,7 +25,7 @@ class Table:
             if (row[0] == nome) & (nome == vizinho):
                 rmrow = (row[0], row[1], row[2], row[3])
         if rmrow:
-            self.rows.remove(rmrow)
+            self.neighbours.remove(rmrow)
         row = (nome, vizinho, endereco, time)
         self.neighbours.add(row)
 
