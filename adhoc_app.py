@@ -34,10 +34,12 @@ def main():
             if(sys.argv[i] == '-i'):
                 INTERVAL = int(sys.argv[i+1])
     else:
+        print('Configurações do nodo:')
         print('-n: nome')
         print('-i: intervalo')
+
+
     print('Nodo: ' + NAME)
-    ROUTING.addNode(NAME, NAME, MYGROUP_6, 0)
     y = threading.Thread(target=receiver, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING,))
     y.start()
     x = threading.Thread(target=sender, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL,))

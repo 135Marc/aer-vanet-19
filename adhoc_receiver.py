@@ -20,10 +20,8 @@ def receiver(socket, name, port, groupipv6, routing_table):
     # Loop, printing any data we receive
     while True:
         data, sender = s.recvfrom(4096)
-        #while data[-1:] == '\0': data = data[:-1] # Strip trailing \0's
         pdu = pickle.loads(data)
-        print ('Tipo: ' + pdu.getType())
-        #print ('TTL: ' + str(pdu.getTTL()))
+        print ('Tipo: ' + pdu.getType() + ' Origem:' + pdu.getSource())
         nodetime = time.time()
         routing_table.addNode(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], nodetime)
         routing_table.addNeighbour(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], nodetime)
