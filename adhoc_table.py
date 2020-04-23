@@ -55,9 +55,9 @@ class Table:
 
     def printTable(self):
         print('-------------------------------------')
-        print(self.fields[0] + ' | ' + self.fields[1] + ' | ' + self.fields[2])
+        print(self.fields[0] + ' | ' + self.fields[1] + ' | ' + self.fields[2]+ ' | ' + 'time')
         for node in self.rows:
-            print(node[0] + '    |    ' + node[1] + '    |   ' + node[2])
+            print(node[0] + '    |    ' + node[1] + '    |   ' + node[2] + '    |   ' + node[3])
         print('-------------------------------------')
 
 
