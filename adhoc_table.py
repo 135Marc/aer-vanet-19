@@ -43,12 +43,6 @@ class Table:
         for node in table.getNeighbours():
             incoming_nodes.add(node[0])
 
-        toadd_nodes = incoming_nodes - actual_nodes
-        for node in toadd_nodes:
-            for row in table.getRows():
-                if(row[0] == node): 
-                    self.rows.add((row[0], source, row[2], time))
-
     def verifyTimes(self, interval):
         actual_time = time.time()
         rmset = set()
@@ -61,9 +55,9 @@ class Table:
 
     def printTable(self):
         print('-------------------------------------')
-        print(self.fields[0] + ' | ' + self.fields[1] + ' | ' + self.fields[2]+ ' | ' + 'time')
+        print(self.fields[0] + ' | ' + self.fields[1] + ' | ' + self.fields[2])
         for node in self.rows:
-            print(node[0] + '    |    ' + node[1] + '    |   ' + node[2] + '    |   ' + str(node[3]))
+            print(node[0] + '    |    ' + node[1] + '    |   ' + node[2])
         print('-------------------------------------')
 
 
