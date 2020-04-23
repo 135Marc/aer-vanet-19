@@ -9,7 +9,8 @@ class Table:
         self.rows = givenRows.copy()
         self.neighbours = givenNeighbours.copy()
 
-    def addNode(self, nome, vizinho, endereco):
+    def addNode(self, nome, vizinho, endereco, time = time.time()):
+        print(time)
         rmrow = None
         for row in self.rows:
             if (row[0] == nome) & (nome == vizinho):
