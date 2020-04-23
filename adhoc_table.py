@@ -1,7 +1,7 @@
 import time
 
 class Table:
-    fields = ['Nome', 'Vizinho', 'Endereço do vizinho']
+    fields = ['Nome', 'Vizinho', 'Endereço do vizinho', 'Timestamp']
     rows = set()
     neighbours = set()
 
