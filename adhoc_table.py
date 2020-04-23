@@ -18,7 +18,7 @@ class Table:
         newrow = (nome, vizinho, endereco)
         self.rows.add(newrow)
 
-    def addNeighbour(self, nome, vizinho, endereco)
+    def addNeighbour(self, nome, vizinho, endereco):
         row = (nome, vizinho, endereco)
         self.neighbours.add(row)
 
