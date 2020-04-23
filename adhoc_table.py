@@ -10,18 +10,17 @@ class Table:
         self.neighbours = givenNeighbours.copy()
 
     def addNode(self, nome, vizinho, endereco, time = time.time()):
-        print(time)
         rmrow = None
         for row in self.rows:
             if (row[0] == nome) & (nome == vizinho):
-                rmrow = (row[0], row[1], row[2])
+                rmrow = (row[0], row[1], row[2], row[3])
         if rmrow:
             self.rows.remove(rmrow)
-        newrow = (nome, vizinho, endereco)
+        newrow = (nome, vizinho, endereco, time)
         self.rows.add(newrow)
 
-    def addNeighbour(self, nome, vizinho, endereco):
-        row = (nome, vizinho, endereco)
+    def addNeighbour(self, nome, vizinho, endereco, time = time.time()):
+        row = (nome, vizinho, endereco, time)
         self.neighbours.add(row)
 
     def getRows(self):
@@ -30,7 +29,7 @@ class Table:
     def getNeighbours(self):
         return self.neighbours
 
-    def mergeTable(self, table, source):
+    def mergeTable(self, table, source, time = time.time()):
         actual_nodes = set()
         incoming_nodes = set()
         for node in self.rows:
@@ -42,7 +41,7 @@ class Table:
         for node in toadd_nodes:
             for row in table.getRows():
                 if(row[0] == node): 
-                    self.rows.add((row[0],source,row[2]))
+                    self.rows.add((row[0],source,row[2], time))
 
     def verifyTimes(interval):
         actual_time = time.time()
