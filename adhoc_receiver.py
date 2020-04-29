@@ -2,6 +2,7 @@ import pickle
 import time
 import struct
 import queue
+from adhoc_pdu import PDU
 
 def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
     # Look up multicast group address in name server and find out IP version
@@ -34,8 +35,10 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
             pdu.printPDU()
         elif pdu.getType() == 'ROUTE_REQUEST':
             nodo = routing_table.exists(pdu.getTarget())
-            if nodo or pdu.getTarget() == name:
+            if nodo:
                 newpdu = PDU(name, 'ROUTE_REPLY', 5, Table(), pdu.getSource(), str(nodo),[])
                 msgqueue.put(newpdu)
+            elif pdu.getTarget() == name:
+                print('O nodo procurado é de nivel 1!')
             else:
-                print('reencaminhar')
+                print('Reencaminhar!')
