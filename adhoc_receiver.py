@@ -30,5 +30,10 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
             routing_table.mergeTable(pdu.getTable(), pdu.getSource(), nodetime, name)
             routing_table.verifyTimes(interval)
             #routing_table.printTable()
-        elif pdu.getType() == 'ROUTE_REQUEST':
+        elif pdu.getType() == 'ROUTE_REPLY':
             pdu.printPDU()
+        elif pdu.getType() == 'ROUTE_REQUEST':
+            nodo = routing_table.exists(pdu.printPDU().getTarget())
+            if nodo:
+                newpdu = PDU(name, 'ROUTE_REPLY', 5, Table(), pdu.getSource(), str(nodo),[])
+                msgqueue.put(newpdu)

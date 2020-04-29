@@ -75,6 +75,13 @@ class Table:
         self.neighbours.difference_update(rmset)
         self.rows.difference_update(rmset)
 
+    def exists(nodo):
+        nodo = None
+        for row in self.rows:
+            if row[1] == nodo:
+                nodo = row
+
+
     def printTable(self):
         print('-------------------------------------')
         print(self.fields[0] + ' | ' + self.fields[1] + ' | ' + self.fields[2])

@@ -7,15 +7,17 @@ class PDU:
     ttl = 1
     table = None
     target = 'None'
+    msg = ''
     path = []
 
-    def __init__(self, givenSource, givenType, givenTTL, givenTable, givenTarget='None', givenPath=[]):
+    def __init__(self, givenSource, givenType, givenTTL, givenTable, givenTarget='None', givenMSG='', givenPath=[]):
         self.source = givenSource
         self.pdu_type = givenType 
         self.ttl = givenTTL
         self.table = Table(givenTable.getRows(), givenTable.getNeighbours())
         if givenType == 'ROUTE_REQUEST':
             self.target = givenTarget
+            self.msg = msg
             self.path = givenPath
 
     def getSource(self):
@@ -28,6 +30,8 @@ class PDU:
         return self.table
     def getTarget(self):
         return self.target
+    def getMsg(self):
+        return self.msg
 
     def setSource(self, givenSource):
         self.source = givenSource
@@ -39,6 +43,8 @@ class PDU:
         self.table = Table(givenTable.getRows(), givenTable.getNeighbours())
     def setTarget(self, givenTarget):
         self.target = givenTarget
+    def setMsg(self, givenMsg):
+        self.msg = givenMsg
 
     def printPDU(self):
         print('**************************')
@@ -46,4 +52,5 @@ class PDU:
         print('* PDU type: ' + self.pdu_type)
         print('* TTL: ' + str(self.ttl))
         print('* Target: ' + self.target)
+        print('* Msg: ' + self.msg)
         print('**************************')
