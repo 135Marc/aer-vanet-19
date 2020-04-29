@@ -75,7 +75,7 @@ class Table:
         self.neighbours.difference_update(rmset)
         self.rows.difference_update(rmset)
 
-    def exists(nodo):
+    def exists(self, nodo):
         nodo = None
         for row in self.rows:
             if row[1] == nodo:
