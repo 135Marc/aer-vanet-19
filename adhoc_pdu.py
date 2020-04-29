@@ -17,7 +17,7 @@ class PDU:
         self.table = Table(givenTable.getRows(), givenTable.getNeighbours())
         if givenType == 'ROUTE_REQUEST':
             self.target = givenTarget
-            self.msg = msg
+            self.msg = givenMSG
             self.path = givenPath
 
     def getSource(self):
