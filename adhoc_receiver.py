@@ -3,6 +3,7 @@ import time
 import struct
 import queue
 from adhoc_pdu import PDU
+from adhoc_table import Table
 
 def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
     # Look up multicast group address in name server and find out IP version
