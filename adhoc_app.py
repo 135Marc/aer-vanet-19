@@ -14,15 +14,17 @@ import sys
 import threading
 import random
 import socket
-from adhoc_pdu import PDU
+import Queue
 from adhoc_table import Table
 from adhoc_sender import sender
 from adhoc_receiver import receiver
+from adhoc_menus import menus
 
 MYPORT = 9999
 MYGROUP_6 = 'ff02::1'
 NAME = ''
 ROUTING = Table()
+MSGQUEUE = Queue(15)
 
 def main():
     INTERVAL = 10
@@ -38,12 +40,13 @@ def main():
         print('-n: nome')
         print('-i: intervalo')
 
-
     print('Nodo: ' + NAME)
-    y = threading.Thread(target=receiver, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL,))
-    y.start()
-    x = threading.Thread(target=sender, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL,))
-    x.start()
+    m = threading.Thread(target=menus, args=(NAME,MSGQUEUE,))
+    m.start()
+    r = threading.Thread(target=receiver, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL,))
+    r.start()
+    s = threading.Thread(target=sender, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL,MSGQUEUE,))
+    s.start()
 
 if __name__ == '__main__':
     main()
