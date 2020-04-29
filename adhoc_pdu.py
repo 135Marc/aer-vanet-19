@@ -14,7 +14,7 @@ class PDU:
         self.pdu_type = givenType 
         self.ttl = givenTTL
         self.table = Table(givenTable.getRows(), givenTable.getNeighbours())
-        if givenType == 'ROUTE_REQUES'
+        if givenType == 'ROUTE_REQUEST':
             self.target = givenTarget
             self.path = givenPath
 
