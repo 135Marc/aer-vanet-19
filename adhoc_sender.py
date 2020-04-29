@@ -11,5 +11,5 @@ def sender(socket, name, port, groupipv6, routing_table, interval, msgqueue):
         pdu = PDU(name, 'HELLO', 1, routing_table)
         sock.sendto(pickle.dumps(pdu), (groupipv6, port))
         if not msgqueue.empty():
-            msgqueue.get().printPDU()
+            sock.sendto(pickle.dumps(msgqueue.get()), (groupipv6, port))
         time.sleep(interval)

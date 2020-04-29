@@ -41,7 +41,9 @@ class PDU:
         self.target = givenTarget
 
     def printPDU(self):
-        print('Source: ' + self.source)
-        print('PDU type: ' + self.pdu_type)
-        print('TTL: ' + str(self.ttl))
-        print('Target: ' + self.target)
+        print('**************************')
+        print('* Source: ' + self.source)
+        print('* PDU type: ' + self.pdu_type)
+        print('* TTL: ' + str(self.ttl))
+        print('* Target: ' + self.target)
+        print('**************************')
