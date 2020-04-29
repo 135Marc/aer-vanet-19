@@ -1,4 +1,4 @@
-from multiprocessing import Queue
+import queue
 from adhoc_pdu import PDU
 from adhoc_table import Table
 

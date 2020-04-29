@@ -14,7 +14,7 @@ import sys
 import threading
 import random
 import socket
-from multiprocessing import Queue
+import queue
 from adhoc_table import Table
 from adhoc_sender import sender
 from adhoc_receiver import receiver
@@ -24,7 +24,7 @@ MYPORT = 9999
 MYGROUP_6 = 'ff02::1'
 NAME = ''
 ROUTING = Table()
-MSGQUEUE = Queue(15)
+MSGQUEUE = queue(15)
 
 def main():
     INTERVAL = 10
