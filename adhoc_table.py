@@ -80,6 +80,7 @@ class Table:
         for row in self.rows:
             if row[1] == nodo:
                 nodo = row
+        return nodo
 
 
     def printTable(self):
