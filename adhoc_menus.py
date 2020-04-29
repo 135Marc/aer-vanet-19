@@ -3,7 +3,7 @@ from adhoc_pdu import PDU
 from adhoc_table import Table
 
 def menus(source, msgqueue):
-    while true:
+    while True:
         print('---------Nodo a encontrar:-----------')
         nodo = input()
         print('-------------------------------------')
