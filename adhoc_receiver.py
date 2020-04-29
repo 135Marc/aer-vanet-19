@@ -37,5 +37,5 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
             if nodo or pdu.getTarget() == name:
                 newpdu = PDU(name, 'ROUTE_REPLY', 5, Table(), pdu.getSource(), str(nodo),[])
                 msgqueue.put(newpdu)
-            else
+            else:
                 print('reencaminhar')
