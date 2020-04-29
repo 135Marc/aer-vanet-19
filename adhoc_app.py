@@ -14,7 +14,7 @@ import sys
 import threading
 import random
 import socket
-import Queue
+from multiprocessing import Queue
 from adhoc_table import Table
 from adhoc_sender import sender
 from adhoc_receiver import receiver

@@ -1,6 +1,7 @@
 import pickle
 import time
 from adhoc_pdu import PDU
+from multiprocessing import Queue
 
 def sender(socket, name, port, groupipv6, routing_table, interval, msgqueue):
     sock = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
