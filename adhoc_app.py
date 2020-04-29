@@ -24,7 +24,7 @@ MYPORT = 9999
 MYGROUP_6 = 'ff02::1'
 NAME = ''
 ROUTING = Table()
-MSGQUEUE = queue(15)
+MSGQUEUE = queue.Queue(15)
 
 def main():
     INTERVAL = 10
