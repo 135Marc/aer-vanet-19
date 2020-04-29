@@ -2,16 +2,21 @@
 from adhoc_table import Table
 
 class PDU:
-    source = 'NaN'
+    source = 'None'
     pdu_type = "HELLO"
     ttl = 1
     table = None
+    target = 'None'
+    path = []
 
-    def __init__(self, givenSource, givenType, givenTTL, givenTable):
+    def __init__(self, givenSource, givenType, givenTTL, givenTable, givenTarget, givenPath):
         self.source = givenSource
         self.pdu_type = givenType 
         self.ttl = givenTTL
         self.table = Table(givenTable.getRows(), givenTable.getNeighbours())
+        if givenType == 'ROUTE_REQUES'
+            self.target = givenTarget
+            self.path = givenPath
 
     def getSource(self):
         return self.source
@@ -21,6 +26,8 @@ class PDU:
         return self.ttl
     def getTable(self):
         return self.table
+    def getTarget(self):
+        return self.target
 
     def setSource(self, givenSource):
         self.source = givenSource
@@ -29,6 +36,12 @@ class PDU:
     def setTTL(self, givenTTL):
         self.ttl = givenTTL
     def setTable(self, givenTable):
-        self.table = givenTable
+        self.table = Table(givenTable.getRows(), givenTable.getNeighbours())
+    def setTarget(self, givenTarget):
+        self.target = givenTarget
 
-    
+    def printPDU():
+        print('Source: ' + self.source)
+        print('PDU type: ' + self.pdu_type)
+        print('TTL: ' + self.ttl)
+        print('Target: ' + self.target)
