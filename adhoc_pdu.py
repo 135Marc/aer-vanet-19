@@ -40,7 +40,7 @@ class PDU:
     def setTarget(self, givenTarget):
         self.target = givenTarget
 
-    def printPDU():
+    def printPDU(self):
         print('Source: ' + self.source)
         print('PDU type: ' + self.pdu_type)
         print('TTL: ' + self.ttl)
