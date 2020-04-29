@@ -76,11 +76,11 @@ class Table:
         self.rows.difference_update(rmset)
 
     def exists(self, nodo):
-        nodo = None
+        newnode = None
         for row in self.rows:
-            if row[1] == nodo:
-                nodo = row
-        return nodo
+            if row[0] == nodo:
+                newnode = row
+        return newnode
 
 
     def printTable(self):
