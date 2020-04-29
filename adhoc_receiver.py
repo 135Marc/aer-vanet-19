@@ -23,9 +23,9 @@ def receiver(socket, name, port, groupipv6, routing_table, interval):
         pdu = pickle.loads(data)
         nodetime = time.time()
 
-        print('Tipo: ' + pdu.getType() + ' Origem: ' + pdu.getSource())
+        #print('Tipo: ' + pdu.getType() + ' Origem: ' + pdu.getSource())
         routing_table.addNode(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], nodetime)
         routing_table.addNeighbour(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], nodetime)
         routing_table.mergeTable(pdu.getTable(), pdu.getSource(), nodetime, name)
         routing_table.verifyTimes(interval)
-        routing_table.printTable()
+        #routing_table.printTable()
