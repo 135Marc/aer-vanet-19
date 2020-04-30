@@ -19,5 +19,6 @@ def sender(socket, name, port, groupipv6, routing_table, interval, msgqueue):
 
 def route_request(sock, msgqueue, groupipv6, port):
     while True:
+        print('Wainting!')
         pdu = msgqueue.get()
         sock.sendto(pickle.dumps(pdu), (groupipv6, port))
