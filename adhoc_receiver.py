@@ -39,7 +39,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
             msg = nodo[0] + ' ' + nodo[2]
             print('linha da tabela: ' + msg)
             if nodo:
-                newpdu = PDU(name, 'ROUTE_REPLY', 5, Table(), pdu.getSource(), 'msg',[])
+                newpdu = PDU(name, 'ROUTE_REPLY', 5, Table(), pdu.getSource(), msg,[])
                 msgqueue.put(newpdu)
             elif pdu.getTarget() == name:
                 print('O nodo procurado é de nivel 1!')
