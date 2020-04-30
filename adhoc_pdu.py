@@ -17,7 +17,6 @@ class PDU:
         self.table = Table(givenTable.getRows(), givenTable.getNeighbours())
         if givenType == 'ROUTE_REQUEST' or givenType == 'ROUTE_REPLY':
             self.target = givenTarget
-            print('mensagem fornacida ao pdu: ' + givenMSG)
             self.msg = givenMSG
             self.path = givenPath
 
