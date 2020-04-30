@@ -36,6 +36,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
             pdu.printPDU()
         elif pdu.getType() == 'ROUTE_REQUEST':
             nodo = routing_table.exists(pdu.getTarget())
+            print('linha da tabela: ' + nodo[0] + ' ' + nodo[2])
             if nodo:
                 newpdu = PDU(name, 'ROUTE_REPLY', 5, Table(), pdu.getSource(), str(nodo[0]) + ' ' + str(nodo[2]),[])
                 msgqueue.put(newpdu)
