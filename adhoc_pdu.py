@@ -10,7 +10,7 @@ class PDU:
     msg = ''
     path = []
 
-    def __init__(self, givenSource, givenType, givenTTL, givenTable, givenTarget='None', givenMSG='', givenPath=[]):
+    def __init__(self, givenSource, givenType, givenTTL, givenTable, givenTarget='None', givenMSG='some', givenPath=[]):
         self.source = givenSource
         self.pdu_type = givenType 
         self.ttl = givenTTL
