@@ -33,7 +33,18 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
             routing_table.mergeTable(pdu.getTable(), pdu.getSource(), nodetime, name)
             routing_table.verifyTimes(interval)
         elif pdutype == 'ROUTE_REPLY':
-            pdu.printPDU()
+            source = pdu.getSource()
+            ttl = pdu.getTTL()
+            path = pdu.getPath()
+
+            if source != name and path[-1] == name:
+                    pdu.forwardingPDU(name)
+                    msgqueue.put(pdu)
+                    print('Reencaminhar REPLY!')
+            else:
+                pdu.printPDU()
+
+
         elif pdutype == 'ROUTE_REQUEST':
             source = pdu.getSource()
             target = routing_table.exists(pdu.getTarget())
@@ -51,6 +62,6 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
                     #ROUTE_REQUEST caso o nodo procurado não exista na tabela
                     pdu.forwardingPDU(name)
                     msgqueue.put(pdu)
-                    print('Reencaminhar!')
+                    print('Reencaminhar REQUEST!')
                 else:
                     print('O ttl do pdu expirou!')
