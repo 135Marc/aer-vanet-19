@@ -37,7 +37,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
             ttl = pdu.getTTL()
             path = pdu.getPath()
 
-            if source != name and path[-1] == name:
+            if source != name and path[-1:] == name:
                     pdu.forwardingPDU(name)
                     msgqueue.put(pdu)
                     print('Reencaminhar REPLY!')
