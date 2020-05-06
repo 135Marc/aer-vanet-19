@@ -37,6 +37,11 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
             ttl = pdu.getTTL()
             path = pdu.getPath()
 
+            print('--------------')
+            print(source)
+            print(path[-1:])
+            print(name)
+            print('--------------')
             if source != name and path[-1:] == name:
                     pdu.forwardingPDU(name)
                     msgqueue.put(pdu)
