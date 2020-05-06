@@ -24,6 +24,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
     while True:
         data, sender = s.recvfrom(4096)
         pdu = pickle.loads(data)
+        routing_table.verifyTimes(interval)
         
         pdutype = pdu.getType()
         if pdutype == 'HELLO':
@@ -31,7 +32,6 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
             routing_table.addNode(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], nodetime)
             routing_table.addNeighbour(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], nodetime)
             routing_table.mergeTable(pdu.getTable(), pdu.getSource(), nodetime, name)
-            routing_table.verifyTimes(interval)
         elif pdutype == 'ROUTE_REPLY':
             nodetime = time.time()
             source = pdu.getSource()
