@@ -14,7 +14,8 @@ class PDU:
         self.source = givenSource
         self.pdu_type = givenType 
         self.ttl = givenTTL
-        self.table = Table(givenTable.getRows(), givenTable.getNeighbours())
+        if givenType == 'HELLO':
+            self.table = Table(givenTable.getRows(), givenTable.getNeighbours())
         if givenType == 'ROUTE_REQUEST' or givenType == 'ROUTE_REPLY':
             self.target = givenTarget
             self.msg = givenMSG
