@@ -26,26 +26,30 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
         pdu = pickle.loads(data)
         
         pdutype = pdu.getType()
-
         if pdutype == 'HELLO':
-            #print('Tipo: ' + pdutype + ' Origem: ' + pdu.getSource())
             nodetime = time.time()
             routing_table.addNode(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], nodetime)
             routing_table.addNeighbour(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], nodetime)
             routing_table.mergeTable(pdu.getTable(), pdu.getSource(), nodetime, name)
             routing_table.verifyTimes(interval)
-            #routing_table.printTable()
         elif pdutype == 'ROUTE_REPLY':
             pdu.printPDU()
-
-
         elif pdutype == 'ROUTE_REQUEST':
-            nodo = routing_table.exists(pdu.getTarget())
-            if nodo:
-                msg = nodo[0] + ' ' + nodo[2]
-                newpdu = PDU(name, 'ROUTE_REPLY', 5, Table(), pdu.getSource(), msg,[])
-                msgqueue.put(newpdu)
-            elif pdu.getTarget() == name:
-                print('O nodo procurado é de nivel 1!')
-            else:
-                print('Reencaminhar!')
+            source = pdu.getSource()
+            target = routing_table.exists(pdu.getTarget())
+            ttl = pdu.getTTL()
+            if source != name
+                if target:
+                    #ROUTE_REPLY caso o nodo procurado exista na tabela
+                    msg = target[0] + ' ' + target[2]
+                    newpdu = PDU(name, 'ROUTE_REPLY', 4, None, source, msg,[])
+                    msgqueue.put(newpdu)
+                    print('Reesponder!')
+                elif ttl >= 0:
+                    #ROUTE_REQUEST caso o nodo procurado não exista na tabela
+                    newpath = pdu.getPath().append(name)
+                    newpdu = PDU(pdu.getSource(), 'ROUTE_REQUEST', ttl-1, None, target, '', newpath)
+                    msgqueue.put(newpdu)
+                    print('Reencaminhar!')
+                else:
+                    print('O ttl do pdu expirou!')
