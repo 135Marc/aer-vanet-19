@@ -1,6 +1,5 @@
 
 from adhoc_table import Table
-import queue
 
 class PDU:
     source = 'None'
@@ -9,9 +8,9 @@ class PDU:
     table = None
     target = 'None'
     msg = ''
-    path = None
+    path = []
 
-    def __init__(self, givenSource, givenType, givenTTL, givenTable, givenTarget='None', givenMSG='', givenPath=queue.LifoQueue()):
+    def __init__(self, givenSource, givenType, givenTTL, givenTable, givenTarget='None', givenMSG='', givenPath=[]):
         self.source = givenSource
         self.pdu_type = givenType 
         self.ttl = givenTTL
@@ -20,7 +19,8 @@ class PDU:
         if givenType == 'ROUTE_REQUEST' or givenType == 'ROUTE_REPLY':
             self.target = givenTarget
             self.msg = givenMSG
-            self.path = givenPath
+            for n in givenPath
+                self.path.append(n)
 
     def getSource(self):
         return self.source
@@ -49,6 +49,20 @@ class PDU:
         self.target = givenTarget
     def setMsg(self, givenMsg):
         self.msg = givenMsg
+
+    def replyPDU(self, n, t, m):
+        self.source = n
+        self.pdu_type = 'ROUTE_REPLY'
+        self.ttl = 10
+        self.target = t
+        self.msg = m
+
+    def forwardingPDU(self, node):
+        self.ttl -= 1
+        if self.pdu_type == 'ROUTE_REQUEST':
+            self.path.append(node)
+        if self.pdu_type == 'ROUTE_REPLY':
+            self.path.pop(node)
 
     def printPDU(self):
         print('**************************')
