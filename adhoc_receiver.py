@@ -36,18 +36,14 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
             source = pdu.getSource()
             ttl = pdu.getTTL()
             path = pdu.getPath()
-
-            print('--------------')
-            print(source)
-            print(path[-1:][0])
-            print(name)
-            print('--------------')
-            if source != name and path[-1:][0] == name:
-                    pdu.forwardingPDU(name)
-                    msgqueue.put(pdu)
-                    print('Reencaminhar REPLY!')
-            else:
-                pdu.printPDU()
+            poped = path[-1:]
+            if len(poped) == 1:
+                if source != name and poped[0] == name:
+                        pdu.forwardingPDU(name)
+                        msgqueue.put(pdu)
+                        print('Reencaminhar REPLY!')
+                else:
+                    pdu.printPDU()
 
 
         elif pdutype == 'ROUTE_REQUEST':
