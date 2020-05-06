@@ -32,8 +32,6 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
             routing_table.addNeighbour(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], nodetime)
             routing_table.mergeTable(pdu.getTable(), pdu.getSource(), nodetime, name)
             routing_table.verifyTimes(interval)
-
-
         elif pdutype == 'ROUTE_REPLY':
             nodetime = time.time()
             source = pdu.getSource()
@@ -52,9 +50,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
                 routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
                 print('Atualizar Tabela')
             else:
-                #pdu.printPDU()
-
-
+                pdu.printPDU()
         elif pdutype == 'ROUTE_REQUEST':
             source = pdu.getSource()
             target = routing_table.exists(pdu.getTarget())
