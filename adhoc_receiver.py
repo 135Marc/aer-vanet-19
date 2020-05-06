@@ -38,17 +38,18 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
             source = pdu.getSource()
             target = routing_table.exists(pdu.getTarget())
             ttl = pdu.getTTL()
-            if source != name:
+            path = pdu.getPath()
+            if source != name and name not in path:
                 if target:
                     #ROUTE_REPLY caso o nodo procurado exista na tabela
                     msg = target[0] + ' ' + target[2]
-                    newpdu = PDU(name, 'ROUTE_REPLY', 4, None, source, msg,[])
+                    newpdu = PDU(name, 'ROUTE_REPLY', 4, None, source, msg, path)
                     msgqueue.put(newpdu)
-                    print('Reesponder!')
+                    print('Responder!')
                 elif ttl >= 0:
                     #ROUTE_REQUEST caso o nodo procurado não exista na tabela
-                    newpath = pdu.getPath().append(name)
-                    newpdu = PDU(pdu.getSource(), 'ROUTE_REQUEST', ttl-1, None, target, '', newpath)
+                    newpath = path.append(name)
+                    newpdu = PDU(source, 'ROUTE_REQUEST', ttl-1, None, target, '', newpath)
                     msgqueue.put(newpdu)
                     print('Reencaminhar!')
                 else:
