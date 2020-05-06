@@ -56,5 +56,5 @@ class PDU:
         print('* TTL: ' + str(self.ttl))
         print('* Target: ' + self.target)
         print('* Msg: ' + self.msg)
-        print('* Path: ' + self.path)
+        print('* Path: ' + ', '.join(self.path))
         print('**************************')
