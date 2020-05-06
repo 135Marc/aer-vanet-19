@@ -49,8 +49,6 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
             elif target == name:
                 routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
                 print('Atualizar Tabela')
-            else:
-                pdu.printPDU()
         elif pdutype == 'ROUTE_REQUEST':
             source = pdu.getSource()
             target = routing_table.exists(pdu.getTarget())
