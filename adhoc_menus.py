@@ -14,7 +14,7 @@ def menus(source, msgqueue, table):
             print('Nome do nodo:')
             nodo = input()
             print('TTL:')
-            ttl = input()
+            ttl = int(input())
             newpdu = PDU(source, 'ROUTE_REQUEST', ttl, None, nodo, '')
             msgqueue.put(newpdu)
         else:
