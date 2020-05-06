@@ -34,7 +34,7 @@ class PDU:
     def getMsg(self):
         return self.msg
     def getPath(self):
-        return self.path
+        return self.path.copy()
 
     def setSource(self, givenSource):
         self.source = givenSource
