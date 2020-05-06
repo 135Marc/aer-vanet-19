@@ -50,7 +50,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
                 elif ttl >= 0:
                     #ROUTE_REQUEST caso o nodo procurado não exista na tabela
                     newpath = path.append(name)
-                    print('-----'+' '.joint(path))
+                    print('-----'+' '.join(path))
                     newpdu = PDU(source, 'ROUTE_REQUEST', ttl-1, None, target, '', newpath)
                     msgqueue.put(newpdu)
                     print('Reencaminhar!')
