@@ -9,7 +9,7 @@ class PDU:
     table = None
     target = 'None'
     msg = ''
-    path = queue.LifoQueue()
+    path = None
 
     def __init__(self, givenSource, givenType, givenTTL, givenTable, givenTarget='None', givenMSG='', givenPath=queue.LifoQueue()):
         self.source = givenSource
