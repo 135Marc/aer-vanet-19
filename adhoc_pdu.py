@@ -62,6 +62,7 @@ class PDU:
         if self.pdu_type == 'ROUTE_REQUEST':
             self.path.append(node)
         if self.pdu_type == 'ROUTE_REPLY':
+            self.source = node
             self.path.pop()
 
     def printPDU(self):
