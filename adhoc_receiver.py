@@ -37,7 +37,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
             source = pdu.getSource()
             target = pdu.getTarget()
             ttl = pdu.getTTL()
-            msg = pdu.getMSG()
+            msg = pdu.getMsg()
             path = pdu.getPath()
             poped = path[-1:]
             if len(poped) == 1:
