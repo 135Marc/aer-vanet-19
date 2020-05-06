@@ -8,9 +8,9 @@ class PDU:
     table = None
     target = 'None'
     msg = ''
-    path = list()
+    path = []
 
-    def __init__(self, givenSource, givenType, givenTTL, givenTable, givenTarget='None', givenMSG='', givenPath=list()):
+    def __init__(self, givenSource, givenType, givenTTL, givenTable, givenTarget='None', givenMSG='', givenPath=[]):
         self.source = givenSource
         self.pdu_type = givenType 
         self.ttl = givenTTL

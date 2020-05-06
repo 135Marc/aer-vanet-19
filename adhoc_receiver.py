@@ -39,6 +39,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
             target = routing_table.exists(pdu.getTarget())
             ttl = pdu.getTTL()
             path = pdu.getPath()
+            
             if source != name and name not in path:
                 if target:
                     #ROUTE_REPLY caso o nodo procurado exista na tabela

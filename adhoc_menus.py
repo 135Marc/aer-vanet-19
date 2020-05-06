@@ -11,9 +11,11 @@ def menus(source, msgqueue, table):
         if opt == 'p':
             table.printTable()
         elif opt == 'f':
-            print('Encontrar nodo:')
+            print('Nome do nodo:')
             nodo = input()
-            newpdu = PDU(source, 'ROUTE_REQUEST', 5, None, nodo, '',[])
+            print('TTL:')
+            ttl = input()
+            newpdu = PDU(source, 'ROUTE_REQUEST', ttl, None, nodo, '')
             msgqueue.put(newpdu)
         else:
             print('Opção inválida.')
