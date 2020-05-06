@@ -44,7 +44,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
                 if target:
                     #ROUTE_REPLY caso o nodo procurado exista na tabela
                     msg = target[0] + ' ' + target[2]
-                    msgqueue.put(pdu.forwardingPDU(name, source, msg))
+                    msgqueue.put(pdu.replyPDU(name, source, msg))
                     print('Responder!')
                 elif ttl >= 0:
                     #ROUTE_REQUEST caso o nodo procurado não exista na tabela
