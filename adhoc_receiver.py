@@ -39,10 +39,10 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
 
             print('--------------')
             print(source)
-            print(path[-1:])
+            print(path[-1:][0])
             print(name)
             print('--------------')
-            if source != name and path[-1:] == name:
+            if source != name and path[-1:][0] == name:
                     pdu.forwardingPDU(name)
                     msgqueue.put(pdu)
                     print('Reencaminhar REPLY!')
