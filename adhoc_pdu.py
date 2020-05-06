@@ -19,7 +19,7 @@ class PDU:
         if givenType == 'ROUTE_REQUEST' or givenType == 'ROUTE_REPLY':
             self.target = givenTarget
             self.msg = givenMSG
-            for n in givenPath
+            for n in givenPath:
                 self.path.append(n)
 
     def getSource(self):
