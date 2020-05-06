@@ -34,6 +34,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
             routing_table.verifyTimes(interval)
         elif pdutype == 'ROUTE_REPLY':
             source = pdu.getSource()
+            target = pdu.getTarget()
             ttl = pdu.getTTL()
             path = pdu.getPath()
             poped = path[-1:]
@@ -42,7 +43,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
                     pdu.forwardingPDU(name)
                     msgqueue.put(pdu)
                     print('Reencaminhar REPLY!')
-            elif source == name:
+            elif target == name:
                 print('Atualizar Tabela')
             else:
                 pdu.printPDU()
