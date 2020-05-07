@@ -33,22 +33,24 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
             routing_table.addNeighbour(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], nodetime)
             routing_table.mergeTable(pdu.getTable(), pdu.getSource(), nodetime, name)
         elif pdutype == 'ROUTE_REPLY':
-            nodetime = time.time()
-            source = pdu.getSource()
-            target = pdu.getTarget()
-            ttl = pdu.getTTL()
-            msg = pdu.getMsg()
-            path = pdu.getPath()
-            poped = path[-1:]
-            if len(poped) == 1:
-                if poped[0] == name:
+            if not routing_table.exists(pdu.getTarget()):
+                nodetime = time.time()
+                source = pdu.getSource()
+                target = pdu.getTarget()
+                ttl = pdu.getTTL()
+                msg = pdu.getMsg()
+                path = pdu.getPath()
+                poped = path[-1:]
+                if len(poped) == 1:
+                    if poped[0] == name:
+                        routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
+                        pdu.forwardingPDU(name)
+                        msgqueue.put(pdu)
+                        print('Reencaminhar REPLY!')
+                elif target == name:
                     routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
-                    pdu.forwardingPDU(name)
-                    msgqueue.put(pdu)
-                    print('Reencaminhar REPLY!')
-            elif target == name:
-                routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
-                print('Atualizar Tabela')
+                    print('Atualizar Tabela')
+            
         elif pdutype == 'ROUTE_REQUEST':
             source = pdu.getSource()
             target = routing_table.exists(pdu.getTarget())
