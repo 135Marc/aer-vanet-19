@@ -3,7 +3,7 @@ class ReplyWait:
     awaiting = []
 
     def __init__(self, givenAwaiting=[]):
-        for n in givenawaiting:
+        for n in givenAwaiting:
             self.awaiting.append(n)
 
     def checkElem(self, elem):
