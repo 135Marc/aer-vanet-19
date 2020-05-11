@@ -5,6 +5,7 @@ import queue
 import sys
 from adhoc_pdu import PDU
 from adhoc_table import Table
+from adhoc_pdutimer import rmAwaitPdu
 
 def sender(socket, name, port, groupipv6, routing_table, interval, msgqueue, rplyawait):
     sock = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
@@ -30,10 +31,4 @@ def dispatch(sock, msgqueue, groupipv6, port, rplyawait, interval):
             t.start()
         sock.sendto(pickle.dumps(pdu), (groupipv6, port))
 
-def rmAwaitPdu(rplyawait, elem, interval):
-    time.sleep(interval)
-    if rplyawait.checkElem(elem):
-        rplyawait.rmElem(elem)
-        print('Response timeout for ', elem)
-        sys.exit()
     
