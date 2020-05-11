@@ -63,7 +63,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
             ttl = pdu.getTTL()
             path = pdu.getPath()
 
-            print(source + '!=' + name + 'and' + name + 'not in' + path)
+            print(source + '!=' + name + 'and' + name + 'not in [ ' + ', '.join(path) + ']')
             if source != name and name not in path:
                 print('ROUTE_REQUEST received')
                 if target:
