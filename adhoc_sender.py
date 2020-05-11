@@ -10,7 +10,7 @@ def sender(socket, name, port, groupipv6, routing_table, interval, msgqueue, rpl
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
 
     #Enviar pdus em fila de espera
-    rr = threading.Thread(target=dispatch, args=(sock,msgqueue,groupipv6,port,rplyawait,))
+    rr = threading.Thread(target=dispatch, args=(sock,msgqueue,groupipv6,port,rplyawait,interval,))
     rr.start()
 
     #Atualizar tabelas de roteamento (Protocolo HELLO)
