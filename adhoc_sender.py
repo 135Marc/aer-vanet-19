@@ -29,6 +29,8 @@ def dispatch(sock, msgqueue, groupipv6, port, rplyawait, interval):
             #Criar tread para remover elemento do array ao fim de um periodo de tempo
             t = threading.Thread(target=rmAwaitPdu, args=(rplyawait,pdu.getTarget(), interval,))
             t.start()
+            print('After thread')
         sock.sendto(pickle.dumps(pdu), (groupipv6, port))
+        print('After send')
 
     
