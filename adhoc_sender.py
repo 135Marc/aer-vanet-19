@@ -22,6 +22,7 @@ def sender(socket, name, port, groupipv6, routing_table, interval, msgqueue, rpl
 
 def dispatch(sock, msgqueue, groupipv6, port, rplyawait, interval):
     while True:
+        print('Dispatch thread again')
         pdu = msgqueue.get()
         if(pdu.getType() == 'ROUTE_REQUEST'):
             rplyawait.addElem(pdu.getTarget())
