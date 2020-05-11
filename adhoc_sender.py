@@ -32,7 +32,8 @@ def dispatch(sock, msgqueue, groupipv6, port, rplyawait, interval):
 
 def rmAwaitPdu(rplyawait, elem, interval):
     time.sleep(interval)
-    rplyawait.rmElem(elem)
-    print('Response timeout for ', elem)
-    sys.exit()
+    if rplyawait.checkElem(elem):
+        rplyawait.rmElem(elem)
+        print('Response timeout for ', elem)
+        sys.exit()
     

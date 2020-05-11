@@ -7,11 +7,7 @@ class ReplyWait:
             self.awaiting.append(n)
 
     def checkElem(self, elem):
-        for n in self.awaiting:
-            if n[0] == elem:
-                return n
-        else:
-            return None
+        return (elem in self.awaiting)
 
     def addElem(self, n):
         self.awaiting.append(n)

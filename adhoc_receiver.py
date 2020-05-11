@@ -50,6 +50,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
 
                 elif target == name:
                     if rplyawait.checkElem(msg.split(' ')[0]):
+                        rplyawait.rmElem(msg.split(' ')[0])
                         routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
                         print('Atualizar Tabela')
             
