@@ -27,7 +27,9 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
         routing_table.verifyTimes(interval)
         
         pdutype = pdu.getType()
+        path = pdu.getPath()
         print('received: ' + pdutype)
+        print('path: [ ' + ','.join(path) + ' ]' )
         if pdutype == 'HELLO':
             nodetime = time.time()
             routing_table.addNode(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], nodetime)
@@ -61,7 +63,6 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
             source = pdu.getSource()
             target = routing_table.exists(pdu.getTarget())
             ttl = pdu.getTTL()
-            path = pdu.getPath()
 
             print(source + ' != ' + name + ' and ' + name + ' not in [ ' + ','.join(path) + ' ]')
             if source != name and (name not in path):
