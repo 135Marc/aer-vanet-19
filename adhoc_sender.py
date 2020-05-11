@@ -11,7 +11,7 @@ def sender(socket, name, port, groupipv6, routing_table, interval, msgqueue, rpl
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
 
     #Enviar pdus em fila de espera
-    rr = threading.Thread(target=dispatch, args=(sock,msgqueue,groupipv6,port,rplyawait,interval,))
+    rr = threading.Thread(target=dispatch, args=(sock,msgqueue,groupipv6,port,rplyawait,interval,name,))
     rr.start()
 
     #Atualizar tabelas de roteamento (Protocolo HELLO)
@@ -20,9 +20,10 @@ def sender(socket, name, port, groupipv6, routing_table, interval, msgqueue, rpl
         sock.sendto(pickle.dumps(pdu), (groupipv6, port))
         time.sleep(interval)
 
-def dispatch(sock, msgqueue, groupipv6, port, rplyawait, interval):
+def dispatch(sock, msgqueue, groupipv6, port, rplyawait, interval,name):
     while True:
         pdu = msgqueue.get()
+        print('SENDER: ' + pdu.getSource() + ' != ' + name + ' and ' + name + ' not in [ ' + ','.join(pdu.getPath()) + ' ]')
         if(pdu.getType() == 'ROUTE_REQUEST'):
             print('Dispatch thread again')
             rplyawait.addElem(pdu.getTarget())
