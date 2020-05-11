@@ -1,4 +1,5 @@
 import time
+import sys
 
 def rmAwaitPdu(rplyawait, elem, interval):
     time.sleep(interval)

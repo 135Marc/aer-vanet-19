@@ -2,7 +2,6 @@ import pickle
 import time
 import threading
 import queue
-import sys
 from adhoc_pdu import PDU
 from adhoc_table import Table
 from adhoc_pdutimer import rmAwaitPdu
