@@ -58,13 +58,14 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                         print('Atualizar Tabela')
             
         elif pdutype == 'ROUTE_REQUEST':
-            print('ROUTE_REQUEST received')
             source = pdu.getSource()
             target = routing_table.exists(pdu.getTarget())
             ttl = pdu.getTTL()
             path = pdu.getPath()
 
+            print(source + '!=' + name + 'and' + name + 'not in' + path)
             if source != name and name not in path:
+                print('ROUTE_REQUEST received')
                 if target:
                     #ROUTE_REPLY caso o nodo procurado exista na tabela
                     msg = target[0] + ' ' + target[2]
