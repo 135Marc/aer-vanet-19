@@ -5,7 +5,7 @@ import queue
 from adhoc_pdu import PDU
 from adhoc_table import Table
 
-def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
+def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, rplyawait):
     # Look up multicast group address in name server and find out IP version
     addrinfo = socket.getaddrinfo(groupipv6, None)[0]
 
@@ -47,9 +47,11 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue):
                         pdu.forwardingPDU(name)
                         msgqueue.put(pdu)
                         print('Reencaminhar REPLY!')
+
                 elif target == name:
-                    routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
-                    print('Atualizar Tabela')
+                    if  checkElem(msg.split(' ')[0])
+                        routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
+                        print('Atualizar Tabela')
             
         elif pdutype == 'ROUTE_REQUEST':
             source = pdu.getSource()

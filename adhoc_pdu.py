@@ -53,7 +53,11 @@ class PDU:
     def replyPDU(self, n, t, m):
         self.source = n
         self.pdu_type = 'ROUTE_REPLY'
-        self.ttl = 10
+        ##TTL suficientemente grande porque é
+        # assumido que a resposta tem de
+        # ter saltos suficientes para
+        # chegar ao nodo de origem.
+        self.ttl = 100 
         self.target = t
         self.msg = m
 
