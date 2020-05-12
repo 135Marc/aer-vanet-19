@@ -74,7 +74,6 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                     msgqueue.put(pdu)
                     print('Responder!')
                 elif ttl > 0:
-                    print('ROUTE_REQUEST received with enougth ttl')
                     #ROUTE_REQUEST caso o nodo procurado não exista na tabela
                     pdu.forwardingPDU(name)
                     msgqueue.put(pdu)

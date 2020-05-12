@@ -25,13 +25,10 @@ def dispatch(sock, msgqueue, groupipv6, port, rplyawait, interval,name):
         pdu = msgqueue.get()
         print('SENDER: ' + pdu.getSource() + ' != ' + name + ' and ' + name + ' not in [ ' + ','.join(pdu.getPath()) + ' ]')
         if(pdu.getType() == 'ROUTE_REQUEST'):
-            print('Dispatch thread again')
             rplyawait.addElem(pdu.getTarget())
             #Criar tread para remover elemento do array ao fim de um periodo de tempo
             t = threading.Thread(target=rmAwaitPdu, args=(rplyawait,pdu.getTarget(), interval,))
             t.start()
-            print('After thread')
         sock.sendto(pickle.dumps(pdu), (groupipv6, port))
-        print('After send')
 
     
