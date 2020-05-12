@@ -1,4 +1,3 @@
-
 from adhoc_table import Table
 
 class PDU:
@@ -35,7 +34,10 @@ class PDU:
     def getMsg(self):
         return self.msg
     def getPath(self):
-        return self.path
+        pathcopy = []
+        for n in path
+            pathcopy.append(n)
+        return pathcopy
 
     def setSource(self, givenSource):
         self.source = givenSource
