@@ -19,6 +19,7 @@ class PDU:
             self.target = givenTarget
             self.msg = givenMSG
             for n in givenPath:
+                self.path.clear()
                 self.path.append(n)
 
     def getSource(self):
