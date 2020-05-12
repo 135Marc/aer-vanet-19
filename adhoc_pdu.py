@@ -35,7 +35,7 @@ class PDU:
         return self.msg
     def getPath(self):
         pathcopy = []
-        for n in path
+        for n in self.path:
             pathcopy.append(n)
         return pathcopy
 
