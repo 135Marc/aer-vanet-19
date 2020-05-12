@@ -18,8 +18,8 @@ class PDU:
         if givenType == 'ROUTE_REQUEST' or givenType == 'ROUTE_REPLY':
             self.target = givenTarget
             self.msg = givenMSG
+            self.path.clear()
             for n in givenPath:
-                self.path.clear()
                 self.path.append(n)
 
     def getSource(self):
@@ -79,5 +79,5 @@ class PDU:
         print('* TTL: ' + str(self.ttl))
         print('* Target: ' + self.target)
         print('* Msg: ' + self.msg)
-        print('* Path: ' + ', '.join(list(self.path)))
+        print('* Path: ' + ','.join(self.path))
         print('**************************')
