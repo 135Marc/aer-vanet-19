@@ -41,7 +41,6 @@ def main():
         print('-n: nome')
         print('-i: intervalo')
 
-    print('Nodo: ' + NAME)
     m = threading.Thread(target=menus, args=(NAME, MSGQUEUE, ROUTING,))
     m.start()
     r = threading.Thread(target=receiver, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL, MSGQUEUE, RPLYAWAIT,))
