@@ -89,11 +89,9 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
 
                         # Verificar se este é o destino da informação
                         if pdu.getTarget() == name:
-                            ##### routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
                             print('ROUTE_REPLY | Atualizar Tabela: ', source, ' -> ', name)
 
                         else:
-                            ##### routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
                             pdu.forwardingPDU(name)
                             msgqueue.put(pdu)
                             print('ROUTE_REPLY | Reencaminhar: ', source, ' -> *')
