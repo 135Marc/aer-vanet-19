@@ -10,11 +10,11 @@ def sender(socket, name, port, groupipv6, routing_table, interval, msgqueue, rpl
     sock = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
 
-    #Enviar pdus em fila de espera
+    # (ROUTE_REPLY|ROUTE_REQUEST) Enviar pdus em fila de espera 
     rr = threading.Thread(target=dispatch, args=(sock,msgqueue,groupipv6,port,rplyawait,interval,name,))
     rr.start()
 
-    #Atualizar tabelas de roteamento (Protocolo HELLO)
+    # (Protocolo HELLO) Atualizar tabelas de roteamento 
     while True:
         pdu = PDU(name, 'HELLO', 1, routing_table)
         sock.sendto(pickle.dumps(pdu), (groupipv6, port))
@@ -22,12 +22,16 @@ def sender(socket, name, port, groupipv6, routing_table, interval, msgqueue, rpl
 
 def dispatch(sock, msgqueue, groupipv6, port, rplyawait, interval,name):
     while True:
+        # Obter proxima mensagem
         pdu = msgqueue.get()
+
+        # Adicionar elemento há lista de espera por respostas 
         if(pdu.getType() == 'ROUTE_REQUEST'):
             rplyawait.addElem(pdu.getTarget())
             #Criar tread para remover elemento do array ao fim de um periodo de tempo
             t = threading.Thread(target=rmAwaitPdu, args=(rplyawait,pdu.getTarget(), interval,))
             t.start()
+
         sock.sendto(pickle.dumps(pdu), (groupipv6, port))
 
     

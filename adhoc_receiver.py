@@ -58,10 +58,10 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                     target = routing_table.exists(pdu.getTarget())
                     if target:
                         # ROUTE_REPLY caso o nodo procurado exista na tabela
-                        ##### pdutable = Table()
-                        ##### pdutable.addNeighbour(target[0], None, target[2], -1)
-                        msg = target[0] + ' ' + target[2]
-                        pdu.replyPDU(name, source, msg)
+                        pdutable = Table()
+                        pdutable.addNeighbour(target[0], None, target[2], -1)
+                        ##### msg = target[0] + ' ' + target[2]
+                        pdu.replyPDU(name, source, pdutable) ##### msg
                         msgqueue.put(pdu)
                         print('ROUTE_REQUEST | Encontrado: ', source, ' -> ', target[0])
 
@@ -77,23 +77,23 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
             # Processar pedido ROUTE_REPLY recebido.
             elif pdutype == 'ROUTE_REPLY':    
                 nodetime = time.time()
-                msg = pdu.getMsg() ##### waited = pdu.getTable().getNeighbours()[0]
+                ##### msg = pdu.getMsg() 
+                waited = pdu.getTable().getNeighbours()[0]
                 poped = path[-1:]
                 
                 # Verificar se é o próximo elemento do caminho e se estava a espera de resposta
-                if len(poped) == 1: ##### and waited 
-                    if poped[0] == name and rplyawait.checkElem(msg.split(' ')[0]): ##### waited[0]
-                        rplyawait.rmElem(msg.split(' ')[0])
-                        ##### routing_table.mergeTable(pdu.getTable(), source, nodetime, name)
-                        #if not routing_table.exists(pdu.getMsg().split(' ')[0]):
+                if len(poped) == 1 and waited: ##### remove waited
+                    if poped[0] == name and rplyawait.checkElem(waited[0]): ##### msg.split(' ')[0]
+                        rplyawait.rmElem(waited[0]) ##### msg.split(' ')[0]
+                        routing_table.mergeTable(pdu.getTable(), source, nodetime, name)
                         
                         # Verificar se este é o destino da informação
                         if pdu.getTarget() == name:
-                            routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
+                            ##### routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
                             print('ROUTE_REPLY | Atualizar Tabela: ', source, ' -> ', name)
 
                         else:
-                            routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
+                            ##### routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
                             pdu.forwardingPDU(name)
                             msgqueue.put(pdu)
                             print('ROUTE_REPLY | Reencaminhar: ', source, ' -> *')

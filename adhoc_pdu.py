@@ -53,7 +53,7 @@ class PDU:
     def setMsg(self, givenMsg):
         self.msg = givenMsg
 
-    def replyPDU(self, n, t, m): # change m for tab
+    def replyPDU(self, n, t, tab): # change tabm for m
         ##TTL suficientemente grande porque é
         # assumido que a resposta tem de
         # ter saltos suficientes para
@@ -62,8 +62,8 @@ class PDU:
         self.source = n
         self.pdu_type = 'ROUTE_REPLY'
         self.target = t
-        # self.table = tab
-        self.msg = m
+        self.table = tab
+        ##### self.msg = m
 
     def forwardingPDU(self, node):
         self.ttl -= 1
