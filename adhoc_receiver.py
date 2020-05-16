@@ -34,7 +34,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
         path = pdu.getPath()
         source = pdu.getSource()
         ttl = pdu.getTTL()
-        
+
         if ttl >= 0:
             # Verificar o tipo de pdu
             # Processar pedido HELLO recebido.
@@ -58,18 +58,21 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                     target = routing_table.exists(pdu.getTarget())
                     if target:
                         # ROUTE_REPLY caso o nodo procurado exista na tabela
+                        pdutable = Table()
+                        pdutable.addNeighbour(target[0], None, target[2], -1)
                         msg = target[0] + ' ' + target[2]
                         pdu.replyPDU(name, source, msg)
                         msgqueue.put(pdu)
-                        print('ROUTE_REQUEST Encontrado: ', source, ' -> ', name)
+                        print('ROUTE_REQUEST Encontrado: ', source, ' -> ', target)
 
                     else:
                         # ROUTE_REQUEST caso o nodo procurado não exista na tabela
                         pdu.forwardingPDU(name)
                         msgqueue.put(pdu)
-                        print('ROUTE_REQUEST Não Encontrado: ', source, ' -> *',  )
+                        print('ROUTE_REQUEST Não Encontrado: ', source, ' -> *')
+
                 else:
-                    print('ROUTE_REQUEST Replicado: ', source)
+                    print('ROUTE_REQUEST Replicado: ', source, ' -> ', name)
 
             # Processar pedido ROUTE_REPLY recebido.
             elif pdutype == 'ROUTE_REPLY':
