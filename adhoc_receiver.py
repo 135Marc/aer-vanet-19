@@ -22,26 +22,20 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
 
     # Loop, printing any data we receive
     while True:
-        routing_table.verifyTimes(interval)
-        # Receive PDU
         data, sender = s.recvfrom(4096)
         pdu = pickle.loads(data)
+        routing_table.verifyTimes(interval)
         
-        # Get PDU informations
         pdutype = pdu.getType()
         path = pdu.getPath()
-
-        # Check datagram type
         if pdutype == 'HELLO':
-            actualtime = time.time()
-            # Update routing table according to the "HELLO" PDU.
-            routing_table.addNode(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], actualtime)
-            routing_table.addNeighbour(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], actualtime)
-            routing_table.mergeTable(pdu.getTable(), pdu.getSource(), actualtime, name)
-
+            nodetime = time.time()
+            routing_table.addNode(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], nodetime)
+            routing_table.addNeighbour(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], nodetime)
+            routing_table.mergeTable(pdu.getTable(), pdu.getSource(), nodetime, name)
         elif pdutype == 'ROUTE_REPLY':
-            actualtime = time.time()
             if not routing_table.exists(pdu.getMsg().split(' ')[0]):
+                nodetime = time.time()
                 source = pdu.getSource()
                 target = pdu.getTarget()
                 ttl = pdu.getTTL()
@@ -52,7 +46,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                     if poped[0] == name:
                         if rplyawait.checkElem(msg.split(' ')[0]):
                             rplyawait.rmElem(msg.split(' ')[0])
-                            routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], actualtime)
+                            routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
                             pdu.forwardingPDU(name)
                             msgqueue.put(pdu)
                             print('Reencaminhar REPLY!')
@@ -60,7 +54,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                 elif target == name:
                     if rplyawait.checkElem(msg.split(' ')[0]):
                         rplyawait.rmElem(msg.split(' ')[0])
-                        routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], actualtime)
+                        routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
                         print('Atualizar Tabela')
             
         elif pdutype == 'ROUTE_REQUEST':
