@@ -58,8 +58,8 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                     target = routing_table.exists(pdu.getTarget())
                     if target:
                         # ROUTE_REPLY caso o nodo procurado exista na tabela
-                        pdutable = Table()
-                        pdutable.addNeighbour(target[0], None, target[2], -1)
+                        ##### pdutable = Table()
+                        ##### pdutable.addNeighbour(target[0], None, target[2], -1)
                         msg = target[0] + ' ' + target[2]
                         pdu.replyPDU(name, source, msg)
                         msgqueue.put(pdu)
