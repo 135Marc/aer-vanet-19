@@ -60,8 +60,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                         # ROUTE_REPLY caso o nodo procurado exista na tabela
                         pdutable = Table()
                         pdutable.addNeighbour(target[0], None, target[2], -1)
-                        ##### msg = target[0] + ' ' + target[2]
-                        pdu.replyPDU(name, source, pdutable) ##### msg
+                        pdu.replyPDU(name, source, pdutable)
                         msgqueue.put(pdu)
                         print('ROUTE_REQUEST | Encontrado: ', source, ' -> ', target[0])
 
@@ -77,14 +76,13 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
             # Processar pedido ROUTE_REPLY recebido.
             elif pdutype == 'ROUTE_REPLY':    
                 nodetime = time.time()
-                ##### msg = pdu.getMsg() 
                 waited = list(pdu.getTable().getNeighbours())[0]
                 poped = path[-1:]
                 
                 # Verificar se é o próximo elemento do caminho e se estava a espera de resposta
-                if len(poped) == 1 and waited: ##### remove waited
-                    if poped[0] == name and rplyawait.checkElem(waited[0]): ##### msg.split(' ')[0]
-                        rplyawait.rmElem(waited[0]) ##### msg.split(' ')[0]
+                if len(poped) == 1 and waited:
+                    if poped[0] == name and rplyawait.checkElem(waited[0]):
+                        rplyawait.rmElem(waited[0])
                         routing_table.addNode(waited[0], source, waited[2], nodetime)
 
                         # Verificar se este é o destino da informação
