@@ -78,7 +78,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
             elif pdutype == 'ROUTE_REPLY':    
                 nodetime = time.time()
                 ##### msg = pdu.getMsg() 
-                waited = pdu.getTable().getNeighbours()[0]
+                waited = list(pdu.getTable().getNeighbours())[0]
                 poped = path[-1:]
                 
                 # Verificar se é o próximo elemento do caminho e se estava a espera de resposta
