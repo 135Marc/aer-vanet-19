@@ -16,7 +16,6 @@ def sender(socket, name, port, groupipv6, routing_table, interval, msgqueue, rpl
 
     #Atualizar tabelas de roteamento (Protocolo HELLO)
     while True:
-        routing_table.verifyTimes(interval)
         pdu = PDU(name, 'HELLO', 1, routing_table)
         sock.sendto(pickle.dumps(pdu), (groupipv6, port))
         time.sleep(interval)
