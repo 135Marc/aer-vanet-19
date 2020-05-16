@@ -33,57 +33,64 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
         pdutype = pdu.getType()
         path = pdu.getPath()
         source = pdu.getSource()
-        # Verificar o tipo de pdu
-        # Processar pedido HELLO recebido.
-        if pdutype == 'HELLO':
-            # Adicionar o nodo nas tabelas (geral e vizinhos diretos).
-            # Juntar a tabela dos vizinhos do emissor do pdu recebido
-            # com a tabela geral.
-            nodetime = time.time()
-            routing_table.addNode(source, source, str(sender[0]).split('%')[0], nodetime)
-            routing_table.addNeighbour(source, source, str(sender[0]).split('%')[0], nodetime)
-            routing_table.mergeTable(pdu.getTable(), source, nodetime, name)
-
-        # Processar pedido ROUTE_REQUEST recebido.
-        elif pdutype == 'ROUTE_REQUEST':
-            target = routing_table.exists(pdu.getTarget())
-            ttl = pdu.getTTL()
-
-            if source != name and (name not in path):
-                if target:
-                    # ROUTE_REPLY caso o nodo procurado exista na tabela
-                    msg = target[0] + ' ' + target[2]
-                    pdu.replyPDU(name, source, msg)
-                    msgqueue.put(pdu)
-                    print('Responder!')
-                elif ttl > 0:
-                    # ROUTE_REQUEST caso o nodo procurado não exista na tabela
-                    pdu.forwardingPDU(name)
-                    msgqueue.put(pdu)
-                    print('Reencaminhar REQUEST!')
-                else:
-                    print('O ttl do pdu expirou!')
-
-        elif pdutype == 'ROUTE_REPLY':
-            if not routing_table.exists(pdu.getMsg().split(' ')[0]):
+        ttl = pdu.getTTL()
+        
+        if ttl >= 0:
+            # Verificar o tipo de pdu
+            # Processar pedido HELLO recebido.
+            if pdutype == 'HELLO':
+                # Adicionar o nodo nas tabelas (geral e vizinhos diretos).
+                # Juntar a tabela dos vizinhos do emissor do pdu recebido
+                # com a tabela geral.
                 nodetime = time.time()
-                source = pdu.getSource()
-                target = pdu.getTarget()
-                ttl = pdu.getTTL()
-                msg = pdu.getMsg()
-                path = pdu.getPath()
-                poped = path[-1:]
-                if len(poped) == 1:
-                    if poped[0] == name:
+                routing_table.addNode(source, source, str(sender[0]).split('%')[0], nodetime)
+                routing_table.addNeighbour(source, source, str(sender[0]).split('%')[0], nodetime)
+                routing_table.mergeTable(pdu.getTable(), source, nodetime, name)
+
+            # Processar pedido ROUTE_REQUEST recebido.
+            elif pdutype == 'ROUTE_REQUEST':
+
+                # Verificar se a origem do datagrama não é este nodo;
+                # Verificar se o pdu ainda não tinha passado por este nodo.
+                if source != name and (name not in path):
+
+                    # Verificar a tabela tem a informação do nodo procurado.
+                    target = routing_table.exists(pdu.getTarget())
+                    if target:
+                        # ROUTE_REPLY caso o nodo procurado exista na tabela
+                        msg = target[0] + ' ' + target[2]
+                        pdu.replyPDU(name, source, msg)
+                        msgqueue.put(pdu)
+                        print('ROUTE_REQUEST Encontrado: ', source, ' -> ', name)
+
+                    else:
+                        # ROUTE_REQUEST caso o nodo procurado não exista na tabela
+                        pdu.forwardingPDU(name)
+                        msgqueue.put(pdu)
+                        print('ROUTE_REQUEST Não Encontrado: ', source, ' -> *',  )
+                else:
+                    print('ROUTE_REQUEST Replicado: ', source)
+
+            # Processar pedido ROUTE_REPLY recebido.
+            elif pdutype == 'ROUTE_REPLY':
+                if not routing_table.exists(pdu.getMsg().split(' ')[0]):
+                    nodetime = time.time()
+                    source = pdu.getSource()
+                    target = pdu.getTarget()
+                    msg = pdu.getMsg()
+                    path = pdu.getPath()
+                    poped = path[-1:]
+                    if len(poped) == 1:
+                        if poped[0] == name:
+                            if rplyawait.checkElem(msg.split(' ')[0]):
+                                rplyawait.rmElem(msg.split(' ')[0])
+                                routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
+                                pdu.forwardingPDU(name)
+                                msgqueue.put(pdu)
+                                print('Reencaminhar REPLY!')
+
+                    elif target == name:
                         if rplyawait.checkElem(msg.split(' ')[0]):
                             rplyawait.rmElem(msg.split(' ')[0])
                             routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
-                            pdu.forwardingPDU(name)
-                            msgqueue.put(pdu)
-                            print('Reencaminhar REPLY!')
-
-                elif target == name:
-                    if rplyawait.checkElem(msg.split(' ')[0]):
-                        rplyawait.rmElem(msg.split(' ')[0])
-                        routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
-                        print('Atualizar Tabela')
+                            print('Atualizar Tabela')
