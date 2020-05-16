@@ -29,16 +29,17 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
         # Get PDU informations
         pdutype = pdu.getType()
         path = pdu.getPath()
-        actualtime = time.time()
 
         # Check datagram type
         if pdutype == 'HELLO':
+            actualtime = time.time()
             # Update routing table according to the "HELLO" PDU.
             routing_table.addNode(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], actualtime)
             routing_table.addNeighbour(pdu.getSource(), pdu.getSource(), str(sender[0]).split('%')[0], actualtime)
             routing_table.mergeTable(pdu.getTable(), pdu.getSource(), actualtime, name)
 
         elif pdutype == 'ROUTE_REPLY':
+            actualtime = time.time()
             if not routing_table.exists(pdu.getMsg().split(' ')[0]):
                 source = pdu.getSource()
                 target = pdu.getTarget()
