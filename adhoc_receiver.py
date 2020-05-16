@@ -24,7 +24,6 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
     while True:
         data, sender = s.recvfrom(4096)
         pdu = pickle.loads(data)
-        routing_table.verifyTimes(interval)
         
         pdutype = pdu.getType()
         path = pdu.getPath()
