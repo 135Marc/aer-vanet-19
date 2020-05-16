@@ -85,8 +85,8 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                 if len(poped) == 1 and waited: ##### remove waited
                     if poped[0] == name and rplyawait.checkElem(waited[0]): ##### msg.split(' ')[0]
                         rplyawait.rmElem(waited[0]) ##### msg.split(' ')[0]
-                        routing_table.mergeTable(pdu.getTable(), source, nodetime, name)
-                        
+                        routing_table.addNode(waited[0], source, waited[2], nodetime)
+
                         # Verificar se este é o destino da informação
                         if pdu.getTarget() == name:
                             ##### routing_table.addNode(msg.split(' ')[0], source, msg.split(' ')[1], nodetime)
