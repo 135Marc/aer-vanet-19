@@ -63,25 +63,26 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                         msg = target[0] + ' ' + target[2]
                         pdu.replyPDU(name, source, msg)
                         msgqueue.put(pdu)
-                        print('ROUTE_REQUEST Encontrado: ', source, ' -> ', target[0])
+                        print('ROUTE_REQUEST | Encontrado: ', source, ' -> ', target[0])
 
                     else:
                         # ROUTE_REQUEST caso o nodo procurado não exista na tabela
                         pdu.forwardingPDU(name)
                         msgqueue.put(pdu)
-                        print('ROUTE_REQUEST Não Encontrado: ', source, ' -> *')
+                        print('ROUTE_REQUEST | Não Encontrado: ', source, ' -> *')
 
                 else:
-                    print('ROUTE_REQUEST Replicado: ', source, ' -> ', name)
+                    print('ROUTE_REQUEST | Replicado: ', source, ' -> ', name)
 
             # Processar pedido ROUTE_REPLY recebido.
             elif pdutype == 'ROUTE_REPLY':
+
+                # Verificar se é o próximo elemento do caminho
                 if not routing_table.exists(pdu.getMsg().split(' ')[0]):
                     nodetime = time.time()
                     source = pdu.getSource()
                     target = pdu.getTarget()
                     msg = pdu.getMsg()
-                    path = pdu.getPath()
                     poped = path[-1:]
                     if len(poped) == 1:
                         if poped[0] == name:
