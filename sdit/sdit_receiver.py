@@ -5,7 +5,7 @@ import struct
 def receiver(s, port, groupipv6):
     # Create a socket
     s.bind((groupipv6, port))
-    s.listen()
+    s.listen(5)
     conn, addr = s.accept()
     with conn:
         print('Connected by', addr)
