@@ -1,6 +1,9 @@
 import pickle
+import socket
 
-def sender(socket, port, groupipv6):
+socket = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+
+def sender(port, groupipv6):
     socket.connect((groupipv6, port))
 
     while True:

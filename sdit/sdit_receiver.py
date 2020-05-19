@@ -1,8 +1,11 @@
 import pickle
 import time
 import struct
+import socket
 
-def receiver(s, port, groupipv6):
+s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+
+def receiver(port, groupipv6):
     # Create a socket
     s.bind((groupipv6, port))
     s.listen(5)
