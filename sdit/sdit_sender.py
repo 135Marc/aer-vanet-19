@@ -14,12 +14,12 @@ def receiveString(s):
         return ''
 
 def sendString(clientsocket, msg):
-    msg = f"{len(msg):<{HEADERSIZE}}" + msg
+    msg = len(msg) + " "*HEADERSIZE + msg
     clientsocket.send(bytes(msg,"utf-8"))
     
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((socket.gethostname(), 9999))
+s.connect((localhost, 9999))
 
 msg = receiveString(s)
 print(msg)
