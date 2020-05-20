@@ -24,11 +24,11 @@ s.connect((socket.gethostname(), 9999))
 msg = receiveString(s)
 print(msg)
 
-print(f'''
+print(f"""
 ---------------------------------
 Command: method/[name/][subname/]
 Methods: GET PUT DEL
----------------------------------'''
+---------------------------------"""
 )
 
 while True:
@@ -45,31 +45,31 @@ while True:
         elif method == 'del' or method == 'DEL' or method == 'Del':
             sendString(s, method.upper())
         else:
-            print(f'''
+            print(f"""
 ---------------------------------
 Method not found: {method}
 Methods: GET PUT DEL
 ---------------------------------
-            ''')
+            """)
     elif opt == 'p':
         sendString(s, 'PTR')
         print(receiveString(s))
     elif opt == 'h' or opt == 'H':
-        print(f'''
+        print(f"""
 ---------------------------------
 Command: method/[name/][subname/]
 Methods: GET PUT DEL
 Name: information name 
 ---------------------------------
-            ''')
+            """)
     elif opt == 'q' or opt == 'Q':
         s.close()
         sys.exit()
     else:
-        print(f'''
+        print(f"""
 ---------------------------------
 Bad command: {opt}
 Command: method/[name/][subname/]
 ---------------------------------
-        ''')
+        """)
 
