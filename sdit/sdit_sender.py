@@ -61,7 +61,7 @@ while True:
         s.close()
         sys.exit()
     else:
-        print'(---------------------------------')
+        print('---------------------------------')
         print('Bad command: {opt}')
         print('Command: method/[name/][subname/]')
         print('---------------------------------')
