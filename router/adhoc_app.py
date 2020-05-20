@@ -18,7 +18,7 @@ from adhoc_table import Table
 from adhoc_replyawait import ReplyWait
 from adhoc_sender import sender
 from adhoc_receiver import receiver
-from adhoc_menus import menus
+from adhoc_menus import menus, tcpserver
 
 MYPORT = 9999
 MYGROUP_6 = 'ff02::1'
@@ -43,6 +43,8 @@ def main():
 
     m = threading.Thread(target=menus, args=(NAME, MSGQUEUE, ROUTING,))
     m.start()
+    t = threading.Thread(target=tcpserver, args=(MYPORT, ROUTING,))
+    t.start()
     r = threading.Thread(target=receiver, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL, MSGQUEUE, RPLYAWAIT,))
     r.start()
     s = threading.Thread(target=sender, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL, MSGQUEUE, RPLYAWAIT,))

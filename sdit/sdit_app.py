@@ -4,14 +4,14 @@ import threading
 from sdit_sender import sender
 from sdit_receiver import receiver
 
-MYPORT = 9999
-MYGROUP_6 = '::'
+PORT = 9997
+IPV6 = '::1'
 
 def main():
-    r = threading.Thread(target=receiver, args=(MYPORT, MYGROUP_6, ))
+    r = threading.Thread(target=receiver, args=(PORT, IPV6, ))
     r.start()
-    s = threading.Thread(target=sender, args=(MYPORT, MYGROUP_6,))
-    s.start()
+    while True:
+        sender(PORT, IPV6)
 
 if __name__ == '__main__':
     main()
