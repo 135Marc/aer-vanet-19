@@ -91,13 +91,10 @@ class Table:
         print('-------------------------------------')
 
     def getStr(self):
-        string = f"""
--------------------------------------
-{self.fields[0] + ' | ' + self.fields[1] + ' | ' + self.fields[2]}
-"""
+        string = '-------------------------------------'
+        string += self.fields[0] + ' | ' + self.fields[1] + ' | ' + self.fields[2] + '\n'
         for node in self.rows:
-            string += f"""{node[0] + '    |    ' + node[1] + '    |   ' + node[2]}
-"""
+            string += node[0] + '    |    ' + node[1] + '    |   ' + node[2] + '\n'
         string += '-------------------------------------'
 
         return string
