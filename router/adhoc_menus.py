@@ -68,7 +68,7 @@ def handleClient(clientsocket, address, table):
                 print(msg)
         else:
             connected = False
-            print(f"[CONNECTION closed] {address} disconnected.")
+            print("[CONNECTION closed] " + address + " disconnected.")
 
 def receiveString(clientsocket):
     #Receber tamanho do datagrama
@@ -81,5 +81,5 @@ def receiveString(clientsocket):
         return ''
 
 def sendString(clientsocket, msg):
-    msg = f"{len(msg):<{HEADERSIZE}}" + msg
+    msg = len(msg):<HEADERSIZE + msg
     clientsocket.send(bytes(msg,"utf-8"))
