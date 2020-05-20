@@ -32,7 +32,7 @@ def tcpserver(port, table):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((socket.gethostname(), port))
     s.listen()
-    print(f"[LISTENING] Server (tcp) is listening on port: {port}")
+    print("[LISTENING] Server (tcp) is listening on port: " + port)
 
     while True:
         # now our endpoint knows about the OTHER endpoint.
@@ -40,13 +40,13 @@ def tcpserver(port, table):
 
         h = threading.Thread(target=handleClient, args=(clientsocket, address, table, ))
         h.start()
-        print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")
+        # print("[ACTIVE CONNECTIONS] " + (threading.activeCount() - 1))
 
 
 HEADERSIZE = 10
 
 def handleClient(clientsocket, address, table):
-    print(f"[NEW CONNECTION] {address} connected.")
+    print("[NEW CONNECTION] " + address + " connected.")
     #Send wellcome message
     sendString(clientsocket, "Welcome to the server!")
 
