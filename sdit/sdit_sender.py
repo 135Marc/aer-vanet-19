@@ -28,7 +28,7 @@ def representsInt(s):
         return False
 
 s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
-s.connect(('::1', 9996))
+s.connect(('2001:1::1', 9996))
 
 msg = receiveString(s)
 print(msg)
