@@ -47,7 +47,7 @@ HEADERSIZE = 10
 
 def handleClient(clientsocket, table):
     #Send wellcome message
-    sendString(clientsocket, "Welcome to the server!")
+    #sendString(clientsocket, "Welcome to the server!")
 
     msg = '-'
     connected = True

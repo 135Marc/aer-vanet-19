@@ -27,19 +27,18 @@ def representsInt(s):
     except ValueError:
         return False
 
-s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
-s.connect(('2001:1::1', 9996))
-
-msg = receiveString(s)
-print(msg)
 
 print('---------------------------------')
 print('Command: method/[name/][subname/]')
 print('Methods: GET PUT DEL')
 print('---------------------------------')
 
+s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
 
 while True:
+    s.close()
+    s.connect(('2001:1::1', 9996))
+
     opt = input()
     cmd = opt.split('/')
     if cmd and len(cmd[0]) == 3:
