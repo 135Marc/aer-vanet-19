@@ -16,7 +16,7 @@ def tcpserver(port, table):
 
         h = threading.Thread(target=handleClient, args=(clientsocket, table, ))
         h.start()
-        print("[ACTIVE CONNECTIONS] " + (threading.activeCount() - 1))
+        print("[ACTIVE CONNECTIONS] " + str(threading.activeCount() - 1))
 
 
 HEADERSIZE = 10
