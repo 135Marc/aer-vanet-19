@@ -29,7 +29,7 @@ def menus(source, msgqueue, table):
             print('Opção inválida.')
 
 def tcpserver(port, table):
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
     s.bind(('::1', port))
     s.listen(5)
     print("[LISTENING] Server (tcp) is listening on port: " + str(port))

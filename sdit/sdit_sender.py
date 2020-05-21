@@ -18,7 +18,7 @@ def sendString(clientsocket, msg):
     clientsocket.send(bytes(msg,"utf-8"))
     
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
 s.connect(('::1', 9996))
 
 msg = receiveString(s)
