@@ -30,7 +30,7 @@ def menus(source, msgqueue, table):
 
 def tcpserver(port, table):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.bind(('localhost', port))
+    s.bind((socket.gethostbyaddr(socket.gethostname())[0], port))
     s.listen(5)
     print("[LISTENING] Server (tcp) is listening on port: " + str(port))
 
