@@ -5,7 +5,7 @@ HEADERSIZE = 10
 
 def receiveString(s):
     #Receber tamanho do datagrama
-    byts = s.recv(HEADERSIZE)
+    byts, address = s.recv(HEADERSIZE)
     if byts:
         size = int(byts)
         msg = s.recv(size)

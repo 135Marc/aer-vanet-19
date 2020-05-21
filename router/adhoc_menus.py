@@ -71,7 +71,7 @@ def handleClient(clientsocket, table):
 
 def receiveString(clientsocket):
     #Receber tamanho do datagrama
-    byts = clientsocket.recv(HEADERSIZE)
+    byts, address = clientsocket.recv(HEADERSIZE)
     if byts:
         size = int(byts)
         msg = clientsocket.recv(size)
