@@ -52,32 +52,37 @@ def handleClient(clientsocket, table):
     msg = '-'
     connected = True
     while connected:
-        print('------')
+        print('1------')
         msg = receiveString(clientsocket)
+        print('2------')
         print(msg)
         if len(msg) != 0:
             if msg == 'PTR':  
+                print('3------')
                 rec_msg = table.getStr()
                 print(rec_msg)
                 sendString(clientsocket, table.getStr())
             elif msg == 'GET': 
+                print('4------')
                 rec_msg = table.getStr()
                 print(rec_msg)
                 sendString(clientsocket, table.getStr()) 
             elif msg == 'PUT': 
+                print('5------')
                 continue
             elif msg == 'DEL':
                 continue
             else:
                 print('[METHOD not found]')
         else:
+            print('6------')
             connected = False
             print("[CONNECTION closed] disconnected.")
 
 def receiveString(clientsocket):
     #Receber tamanho do datagrama
     byts = clientsocket.recv(HEADERSIZE)
-    if byts and representsInt(byts):
+    if representsInt(byts):
         size = int(byts)
         msg = clientsocket.recv(size)
         return msg.decode("utf-8")
