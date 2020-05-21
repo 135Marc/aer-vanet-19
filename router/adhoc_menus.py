@@ -46,7 +46,7 @@ def tcpserver(port, table):
 HEADERSIZE = 10
 
 def handleClient(clientsocket, address, table):
-    print("[NEW CONNECTION] " + address + " connected.")
+    print("[NEW CONNECTION] " + address[0] + " connected.")
     #Send wellcome message
     sendString(clientsocket, "Welcome to the server!")
 
@@ -68,7 +68,7 @@ def handleClient(clientsocket, address, table):
                 print(msg)
         else:
             connected = False
-            print("[CONNECTION closed] " + address + " disconnected.")
+            print("[CONNECTION closed] " + address[0] + " disconnected.")
 
 def receiveString(clientsocket):
     #Receber tamanho do datagrama
