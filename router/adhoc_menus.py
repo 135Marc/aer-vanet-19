@@ -52,7 +52,6 @@ def handleClient(clientsocket, table):
     msg = '-'
     connected = True
     while connected:
-        print('1------')
         try:
             msg = receiveString(clientsocket)
         except:
@@ -74,7 +73,6 @@ def handleClient(clientsocket, table):
             else:
                 print('[METHOD not found]')
         else:
-            print('6------')
             connected = False
             print("[CONNECTION closed] disconnected.")
 
