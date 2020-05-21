@@ -50,7 +50,7 @@ while True:
         if method == 'get' or method == 'GET' or method == 'Get':
             sendString(s, method.upper())
             rec_msg = receiveString(s)
-            print('msg get: ' + rec_msg)
+            print(rec_msg)
         elif method == 'put' or method == 'PUT' or method == 'Put':
             sendString(s, method.upper())
         elif method == 'del' or method == 'DEL' or method == 'Del':
@@ -63,7 +63,7 @@ while True:
     elif opt == 'p':
         sendString(s, 'PTR')
         rec_msg = receiveString(s)
-        print('msg p: ' + rec_msg)
+        print(rec_msg)
     elif opt == 'h' or opt == 'H':
         print('---------------------------------')
         print('Command: method/[name/][subname/]')
