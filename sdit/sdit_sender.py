@@ -61,7 +61,8 @@ while True:
             print('---------------------------------')
     elif opt == 'p':
         sendString(s, 'PTR')
-        print(receiveString(s))
+        rec_msg = receiveString(s)
+        print('msg received: ' + rec_msg)
     elif opt == 'h' or opt == 'H':
         print('---------------------------------')
         print('Command: method/[name/][subname/]')
