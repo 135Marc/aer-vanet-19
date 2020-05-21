@@ -4,30 +4,6 @@ import time
 import threading
 from adhoc_pdu import PDU
 
-def menus(source, msgqueue, table):
-    while True:
-        print('Nodo: ' + source)
-        # print('---------Opções:-----------')
-        # print('Encontrar nodo: f')
-        # print('Imprimir tabela: p')
-        # print('---------------------------')
-
-        opt = input()
-        # Imprimir tabela
-        if opt == 'p':
-            table.printTable()
-        
-        # Encontrar novo nodo
-        elif opt == 'f':
-            print('Nome do nodo:')
-            nodo = input()
-            newpdu = PDU(source, 'ROUTE_REQUEST', 5, None, nodo, '', [source])
-            msgqueue.put(newpdu)
-        
-        # Operação padrão
-        else:
-            print('Opção inválida.')
-
 def tcpserver(port, table):
     s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
     s.bind((s.getsockname()[0], port))
@@ -40,7 +16,7 @@ def tcpserver(port, table):
 
         h = threading.Thread(target=handleClient, args=(clientsocket, table, ))
         h.start()
-        # print("[ACTIVE CONNECTIONS] " + (threading.activeCount() - 1))
+        print("[ACTIVE CONNECTIONS] " + (threading.activeCount() - 1))
 
 
 HEADERSIZE = 10
@@ -97,3 +73,28 @@ def representsInt(s):
             return False
     except ValueError:
         return False
+
+
+def menus(source, msgqueue, table):
+    while True:
+        print('Nodo: ' + source)
+        # print('---------Opções:-----------')
+        # print('Encontrar nodo: f')
+        # print('Imprimir tabela: p')
+        # print('---------------------------')
+
+        opt = input()
+        # Imprimir tabela
+        if opt == 'p':
+            table.printTable()
+        
+        # Encontrar novo nodo
+        elif opt == 'f':
+            print('Nome do nodo:')
+            nodo = input()
+            newpdu = PDU(source, 'ROUTE_REQUEST', 5, None, nodo, '', [source])
+            msgqueue.put(newpdu)
+        
+        # Operação padrão
+        else:
+            print('Opção inválida.')
