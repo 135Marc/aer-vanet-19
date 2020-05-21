@@ -41,12 +41,16 @@ def main():
         print('-n: nome')
         print('-i: intervalo')
 
-    m = threading.Thread(target=menus, args=(NAME, MSGQUEUE, ROUTING,))
-    m.start()
+    # Menus
+    # m = threading.Thread(target=menus, args=(NAME, MSGQUEUE, ROUTING,))
+    # m.start()
+    # Ligação TCP para o sistema de difusão de informação de transito
     t = threading.Thread(target=tcpserver, args=(MYPORT, ROUTING,))
     t.start()
+    # Obter datagramas UDP para o protocaolo HELLO e ROUTE_REQUEST
     r = threading.Thread(target=receiver, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL, MSGQUEUE, RPLYAWAIT,))
     r.start()
+    # Despachar datagramas UDP para o protocolo HELLO e de datagramas de travessia
     s = threading.Thread(target=sender, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL, MSGQUEUE, RPLYAWAIT,))
     s.start()
 
