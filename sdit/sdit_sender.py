@@ -19,7 +19,7 @@ def sendString(clientsocket, msg):
     
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(('localhost', 9999))
+s.connect(('localhost', 9995))
 
 msg = receiveString(s)
 print(msg)
