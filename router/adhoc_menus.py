@@ -56,12 +56,15 @@ def handleClient(clientsocket, table):
             msg = receiveString(clientsocket)
             print(msg)
             if msg == 'PTR':  
-                print(table.getStr()) 
+                print(msg)
+                rec_msg = table.getStr()
+                print('msg ptr: ' + rec_msg)
                 sendString(clientsocket, table.getStr())
+            elif msg == 'GET':  
                 print(msg)
-            elif msg == 'GET': 
-                sendString(clientsocket, table.getStr())  
-                print(msg)
+                rec_msg = table.getStr()
+                print('msg get: ' + rec_msg)
+                sendString(clientsocket, table.getStr()) 
             elif msg == 'PUT': 
                 print(msg)
             elif msg == 'DEL':

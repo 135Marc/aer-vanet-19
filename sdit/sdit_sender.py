@@ -34,9 +34,9 @@ print('Methods: GET PUT DEL')
 print('---------------------------------')
 
 s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+s.connect(('2001:1::1', 9996))
 
 while True:
-    s.connect(('2001:1::1', 9996))
     opt = input()
     cmd = opt.split('/')
     if cmd and len(cmd[0]) == 3:
@@ -46,7 +46,7 @@ while True:
         if method == 'get' or method == 'GET' or method == 'Get':
             sendString(s, method.upper())
             rec_msg = receiveString(s)
-            print(rec_msg)
+            print('msg get: ' + rec_msg)
         elif method == 'put' or method == 'PUT' or method == 'Put':
             sendString(s, method.upper())
         elif method == 'del' or method == 'DEL' or method == 'Del':
@@ -59,7 +59,7 @@ while True:
     elif opt == 'p':
         sendString(s, 'PTR')
         rec_msg = receiveString(s)
-        print(rec_msg)
+        print('msg p: ' + rec_msg)
     elif opt == 'h' or opt == 'H':
         print('---------------------------------')
         print('Command: method/[name/][subname/]')
