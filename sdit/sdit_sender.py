@@ -1,5 +1,6 @@
 import socket
 import sys
+import time
 
 HEADERSIZE = 10
 
@@ -48,6 +49,7 @@ while True:
 
         if method == 'get' or method == 'GET' or method == 'Get':
             sendString(s, method.upper())
+            time.sleep(5)
             print(receiveString(s))
         elif method == 'put' or method == 'PUT' or method == 'Put':
             sendString(s, method.upper())
@@ -60,6 +62,7 @@ while True:
             print('---------------------------------')
     elif opt == 'p':
         sendString(s, 'PTR')
+        time.sleep(5)
         print(receiveString(s))
     elif opt == 'h' or opt == 'H':
         print('---------------------------------')
