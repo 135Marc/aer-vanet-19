@@ -91,7 +91,7 @@ class Table:
         print('-------------------------------------')
 
     def getStr(self):
-        string = '-------------------------------------'
+        string = '-------------------------------------\n'
         string += self.fields[0] + ' | ' + self.fields[1] + ' | ' + self.fields[2] + '\n'
         for node in self.rows:
             string += node[0] + '    |    ' + node[1] + '    |   ' + node[2] + '\n'
