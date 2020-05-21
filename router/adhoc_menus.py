@@ -80,5 +80,5 @@ def receiveString(clientsocket):
         return ''
 
 def sendString(clientsocket, msg):
-    msg = f"{len(msg):<{HEADERSIZE}}" + msg
+    msg = '{:<10}'.format(len(msg)) + msg
     clientsocket.send(bytes(msg,"utf-8"))
