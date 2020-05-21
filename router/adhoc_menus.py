@@ -73,7 +73,6 @@ def handleClient(clientsocket, table):
                 print(msg)
         else:
             connected = False
-            clientsocket.close()
             print("[CONNECTION closed] disconnected.")
 
 def receiveString(clientsocket):
