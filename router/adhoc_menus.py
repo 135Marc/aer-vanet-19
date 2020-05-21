@@ -54,12 +54,15 @@ def handleClient(clientsocket, table):
     while connected:
         if len(msg) != 0:
             msg = receiveString(clientsocket)
-            if msg == 'PTR':   
+            print(msg)
+            if msg == 'PTR':  
+                print(table.getStr()) 
                 sendString(clientsocket, table.getStr())
                 print(msg)
-            elif msg == 'GET':   
+            elif msg == 'GET': 
+                sendString(clientsocket, table.getStr())  
                 print(msg)
-            elif msg == 'PUT':   
+            elif msg == 'PUT': 
                 print(msg)
             elif msg == 'DEL':
                 print(msg)
@@ -67,12 +70,13 @@ def handleClient(clientsocket, table):
                 print(msg)
         else:
             connected = False
+            clientsocket.close()
             print("[CONNECTION closed] disconnected.")
 
 def receiveString(clientsocket):
     #Receber tamanho do datagrama
     byts = clientsocket.recv(HEADERSIZE)
-    if byts:
+    if byts and representsInt(byts):
         size = int(byts)
         msg = clientsocket.recv(size)
         return msg.decode("utf-8")
@@ -82,3 +86,13 @@ def receiveString(clientsocket):
 def sendString(clientsocket, msg):
     msg = '{:<10}'.format(len(msg)) + msg
     clientsocket.send(bytes(msg,"utf-8"))
+
+def representsInt(s):
+    try: 
+        n = int(s)
+        if n >= 0:
+            return True
+        else:
+            return False
+    except ValueError:
+        return False

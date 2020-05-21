@@ -6,7 +6,7 @@ HEADERSIZE = 10
 def receiveString(s):
     #Receber tamanho do datagrama
     byts = s.recv(HEADERSIZE)
-    if byts:
+    if byts and representsInt(byts):
         size = int(byts)
         msg = s.recv(size)
         return msg.decode("utf-8")
@@ -17,6 +17,15 @@ def sendString(clientsocket, msg):
     msg = '{:<10}'.format(len(msg)) + msg
     clientsocket.send(bytes(msg,"utf-8"))
     
+def representsInt(s):
+    try: 
+        n = int(s)
+        if n >= 0:
+            return True
+        else:
+            return False
+    except ValueError:
+        return False
 
 s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
 s.connect(('::1', 9996))
@@ -39,6 +48,7 @@ while True:
 
         if method == 'get' or method == 'GET' or method == 'Get':
             sendString(s, method.upper())
+            print(receiveString(s))
         elif method == 'put' or method == 'PUT' or method == 'Put':
             sendString(s, method.upper())
         elif method == 'del' or method == 'DEL' or method == 'Del':
