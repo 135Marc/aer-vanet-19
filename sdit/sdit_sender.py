@@ -2,6 +2,11 @@ import socket
 import sys
 
 HEADERSIZE = 10
+IPv6 = '::1'
+s = len(sys.argv)
+    if s > 1:
+        IPv6 = sys.argv[1]
+        
 
 def receiveString(s):
     #Receber tamanho do datagrama
@@ -33,10 +38,9 @@ print('Command: method/[name/][subname/]')
 print('Methods: GET PUT DEL')
 print('---------------------------------')
 
-s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
-s.connect(('2001:1::1', 9996))
-
 while True:
+    s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+    s.connect((IPv6, 9996))
     opt = input()
     cmd = opt.split('/')
     if cmd and len(cmd[0]) == 3:
@@ -67,11 +71,11 @@ while True:
         print('Name: information name')
         print('---------------------------------')
     elif opt == 'q' or opt == 'Q':
-        s.close()
         sys.exit()
     else:
         print('---------------------------------')
         print('Bad command: {opt}')
         print('Command: method/[name/][subname/]')
         print('---------------------------------')
+    s.close()
 
