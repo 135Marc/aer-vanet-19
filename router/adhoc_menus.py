@@ -38,15 +38,14 @@ def tcpserver(port, table):
         # now our endpoint knows about the OTHER endpoint.
         clientsocket, address = s.accept()
 
-        h = threading.Thread(target=handleClient, args=(clientsocket, address, table, ))
+        h = threading.Thread(target=handleClient, args=(clientsocket, table, ))
         h.start()
         # print("[ACTIVE CONNECTIONS] " + (threading.activeCount() - 1))
 
 
 HEADERSIZE = 10
 
-def handleClient(clientsocket, address, table):
-    print("[NEW CONNECTION] " + address[0] + " connected.")
+def handleClient(clientsocket, table):
     #Send wellcome message
     sendString(clientsocket, "Welcome to the server!")
 
@@ -68,7 +67,7 @@ def handleClient(clientsocket, address, table):
                 print(msg)
         else:
             connected = False
-            print("[CONNECTION closed] " + address[0] + " disconnected.")
+            print("[CONNECTION closed] disconnected.")
 
 def receiveString(clientsocket):
     #Receber tamanho do datagrama
