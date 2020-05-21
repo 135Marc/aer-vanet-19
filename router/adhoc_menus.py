@@ -52,25 +52,23 @@ def handleClient(clientsocket, table):
     msg = '-'
     connected = True
     while connected:
+        msg = receiveString(clientsocket)
+        print(msg)
         if len(msg) != 0:
-            msg = receiveString(clientsocket)
-            print(msg)
             if msg == 'PTR':  
-                print(msg)
                 rec_msg = table.getStr()
                 print('msg ptr: ' + rec_msg)
                 sendString(clientsocket, table.getStr())
-            elif msg == 'GET':  
-                print(msg)
+            elif msg == 'GET': 
                 rec_msg = table.getStr()
                 print('msg get: ' + rec_msg)
                 sendString(clientsocket, table.getStr()) 
             elif msg == 'PUT': 
-                print(msg)
+                continue
             elif msg == 'DEL':
-                print(msg)
+                continue
             else:
-                print(msg)
+                print('400 method not found')
         else:
             connected = False
             print("[CONNECTION closed] disconnected.")
