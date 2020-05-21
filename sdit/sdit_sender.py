@@ -36,7 +36,6 @@ print('---------------------------------')
 s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
 
 while True:
-    s.close()
     s.connect(('2001:1::1', 9996))
 
     opt = input()
@@ -76,4 +75,6 @@ while True:
         print('Bad command: {opt}')
         print('Command: method/[name/][subname/]')
         print('---------------------------------')
+    
+    s.close()
 
