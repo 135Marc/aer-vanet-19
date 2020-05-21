@@ -32,7 +32,7 @@ def tcpserver(port, table):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind(('localhost', port))
     s.listen(5)
-    print("[LISTENING] Server (tcp) is listening on port: " + port)
+    print("[LISTENING] Server (tcp) is listening on port: " + str(port))
 
     while True:
         # now our endpoint knows about the OTHER endpoint.
