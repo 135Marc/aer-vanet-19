@@ -14,7 +14,7 @@ def receiveString(s):
         return ''
 
 def sendString(clientsocket, msg):
-    msg = str(len(msg)) + " "*HEADERSIZE + msg
+    msg = len(msg) + " "*HEADERSIZE + msg
     clientsocket.send(bytes(msg,"utf-8"))
     
 
