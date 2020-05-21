@@ -57,7 +57,7 @@ while True:
             sendString(s, method.upper())
         else:
             print('---------------------------------')
-            print('Method not found: {method}')
+            print('Method not found: {}'.format(method))
             print('Methods: GET PUT DEL')
             print('---------------------------------')
     elif opt == 'p':
@@ -74,7 +74,7 @@ while True:
         sys.exit()
     else:
         print('---------------------------------')
-        print('Bad command: {opt}')
+        print('Bad command: {}'.format(opt))
         print('Command: method/[name/][subname/]')
         print('---------------------------------')
     s.close()
