@@ -53,22 +53,21 @@ def handleClient(clientsocket, table):
     connected = True
     while connected:
         print('1------')
-        msg = receiveString(clientsocket)
-        print('2------')
+        try:
+            msg = receiveString(clientsocket)
+        except:
+            msg = ''
         print(msg)
         if len(msg) != 0:
             if msg == 'PTR':  
-                print('3------')
                 rec_msg = table.getStr()
                 print(rec_msg)
                 sendString(clientsocket, table.getStr())
             elif msg == 'GET': 
-                print('4------')
                 rec_msg = table.getStr()
                 print(rec_msg)
                 sendString(clientsocket, table.getStr()) 
             elif msg == 'PUT': 
-                print('5------')
                 continue
             elif msg == 'DEL':
                 continue
