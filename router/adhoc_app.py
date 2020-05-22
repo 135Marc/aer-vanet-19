@@ -45,7 +45,7 @@ def main():
     # m = threading.Thread(target=menus, args=(NAME, MSGQUEUE, ROUTING,))
     # m.start()
     # Ligação TCP para o sistema de difusão de informação de transito
-    t = threading.Thread(target=tcpserver, args=(MYPORT, ROUTING,))
+    t = threading.Thread(target=tcpserver, args=(NAME, MYPORT, ROUTING, MSGQUEUE,))
     t.start()
     # Obter datagramas UDP para o protocaolo HELLO e ROUTE_REQUEST
     r = threading.Thread(target=receiver, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL, MSGQUEUE, RPLYAWAIT,))

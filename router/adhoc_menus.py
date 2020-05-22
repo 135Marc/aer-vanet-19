@@ -4,7 +4,7 @@ import time
 import threading
 from adhoc_pdu import PDU
 
-def tcpserver(port, table):
+def tcpserver(name, port, table, msgqueue):
     s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
     s.bind((s.getsockname()[0], port))
     s.listen(5)
@@ -14,14 +14,14 @@ def tcpserver(port, table):
         # now our endpoint knows about the OTHER endpoint.
         clientsocket, address = s.accept()
 
-        h = threading.Thread(target=handleClient, args=(clientsocket, table, ))
+        h = threading.Thread(target=handleClient, args=(name, clientsocket, table, msgqueue, ))
         h.start()
         print("[ACTIVE CONNECTIONS] " + str(threading.activeCount() - 1))
 
 
 HEADERSIZE = 10
 
-def handleClient(clientsocket, table):
+def handleClient(name, clientsocket, table, msgqueue):
     #Send wellcome message
     #sendString(clientsocket, "Welcome to the server!")
 
@@ -39,6 +39,8 @@ def handleClient(clientsocket, table):
                 sendString(clientsocket, table.getStr())
             elif msg == 'GET': 
                 rec_msg = table.getStr()
+                newpdu = PDU(name, 'ROUTE_REQUEST', 5, None, nodo, msg, [name])
+                msgqueue.put(newpdu)
                 sendString(clientsocket, table.getStr()) 
             elif msg == 'PUT': 
                 continue

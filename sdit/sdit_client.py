@@ -3,9 +3,6 @@ import sys
 
 HEADERSIZE = 10
 IPv6 = '::1'
-s = len(sys.argv)
-if s > 1:
-    IPv6 = sys.argv[1]
         
 
 def receiveString(s):
