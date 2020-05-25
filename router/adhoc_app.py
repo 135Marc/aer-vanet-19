@@ -26,10 +26,10 @@ NAME = ''
 ROUTING = Table()
 MSGQUEUE = queue.Queue(15)
 RPLYAWAIT = ReplyWait()
-SERVER = False
 
 def main():
     INTERVAL = 10
+    SERVER = False
     s = len(sys.argv)
     if s > 1:
         for i in range(1, s):
