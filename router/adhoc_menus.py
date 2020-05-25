@@ -56,7 +56,7 @@ def handleClient(name, clientsocket, table, msgqueue):
                     sendString(clientsocket, req_msg)
                 else:
                     sendString(clientsocket, '400 File not found.')
-            elif msg == 'PUT': 
+            elif method == 'PUT': 
                 newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'B', method + '/' + info, [name])
                 msgqueue.put(newpdu)
                 continue
