@@ -26,7 +26,7 @@ def dispatch(sock, msgqueue, groupipv6, port, rplyawait, interval,name):
         pdu = msgqueue.get()
 
         # Adicionar elemento há lista de espera por respostas 
-        if(pdu.getType() == 'ROUTE_REQUEST'):
+        if(pdu.getType() == 'ROUTE_REQUEST' or pdu.getType() == 'METHOD_REQUEST'):
             rplyawait.addElem(pdu.getTarget())
             #Criar tread para remover elemento do array ao fim de um periodo de tempo
             t = threading.Thread(target=rmAwaitPdu, args=(rplyawait,pdu.getTarget(), interval,))

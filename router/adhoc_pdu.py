@@ -15,7 +15,7 @@ class PDU:
         self.ttl = givenTTL
         if givenType == 'HELLO':
             self.table = Table(givenTable.getRows(), givenTable.getNeighbours())
-        if givenType == 'ROUTE_REQUEST' or givenType == 'ROUTE_REPLY':
+        if givenType == 'ROUTE_REQUEST' or givenType == 'ROUTE_REPLY' or givenType == 'METHOD_REQUEST':
             self.target = givenTarget
             self.msg = givenMSG
             self.path = []
@@ -53,19 +53,25 @@ class PDU:
     def setMsg(self, givenMsg):
         self.msg = givenMsg
 
-    def replyPDU(self, n, t, tab):
+    def replyPDU(self, n, t, tab, pdutype, msg = ''):
         ##TTL suficientemente grande porque é
         # assumido que a resposta tem de
         # ter saltos suficientes para
         # chegar ao nodo de origem.
         self.ttl = 100 
         self.source = n
-        self.pdu_type = 'ROUTE_REPLY'
+        self.pdu_type = pdutype
         self.target = t
         self.table = tab
+        self.msg = msg
 
     def forwardingPDU(self, node):
         self.ttl -= 1
+        if self.pdu_type == 'METHOD_REQUEST':
+            self.path.append(node)
+        if self.pdu_type == 'METHOD_REPLY':
+            self.source = node
+            self.path.pop()
         if self.pdu_type == 'ROUTE_REQUEST':
             self.path.append(node)
         if self.pdu_type == 'ROUTE_REPLY':

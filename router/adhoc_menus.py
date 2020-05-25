@@ -30,19 +30,35 @@ def handleClient(name, clientsocket, table, msgqueue):
     while connected:
         try:
             msg = receiveString(clientsocket)
+            cmd = msg.split('/')
+            method = cmd[0]
+            value = ''
+            if method == 'PUT':
+                value = cmd[-1]
+                cmd.pop()
+            cmd.pop(0)
+            info = '/'.join(cmd)
         except:
-            msg = ''
-        print(msg)
-        if len(msg) != 0:
-            if msg == 'PTR':  
-                rec_msg = table.getStr()
+            method = ''
+        print(method)
+        if len(method) != 0:
+            if method == 'PTR':  
+                req_msg = table.getStr()
                 sendString(clientsocket, table.getStr())
-            elif msg == 'GET': 
-                rec_msg = table.getStr()
-                newpdu = PDU(name, 'ROUTE_REQUEST', 5, None, nodo, msg, [name])
+            elif method == 'GET':
+                newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'B', method + '/' + info, [name])
                 msgqueue.put(newpdu)
-                sendString(clientsocket, table.getStr()) 
+
+                time.sleep(1) ## mudar isto
+                pdu = msgqueue.get()
+                req_msg = pdu.getMsg()
+                if req_msg != '400 File not found.':
+                    sendString(clientsocket, req_msg)
+                else:
+                    sendString(clientsocket, '400 File not found.')
             elif msg == 'PUT': 
+                newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'B', method + '/' + info, [name])
+                msgqueue.put(newpdu)
                 continue
             elif msg == 'DEL':
                 continue

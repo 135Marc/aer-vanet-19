@@ -26,16 +26,22 @@ NAME = ''
 ROUTING = Table()
 MSGQUEUE = queue.Queue(15)
 RPLYAWAIT = ReplyWait()
+SERVER = False
 
 def main():
     INTERVAL = 10
     s = len(sys.argv)
     if s > 1:
         for i in range(1, s):
+            # Nome do nodo
             if(sys.argv[i] == '-n'):
                 NAME = sys.argv[i+1]
+            # Defenir intervalo de "refresh"
             if(sys.argv[i] == '-i'):
                 INTERVAL = int(sys.argv[i+1])
+            # Ativar o modo servidor (por defeito é cliente)
+            if(sys.argv[i] == '-s'):
+                INTERVAL = True
     else:
         print('Configurações do nodo:')
         print('-n: nome')
@@ -45,8 +51,9 @@ def main():
     # m = threading.Thread(target=menus, args=(NAME, MSGQUEUE, ROUTING,))
     # m.start()
     # Ligação TCP para o sistema de difusão de informação de transito
-    t = threading.Thread(target=tcpserver, args=(NAME, MYPORT, ROUTING, MSGQUEUE,))
-    t.start()
+    if SERVIDOR:
+        t = threading.Thread(target=tcpserver, args=(NAME, MYPORT, ROUTING, MSGQUEUE,))
+        t.start()
     # Obter datagramas UDP para o protocaolo HELLO e ROUTE_REQUEST
     r = threading.Thread(target=receiver, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL, MSGQUEUE, RPLYAWAIT,))
     r.start()

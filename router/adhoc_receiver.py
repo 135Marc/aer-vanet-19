@@ -2,8 +2,12 @@ import pickle
 import time
 import struct
 import queue
+import socket
 from adhoc_pdu import PDU
 from adhoc_table import Table
+
+HEADERSIZE = 10
+IPv6 = '::1'
 
 def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, rplyawait):
     # Look up multicast group address in name server and find out IP version
@@ -47,6 +51,50 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                 routing_table.addNeighbour(source, source, str(sender[0]).split('%')[0], nodetime)
                 routing_table.mergeTable(pdu.getTable(), source, nodetime, name)
 
+            # Processar pedido Method_REQUEST recebido.
+            elif pdutype == 'METHOD_REQUEST':
+
+                # Verificar se a origem do datagrama não é este nodo;
+                # Verificar se o pdu ainda não tinha passado por este nodo.
+                if source != name and (name not in path):
+
+                    pdu.printPDU()
+                    # Obter method and info name (case put collects value)
+                    cmd = pdu.getMsg().split('/')
+                    method = cmd[0]
+                    value = ''
+                    if method == 'PUT':
+                        value = cmd[-1]
+                        cmd.pop()
+                    cmd.pop(0)
+                    info = '/'.join(cmd)
+
+                    target = pdu.getTarget(s)
+                    if target == name:
+                        #Pedido ao servidor tcp
+                        s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+                        IPv6 = s.getsockname()[0]
+                        s.connect((IPv6, 9997))
+                        rec_msg = ''
+                        if method == 'PUT':
+                            sendString(s, method + '/' + info + '/' + value)
+                            rec_msg = receiveString(s)
+                            print(rec_msg)
+                        
+                            # METHOD_REPLY caso o nodo procurado exista na tabela
+                            pdu.replyPDU(name, source, pdutable, pdutype, rec_msg)
+                            msgqueue.put(pdu)
+                            print('[METHOD_REQUEST Encontrado] ', source, ' -> ', target[0])
+                        s.close()
+                    else:
+                        # METHOD_REQUEST caso o nodo procurado não exista na tabela
+                        pdu.forwardingPDU(name)
+                        msgqueue.put(pdu)
+                        print('[METHOD_REQUEST Não Encontrado] ', source, ' -> *')
+
+                else:
+                    print('[METHOD_REQUEST  Replicado] ', source, ' -> ', name)
+
             # Processar pedido ROUTE_REQUEST recebido.
             elif pdutype == 'ROUTE_REQUEST':
 
@@ -60,18 +108,18 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                         # ROUTE_REPLY caso o nodo procurado exista na tabela
                         pdutable = Table()
                         pdutable.addNeighbour(target[0], None, target[2], -1)
-                        pdu.replyPDU(name, source, pdutable)
+                        pdu.replyPDU(name, source, pdutable, pdutype)
                         msgqueue.put(pdu)
-                        print('ROUTE_REQUEST | Encontrado: ', source, ' -> ', target[0])
+                        print('[ROUTE_REQUEST Encontrado] ', source, ' -> ', target[0])
 
                     else:
                         # ROUTE_REQUEST caso o nodo procurado não exista na tabela
                         pdu.forwardingPDU(name)
                         msgqueue.put(pdu)
-                        print('ROUTE_REQUEST | Não Encontrado: ', source, ' -> *')
+                        print('[ROUTE_REQUEST Não Encontrado] ', source, ' -> *')
 
                 else:
-                    print('ROUTE_REQUEST | Replicado: ', source, ' -> ', name)
+                    print('[ROUTE_REQUEST  Replicado] ', source, ' -> ', name)
 
             # Processar pedido ROUTE_REPLY recebido.
             elif pdutype == 'ROUTE_REPLY':    
@@ -87,9 +135,34 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
 
                         # Verificar se este é o destino da informação
                         if pdu.getTarget() == name:
-                            print('ROUTE_REPLY | Atualizar Tabela: ', source, ' -> ', name)
+                            print('[ROUTE_REPLY Atualizar Tabela] ', source, ' -> ', name)
 
                         else:
                             pdu.forwardingPDU(name)
                             msgqueue.put(pdu)
-                            print('ROUTE_REPLY | Reencaminhar: ', source, ' -> *')
+                            print('[ROUTE_REPLY Reencaminhar] ', source, ' -> *')
+
+        
+def receiveString(s):
+    #Receber tamanho do datagrama
+    byts = s.recv(HEADERSIZE)
+    if byts and representsInt(byts):
+        size = int(byts)
+        msg = s.recv(size)
+        return msg.decode("utf-8")
+    else:
+        return ''
+
+def sendString(clientsocket, msg):
+    msg = '{:<10}'.format(len(msg)) + msg
+    clientsocket.send(bytes(msg,"utf-8"))
+    
+def representsInt(s):
+    try: 
+        n = int(s)
+        if n >= 0:
+            return True
+        else:
+            return False
+    except ValueError:
+        return False
