@@ -72,6 +72,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                     pdu.printPDU()
 
                     if target == name:
+                        print('SERVIDOR REQUERIDO')
                         #Pedido ao servidor tcp
                         s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
                         IPv6 = s.getsockname()[0]
@@ -87,14 +88,15 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                             msgqueue.put(pdu)
                             print('[METHOD_REQUEST Encontrado] ', source, ' -> ', target[0])
                         s.close()
-                        else:
-                            print('[METHOD_REQUEST  Replicado] ', source, ' -> ', name)
                     else:
+                        print('REENCAMINHAR')
                         # METHOD_REQUEST caso o nodo procurado não exista na tabela
                         pdu.forwardingPDU(name)
                         msgqueue.put(pdu)
                         print('[METHOD_REQUEST Não Encontrado] ', source, ' -> *')
 
+                else:
+                    print('[METHOD_REQUEST  Replicado] ', source, ' -> ', name)
 
             # Processar pedido ROUTE_REQUEST recebido.
             elif pdutype == 'ROUTE_REQUEST':
