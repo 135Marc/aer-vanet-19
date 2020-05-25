@@ -55,6 +55,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
             elif pdutype == 'METHOD_REQUEST':
                 print('RECEIVER PRINT PDU')
                 pdu.printPDU()
+                print(source, '!=', name, 'and ('+name, 'not in [' + ','.join(path)+'])')
                 # Verificar se a origem do datagrama não é este nodo;
                 # Verificar se o pdu ainda não tinha passado por este nodo.
                 if source != name and (name not in path):
