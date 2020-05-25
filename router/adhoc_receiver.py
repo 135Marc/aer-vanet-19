@@ -85,7 +85,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                             pdu.replyPDU(name, source, pdutable, pdutype, rec_msg)
                             msgqueue.put(pdu)
                             print('[METHOD_REQUEST Encontrado] ', source, ' -> ', target[0])
-                        s.close()
+                        sok.close()
                     else:
                         print('REENCAMINHAR')
                         # METHOD_REQUEST caso o nodo procurado não exista na tabela
