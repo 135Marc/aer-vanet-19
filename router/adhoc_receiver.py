@@ -76,7 +76,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                         #Pedido ao servidor tcp
                         s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
                         IPv6 = s.getsockname()[0]
-                        s.connect((IPv6, 9994))
+                        s.connect((IPv6, 9992))
                         rec_msg = ''
                         if method == 'PUT':
                             sendString(s, method + '/' + info + '/' + value)
