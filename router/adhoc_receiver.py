@@ -53,8 +53,6 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
 
             # Processar pedido Method_REQUEST recebido.
             elif pdutype == 'METHOD_REQUEST':
-
-                pdu.printPDU()
                 # Verificar se a origem do datagrama não é este nodo;
                 # Verificar se o pdu ainda não tinha passado por este nodo.
                 if source != name and (name not in path):
@@ -70,6 +68,9 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                     info = '/'.join(cmd)
 
                     target = pdu.getTarget(s)
+                    print('RECEIVER PRINT PDU')
+                    pdu.printPDU()
+
                     if target == name:
                         #Pedido ao servidor tcp
                         s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
@@ -86,14 +87,14 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                             msgqueue.put(pdu)
                             print('[METHOD_REQUEST Encontrado] ', source, ' -> ', target[0])
                         s.close()
+                        else:
+                            print('[METHOD_REQUEST  Replicado] ', source, ' -> ', name)
                     else:
                         # METHOD_REQUEST caso o nodo procurado não exista na tabela
                         pdu.forwardingPDU(name)
                         msgqueue.put(pdu)
                         print('[METHOD_REQUEST Não Encontrado] ', source, ' -> *')
 
-                else:
-                    print('[METHOD_REQUEST  Replicado] ', source, ' -> ', name)
 
             # Processar pedido ROUTE_REQUEST recebido.
             elif pdutype == 'ROUTE_REQUEST':
