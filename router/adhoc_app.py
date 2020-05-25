@@ -41,7 +41,7 @@ def main():
                 INTERVAL = int(sys.argv[i+1])
             # Ativar o modo servidor (por defeito é cliente)
             if(sys.argv[i] == '-c'):
-                INTERVAL = True
+                SERVER = True
     else:
         print('Configurações do nodo:')
         print('-n: nome')
@@ -51,7 +51,7 @@ def main():
     # m = threading.Thread(target=menus, args=(NAME, MSGQUEUE, ROUTING,))
     # m.start()
     # Ligação TCP para o sistema de difusão de informação de transito
-    if SERVIDOR:
+    if SERVER:
         t = threading.Thread(target=tcpserver, args=(NAME, MYPORT, ROUTING, MSGQUEUE,))
         t.start()
     # Obter datagramas UDP para o protocaolo HELLO e ROUTE_REQUEST
