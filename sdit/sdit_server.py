@@ -5,7 +5,7 @@ import threading
 
 HEADERSIZE = 10
 INFNAMES = {}
-port = 9997
+port = 9994
 
 def infNamesList():
     lst = ''
