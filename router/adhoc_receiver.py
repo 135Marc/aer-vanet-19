@@ -54,11 +54,11 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
             # Processar pedido Method_REQUEST recebido.
             elif pdutype == 'METHOD_REQUEST':
 
+                pdu.printPDU()
                 # Verificar se a origem do datagrama não é este nodo;
                 # Verificar se o pdu ainda não tinha passado por este nodo.
                 if source != name and (name not in path):
 
-                    pdu.printPDU()
                     # Obter method and info name (case put collects value)
                     cmd = pdu.getMsg().split('/')
                     method = cmd[0]

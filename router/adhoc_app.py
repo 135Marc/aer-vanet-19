@@ -40,7 +40,7 @@ def main():
             if(sys.argv[i] == '-i'):
                 INTERVAL = int(sys.argv[i+1])
             # Ativar o modo servidor (por defeito é cliente)
-            if(sys.argv[i] == '-s'):
+            if(sys.argv[i] == '-c'):
                 INTERVAL = True
     else:
         print('Configurações do nodo:')
