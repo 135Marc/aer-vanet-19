@@ -71,7 +71,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                     target = pdu.getTarget()
 
                     if target == name:
-                        rec_msg = get()
+                        rec_msg = get(method + '/' + info + '/' + value)
                         # METHOD_REPLY caso o nodo procurado exista na tabela
                         pdutable = Table()
                         pdu.replyPDU(name, source, pdutable, 'METHOD_REPLY', rec_msg)
