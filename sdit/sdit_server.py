@@ -38,7 +38,7 @@ def handleClient(clientsocket):
             if method == 'GET':
                 try:
                     info = INFNAMES[info]
-                    sendString(clientsocket, info)
+                    sendString(clientsocket, info[:-1])
                 except:
                     sendString(clientsocket, '400 File not found.')
             elif method == 'PUT': 
