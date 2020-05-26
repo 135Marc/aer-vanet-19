@@ -20,7 +20,7 @@ from adhoc_sender import sender
 from adhoc_receiver import receiver
 from adhoc_menus import menus, tcpserver
 
-MYPORT = 9988
+MYPORT = 9984
 MYGROUP_6 = 'ff02::1'
 NAME = ''
 ROUTING = Table()
