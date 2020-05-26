@@ -67,7 +67,12 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                 req_msg = pdu.getMsg()
                 sendString(clientsocket, req_msg)
             elif msg == 'DEL':
-                continue
+                newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', method + '/' + info, [name])
+                msgqueue.put(newpdu)
+
+                pdu = answers.get()
+                req_msg = pdu.getMsg()
+                sendString(clientsocket, req_msg)
             else:
                 print('[METHOD not found]')
         else:
