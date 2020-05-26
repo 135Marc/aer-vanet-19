@@ -73,7 +73,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                         #Pedido ao servidor tcp
                         # sok = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
                         # IPv6 = sok.getsockname()[0]
-                        # sok.connect((IPv6, 9992))
+                        # sok.connect((IPv6, 9988))
                         rec_msg = ''
                         if method == 'PUT':
                             #sendString(sok, method + '/' + info + '/' + value)
@@ -82,7 +82,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                         
                             # METHOD_REPLY caso o nodo procurado exista na tabela
                             pdutable = Table()
-                            pdu.replyPDU(name, source, pdutable, pdutype, rec_msg)
+                            pdu.replyPDU(name, source, pdutable, 'METHOD_REPLY', rec_msg)
                             msgqueue.put(pdu)
                             print('[METHOD_REQUEST Encontrado] ', source, ' -> ', target[0])
                         # sok.close()
@@ -127,7 +127,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                         # ROUTE_REPLY caso o nodo procurado exista na tabela
                         pdutable = Table()
                         pdutable.addNeighbour(target[0], None, target[2], -1)
-                        pdu.replyPDU(name, source, pdutable, pdutype)
+                        pdu.replyPDU(name, source, pdutable, 'ROUTE_REPLY')
                         msgqueue.put(pdu)
                         print('[ROUTE_REQUEST Encontrado] ', source, ' -> ', target[0])
 

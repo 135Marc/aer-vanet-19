@@ -37,7 +37,7 @@ print('---------------------------------')
 while True:
     s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
     IPv6 = s.getsockname()[0]
-    s.connect((IPv6, 9992))
+    s.connect((IPv6, 9988))
     opt = input()
     cmd = opt.split('/')
     if cmd and len(cmd[0]) == 3:
