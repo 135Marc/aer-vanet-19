@@ -23,6 +23,7 @@ def handleClient(clientsocket):
     while connected:
         try:
             msg = receiveString(clientsocket)
+            print(msg)
             cmd = msg.split('/')
             method = cmd[0]
             value = ''
@@ -49,6 +50,7 @@ def handleClient(clientsocket):
                     sendString(clientsocket, 'File attached.')
             elif method == 'DEL':
                 try:
+                    print(info)
                     del INFNAMES[info]
                     sendString(clientsocket, 'File deleted.')
                 except:
