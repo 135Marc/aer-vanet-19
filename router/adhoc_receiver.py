@@ -8,7 +8,7 @@ from adhoc_table import Table
 from adhoc_querier import get
 
 
-def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, rplyawait):
+def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, rplyawait, answers):
     # Look up multicast group address in name server and find out IP version
     addrinfo = socket.getaddrinfo(groupipv6, None)[0]
 
@@ -94,7 +94,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
 
                         # Verificar se este é o destino da informação
                         if pdu.getTarget() == name:
-                            msgqueue.put(pdu)
+                            answers.put(pdu)
                             print('[METHOD_REPLY Atualizar Tabela] ', source, ' -> ', name)
 
                         else:

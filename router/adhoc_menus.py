@@ -4,7 +4,7 @@ import time
 import threading
 from adhoc_pdu import PDU
 
-def tcpserver(name, port, table, msgqueue):
+def tcpserver(name, port, table, msgqueue, answers):
     s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
     s.bind((s.getsockname()[0], port))
     s.listen(5)
@@ -14,14 +14,14 @@ def tcpserver(name, port, table, msgqueue):
         # now our endpoint knows about the OTHER endpoint.
         clientsocket, address = s.accept()
 
-        h = threading.Thread(target=handleClient, args=(name, clientsocket, table, msgqueue, ))
+        h = threading.Thread(target=handleClient, args=(name, clientsocket, table, msgqueue, answers ))
         h.start()
         print("[ACTIVE CONNECTIONS] " + str(threading.activeCount() - 1))
 
 
 HEADERSIZE = 10
 
-def handleClient(name, clientsocket, table, msgqueue):
+def handleClient(name, clientsocket, table, msgqueue, answers):
     #Send wellcome message
     #sendString(clientsocket, "Welcome to the server!")
 
@@ -50,7 +50,7 @@ def handleClient(name, clientsocket, table, msgqueue):
                 msgqueue.put(newpdu)
 
                 time.sleep(1) ## mudar isto
-                pdu = msgqueue.get()
+                pdu = answers.get()
                 req_msg = pdu.getMsg()
                 if req_msg != '400 File not found.':
                     sendString(clientsocket, req_msg)
