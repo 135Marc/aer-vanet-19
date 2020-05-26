@@ -49,13 +49,10 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                 newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'B', method + '/' + info, [name])
                 msgqueue.put(newpdu)
 
-                time.sleep(1) ## mudar isto
                 pdu = answers.get()
                 req_msg = pdu.getMsg()
-                if req_msg != '400 File not found.':
-                    sendString(clientsocket, req_msg)
-                else:
-                    sendString(clientsocket, '400 File not found.')
+                print('Menus before send: ',req_msg)
+                sendString(clientsocket, req_msg)
             elif method == 'PUT': 
                 newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', method + '/' + info, [name])
                 msgqueue.put(newpdu)
