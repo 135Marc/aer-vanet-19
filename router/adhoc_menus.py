@@ -49,7 +49,9 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                 newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'B', method + '/' + info, [name])
                 msgqueue.put(newpdu)
 
+                print('Menus before get answer: ')
                 pdu = answers.get()
+                print('Menus after get answer: ')
                 req_msg = pdu.getMsg()
                 print('Menus before send: ',req_msg)
                 sendString(clientsocket, req_msg)
