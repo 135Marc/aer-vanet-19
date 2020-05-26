@@ -33,7 +33,7 @@ def handleClient(clientsocket):
             info = '/'.join(cmd)
         except:
             method = ''
-        print(method)
+        print(method + ' ' + info)
         if len(method) != 0:
             if method == 'GET':
                 try:
