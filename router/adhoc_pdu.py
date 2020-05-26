@@ -59,6 +59,7 @@ class PDU:
         # ter saltos suficientes para
         # chegar ao nodo de origem.
         self.ttl = 100 
+        print('Source:', n)
         self.source = n
         self.pdu_type = pdutype
         self.target = t
