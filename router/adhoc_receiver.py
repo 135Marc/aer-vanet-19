@@ -7,8 +7,6 @@ from adhoc_pdu import PDU
 from adhoc_table import Table
 from adhoc_querier import get
 
-HEADERSIZE = 10
-IPv6 = '::1'
 
 def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, rplyawait):
     # Look up multicast group address in name server and find out IP version

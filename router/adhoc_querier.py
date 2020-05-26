@@ -1,5 +1,7 @@
-
 import socket
+
+IPv6 = '::1'
+HEADERSIZE = 10
 
 def get(msg):
     #Pedido ao servidor tcp
