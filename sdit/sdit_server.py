@@ -23,7 +23,6 @@ def handleClient(clientsocket):
     while connected:
         try:
             msg = receiveString(clientsocket)
-            print(msg)
             cmd = msg.split('/')
             method = cmd[0]
             value = ''
@@ -34,7 +33,6 @@ def handleClient(clientsocket):
             info = '/'.join(cmd)
         except:
             method = ''
-        print(method + ' ' + info)
         if len(method) != 0:
             if method == 'GET':
                 try:
