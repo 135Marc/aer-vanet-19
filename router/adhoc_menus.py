@@ -56,7 +56,7 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                 print('Menus GET before send: ',req_msg)
                 sendString(clientsocket, req_msg)
             elif method == 'PUT': 
-                newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', method + '/' + info '/' + value, [name])
+                newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', method + '/' + info + '/' + value, [name])
                 msgqueue.put(newpdu)
 
                 print('Menus PUT before get answer: ')
