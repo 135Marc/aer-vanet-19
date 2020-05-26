@@ -66,7 +66,7 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                 pdu = answers.get()
                 req_msg = pdu.getMsg()
                 sendString(clientsocket, req_msg)
-            elif msg == 'DEL':
+            elif method == 'DEL':
                 newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', method + '/' + info, [name])
                 msgqueue.put(newpdu)
 
