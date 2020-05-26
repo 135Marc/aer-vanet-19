@@ -66,6 +66,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                     cmd.pop(0)
                     info = '/'.join(cmd)
 
+                    print('Target: ', pdu.getTarget())
                     target = pdu.getTarget()
 
                     if target == name:
