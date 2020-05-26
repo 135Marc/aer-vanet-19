@@ -79,30 +79,6 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
             connected = False
             print("[CONNECTION closed] disconnected.")
 
-def receiveString(clientsocket):
-    #Receber tamanho do datagrama
-    byts = clientsocket.recv(HEADERSIZE)
-    if representsInt(byts):
-        size = int(byts)
-        msg = clientsocket.recv(size)
-        return msg.decode("utf-8")
-    else:
-        return ''
-
-def sendString(clientsocket, msg):
-    msg = '{:<10}'.format(len(msg)) + msg
-    clientsocket.send(bytes(msg,"utf-8"))
-
-def representsInt(s):
-    try: 
-        n = int(s)
-        if n >= 0:
-            return True
-        else:
-            return False
-    except ValueError:
-        return False
-
 
 def menus(source, msgqueue, table):
     while True:

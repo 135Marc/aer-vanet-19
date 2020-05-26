@@ -30,7 +30,7 @@ RPLYAWAIT = ReplyWait()
 
 def main():
     INTERVAL = 10
-    SERVER = False
+    CLIENT = False
     s = len(sys.argv)
     if s > 1:
         for i in range(1, s):
@@ -48,16 +48,20 @@ def main():
         print('-n: nome')
         print('-i: intervalo')
 
-    # Menus
-    # m = threading.Thread(target=menus, args=(NAME, MSGQUEUE, ROUTING,))
-    # m.start()
+    
+    if CLIENT:
     # Ligação TCP para o sistema de difusão de informação de transito
-    if SERVER:
         t = threading.Thread(target=tcpserver, args=(NAME, MYPORT, ROUTING, MSGQUEUE, ANSWERS,))
         t.start()
+    else:
+        # Menus
+        m = threading.Thread(target=menus, args=(NAME, MSGQUEUE, ROUTING,))
+        m.start()
+
     # Obter datagramas UDP para o protocaolo HELLO e ROUTE_REQUEST
     r = threading.Thread(target=receiver, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL, MSGQUEUE, RPLYAWAIT, ANSWERS,))
     r.start()
+    
     # Despachar datagramas UDP para o protocolo HELLO e de datagramas de travessia
     s = threading.Thread(target=sender, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL, MSGQUEUE, RPLYAWAIT,))
     s.start()
