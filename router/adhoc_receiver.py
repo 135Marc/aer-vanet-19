@@ -5,6 +5,7 @@ import queue
 import socket
 from adhoc_pdu import PDU
 from adhoc_table import Table
+from adhoc_querier import get
 
 HEADERSIZE = 10
 IPv6 = '::1'
@@ -70,28 +71,17 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                     target = pdu.getTarget()
 
                     if target == name:
-                        #Pedido ao servidor tcp
-                        # sok = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
-                        # IPv6 = sok.getsockname()[0]
-                        # sok.connect((IPv6, 9988))
-                        rec_msg = ''
-                        if method == 'PUT':
-                            #sendString(sok, method + '/' + info + '/' + value)
-                            #rec_msg = receiveString(sok)
-                            #print(rec_msg)
-                        
-                            # METHOD_REPLY caso o nodo procurado exista na tabela
-                            pdutable = Table()
-                            pdu.replyPDU(name, source, pdutable, 'METHOD_REPLY', rec_msg)
-                            msgqueue.put(pdu)
-                            print('[METHOD_REQUEST Encontrado] ', source, ' -> ', target[0])
-                        # sok.close()
+                        rec_msg = get()
+                        # METHOD_REPLY caso o nodo procurado exista na tabela
+                        pdutable = Table()
+                        pdu.replyPDU(name, source, pdutable, 'METHOD_REPLY', rec_msg)
+                        msgqueue.put(pdu)
+                        print('[METHOD_REQUEST Encontrado] ', source, ' -> ', target[0])
                     else:
-                        print('REENCAMINHAR')
                         # METHOD_REQUEST caso o nodo procurado não exista na tabela
                         pdu.forwardingPDU(name)
                         msgqueue.put(pdu)
-                        print('[METHOD_REQUEST Não Encontrado] ', source, ' -> *')
+                        print('[METHOD_REQUEST Reencaminhar] ', source, ' -> *')
 
                 else:
                     print('[METHOD_REQUEST  Replicado] ', source, ' -> ', name)
