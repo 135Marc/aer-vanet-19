@@ -29,3 +29,13 @@ def receiveString(s):
 def sendString(clientsocket, msg):
     msg = '{:<10}'.format(len(msg)) + msg
     clientsocket.send(bytes(msg,"utf-8"))
+
+def representsInt(s):
+    try: 
+        n = int(s)
+        if n >= 0:
+            return True
+        else:
+            return False
+    except ValueError:
+        return False

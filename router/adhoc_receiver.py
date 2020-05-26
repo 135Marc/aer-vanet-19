@@ -149,12 +149,3 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                             msgqueue.put(pdu)
                             print('[ROUTE_REPLY Reencaminhar] ', source, ' -> *')
     
-def representsInt(s):
-    try: 
-        n = int(s)
-        if n >= 0:
-            return True
-        else:
-            return False
-    except ValueError:
-        return False
