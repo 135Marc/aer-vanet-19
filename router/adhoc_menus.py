@@ -65,6 +65,16 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                 req_msg = pdu.getMsg()
                 print('Menus PUT before send: ',req_msg)
                 sendString(clientsocket, req_msg)
+            elif method == 'LST': 
+                newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', method + '/' + info, [name])
+                msgqueue.put(newpdu)
+
+                print('Menus PUT before get answer: ')
+                pdu = answers.get()
+                print('Menus PUT after get answer: ')
+                req_msg = pdu.getMsg()
+                print('Menus PUT before send: ',req_msg)
+                sendString(clientsocket, req_msg)
             elif msg == 'DEL':
                 continue
             else:
