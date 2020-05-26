@@ -49,15 +49,22 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                 newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'B', method + '/' + info, [name])
                 msgqueue.put(newpdu)
 
-                print('Menus before get answer: ')
+                print('Menus GET before get answer: ')
                 pdu = answers.get()
-                print('Menus after get answer: ')
+                print('Menus GET after get answer: ')
                 req_msg = pdu.getMsg()
-                print('Menus before send: ',req_msg)
+                print('Menus GET before send: ',req_msg)
                 sendString(clientsocket, req_msg)
             elif method == 'PUT': 
                 newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', method + '/' + info, [name])
                 msgqueue.put(newpdu)
+
+                print('Menus PUT before get answer: ')
+                pdu = answers.get()
+                print('Menus PUT after get answer: ')
+                req_msg = pdu.getMsg()
+                print('Menus PUT before send: ',req_msg)
+                sendString(clientsocket, req_msg)
             elif msg == 'DEL':
                 continue
             else:
