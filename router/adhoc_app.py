@@ -42,7 +42,7 @@ def main():
                 INTERVAL = int(sys.argv[i+1])
             # Ativar o modo servidor (por defeito é cliente)
             if(sys.argv[i] == '-c'):
-                SERVER = True
+                CLIENT = True
     else:
         print('Configurações do nodo:')
         print('-n: nome')
