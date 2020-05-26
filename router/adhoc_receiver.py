@@ -96,6 +96,24 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                 else:
                     print('[METHOD_REQUEST  Replicado] ', source, ' -> ', name)
 
+            # Processar pedido METHOD_REPLY recebido.
+            elif pdutype == 'METHOD_REPLY':
+                poped = path[-1:]
+                
+                # Verificar se é o próximo elemento do caminho e se estava a espera de resposta
+                if len(poped) == 1:
+                    if poped[0] == name:
+
+                        # Verificar se este é o destino da informação
+                        if pdu.getTarget() == name:
+                            msgqueue.put(pdu)
+                            print('[METHOD_REPLY Atualizar Tabela] ', source, ' -> ', name)
+
+                        else:
+                            pdu.forwardingPDU(name)
+                            msgqueue.put(pdu)
+                            print('[METHOD_REPLY Reencaminhar] ', source, ' -> *')
+
             # Processar pedido ROUTE_REQUEST recebido.
             elif pdutype == 'ROUTE_REQUEST':
 
