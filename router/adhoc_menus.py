@@ -41,7 +41,7 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
         except:
             method = ''
         print(method)
-        if len(method) != 0:
+        if method.upper() != 'QIT':
             if method == 'PTR':  
                 req_msg = table.getStr()
                 sendString(clientsocket, table.getStr())
