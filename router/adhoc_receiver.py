@@ -150,21 +150,6 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                             pdu.forwardingPDU(name)
                             msgqueue.put(pdu)
                             print('[ROUTE_REPLY Reencaminhar] ', source, ' -> *')
-
-        
-def receiveString(s):
-    #Receber tamanho do datagrama
-    byts = s.recv(HEADERSIZE)
-    if byts and representsInt(byts):
-        size = int(byts)
-        msg = s.recv(size)
-        return msg.decode("utf-8")
-    else:
-        return ''
-
-def sendString(clientsocket, msg):
-    msg = '{:<10}'.format(len(msg)) + msg
-    clientsocket.send(bytes(msg,"utf-8"))
     
 def representsInt(s):
     try: 
