@@ -44,26 +44,19 @@ while True:
     opt = input()
 
     fields = opt.split(' ')
+    size = len(fields)
     if fields and len(fields[0]) == 3:
-
         method = fields[0]
-        value = ''
-        if method.upper() == 'PUT':
-            value = fields[2]
-            fields.pop()
-        fields.pop(0)
-        info = fields[1]
-
         if method.upper() == 'GET':
-            sendString(s, method.upper() + '/' + info)
+            sendString(s, method.upper() + '/' + fields[1])
             rec_msg = receiveString(s)
             print(rec_msg)
         elif method.upper() == 'PUT':
-            sendString(s, method.upper() + '/' + info + '/' + value)
+            sendString(s, method.upper() + '/' + fields[1] + '/' + fields[2])
             rec_msg = receiveString(s)
             print(rec_msg)
         elif method.upper() == 'DEL':
-            sendString(s, method.upper() + '/' + info)
+            sendString(s, method.upper() + '/' + fields[1])
             rec_msg = receiveString(s)
             print(rec_msg)
         elif method.upper() == 'LST':
@@ -75,7 +68,7 @@ while True:
             print('Method not found: {}'.format(method))
             print('Methods: GET PUT DEL')
             print('---------------------------------')
-            
+
     elif opt == 'p':
         sendString(s, 'PTR')
         rec_msg = receiveString(s)
