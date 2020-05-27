@@ -31,6 +31,7 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
         except:
             method = ''
 
+        print(method)
         if len(method) != 0:
             if method == 'PTR':  
                 req_msg = table.getStr()
