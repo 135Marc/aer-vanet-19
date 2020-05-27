@@ -25,14 +25,9 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
     while connected:
         try:
             msg = receiveString(clientsocket)
-            cmd = msg.split('/')
+
+            cmd = msg.split(' ')
             method = cmd[0]
-            value = ''
-            if method == 'PUT':
-                value = cmd[-1]
-                cmd.pop()
-            cmd.pop(0)
-            info = '/'.join(cmd)
         except:
             method = ''
 
@@ -40,9 +35,10 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
             if method == 'PTR':  
                 req_msg = table.getStr()
                 sendString(clientsocket, table.getStr())
+
             else:
-                if not table.exists('C'):
-                    newpdu = PDU(name, 'ROUTE_REQUEST', 5, None, 'C', '', [name])
+                if not table.exists(cmd[-1]):
+                    newpdu = PDU(name, 'ROUTE_REQUEST', 5, None, cmd[-1], '', [name])
                     msgqueue.put(newpdu)
 
                     up = answers.get()
@@ -52,26 +48,26 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                     else:
                         if method == 'GET' or method == 'LST' or method == 'DEL' or method == 'PUT':
                             print(method)
-                            tmsg = method + '/' + info
+                            tmsg = method + '/' + cmd[1]
                             if method == 'PUT':
-                                tmsg += '/' + value
+                                tmsg += '/' + cmd[2]
 
-                            newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', tmsg, [name])
+                            newpdu = PDU(name, 'METHOD_REQUEST', 5, None, cmd[-1], tmsg, [name])
                             msgqueue.put(newpdu)
                             
                             pdu = answers.get()
                             req_msg = pdu.getMsg()
                             sendString(clientsocket, req_msg)
-                            table.remove('C')
+                            table.remove(cmd[-1])
                         else:
                             print('[METHOD not found]')
                 elif method == 'GET' or method == 'LST' or method == 'DEL' or method == 'PUT':
                     print(method)
-                    tmsg = method + '/' + info
+                    tmsg = method + '/' + cmd[1]
                     if method == 'PUT':
-                        tmsg += '/' + value
+                        tmsg += '/' + cmd[2]
 
-                    newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', tmsg, [name])
+                    newpdu = PDU(name, 'METHOD_REQUEST', 5, None, cmd[-1], tmsg, [name])
                     msgqueue.put(newpdu)
                     
                     pdu = answers.get()

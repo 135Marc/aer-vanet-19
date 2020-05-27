@@ -48,19 +48,19 @@ while True:
     if fields and len(fields[0]) == 3:
         method = fields[0]
         if method.upper() == 'GET':
-            sendString(s, method.upper() + '/' + fields[1])
+            sendString(s, method.upper() + '/' + fields[1] + ' ' + fields[2])
             rec_msg = receiveString(s)
             print(rec_msg)
         elif method.upper() == 'PUT':
-            sendString(s, method.upper() + '/' + fields[1] + '/' + fields[2])
+            sendString(s, method.upper() + '/' + fields[1] + '/' + fields[2] + ' ' + fields[3])
             rec_msg = receiveString(s)
             print(rec_msg)
         elif method.upper() == 'DEL':
-            sendString(s, method.upper() + '/' + fields[1])
+            sendString(s, method.upper() + '/' + fields[1] + ' ' + fields[2])
             rec_msg = receiveString(s)
             print(rec_msg)
         elif method.upper() == 'LST':
-            sendString(s, method.upper())
+            sendString(s, method.upper() + ' ' + fields[1])
             rec_msg = receiveString(s)
             print(rec_msg)
         else:
