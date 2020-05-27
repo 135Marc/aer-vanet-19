@@ -29,10 +29,12 @@ def representsInt(s):
     except ValueError:
         return False
 
-
 print('---------------------------------')
-print('Command: method/[name/][subname/]')
-print('Methods: GET PUT DEL')
+print('Command: method [name/] [value/] servidor')
+print('Methods: GET PUT DEL LST')
+print('Tools: p - print')
+print('       q - quit')
+print('       h - help')
 print('---------------------------------')
 
 while True:
@@ -40,28 +42,31 @@ while True:
     IPv6 = s.getsockname()[0]
     s.connect((IPv6, PORT))
     opt = input()
-    cmd = opt.split('/')
-    if cmd and len(cmd[0]) == 3:
-        method = cmd[0]
+
+    fields = opt.split(' ')
+    if fields and len(fields[0]) == 3:
+
+        method = fields[0]
         value = ''
-        if method == 'put' or method == 'PUT' or method == 'Put':
-            value = cmd[-1]
-            cmd.pop()
-        cmd.pop(0)
-        info = '/'.join(cmd)
-        if method == 'get' or method == 'GET' or method == 'Get':
+        if method.upper() == 'PUT':
+            value = fields[2]
+            fields.pop()
+        fields.pop(0)
+        info = fields[1]
+
+        if method.upper() == 'GET':
             sendString(s, method.upper() + '/' + info)
             rec_msg = receiveString(s)
             print(rec_msg)
-        elif method == 'put' or method == 'PUT' or method == 'Put':
+        elif method.upper() == 'PUT':
             sendString(s, method.upper() + '/' + info + '/' + value)
             rec_msg = receiveString(s)
             print(rec_msg)
-        elif method == 'del' or method == 'DEL' or method == 'Del':
+        elif method.upper() == 'DEL':
             sendString(s, method.upper() + '/' + info)
             rec_msg = receiveString(s)
             print(rec_msg)
-        elif method == 'lst' or method == 'LST' or method == 'Lst':
+        elif method.upper() == 'LST':
             sendString(s, method.upper())
             rec_msg = receiveString(s)
             print(rec_msg)
@@ -70,22 +75,26 @@ while True:
             print('Method not found: {}'.format(method))
             print('Methods: GET PUT DEL')
             print('---------------------------------')
+            
     elif opt == 'p':
         sendString(s, 'PTR')
         rec_msg = receiveString(s)
         print(rec_msg)
-    elif opt == 'h' or opt == 'H':
-        print('---------------------------------')
-        print('Command: method/[name/][subname/]')
-        print('Methods: GET PUT DEL')
-        print('Name: information name')
-        print('---------------------------------')
     elif opt == 'q' or opt == 'Q':
         sys.exit()
+    elif opt == 'h' or opt == 'H':
+        print('---------------------------------')
+        print('Command: method [name/] [value/] server')
+        print('Methods: GET PUT DEL LST')
+        print('Tools: p - print')
+        print('       q - quit')
+        print('       h - help')
+        print('Name: information name')
+        print('---------------------------------')
     else:
         print('---------------------------------')
-        print('Bad command: {}'.format(opt))
-        print('Command: method/[name/][subname/]')
+        print('Bad format: {}'.format(opt))
+        print('Command: method [name/] [subname/] server')
         print('---------------------------------')
     s.close()
 

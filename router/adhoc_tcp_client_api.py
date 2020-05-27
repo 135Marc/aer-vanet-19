@@ -4,6 +4,8 @@ import time
 import threading
 from adhoc_pdu import PDU
 
+HEADERSIZE = 10
+
 def get(name, port, table, msgqueue, answers):
     s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
     s.bind((s.getsockname()[0], port))
@@ -16,15 +18,8 @@ def get(name, port, table, msgqueue, answers):
 
         h = threading.Thread(target=handleClient, args=(name, clientsocket, table, msgqueue, answers ))
         h.start()
-        print("[ACTIVE CONNECTIONS] " + str(threading.activeCount() - 1))
-
-
-HEADERSIZE = 10
 
 def handleClient(name, clientsocket, table, msgqueue, answers):
-    #Send wellcome message
-    #sendString(clientsocket, "Welcome to the server!")
-
     msg = '-'
     connected = True
     while connected:
