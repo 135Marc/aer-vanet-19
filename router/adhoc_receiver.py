@@ -176,6 +176,8 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
 
                         # Verificar se este é o destino da informação
                         if pdu.getTarget() == name:
+                            ## tabela atualizada
+                            answers.put('table updated')
                             print('[ROUTE_REPLY Atualizar Tabela] ', source, ' -> ', name)
 
                         else:
