@@ -75,7 +75,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                         msgqueue.put(pdu)
                         print('[METHOD_REQUEST Encontrado] ', source, ' -> ', target[0])
 
-                else:
+                elif name not in path:
                     # METHOD_REQUEST caso o nodo procurado não exista na tabela
                     pdu.forwardingPDU(name)
                     msgqueue.put(pdu)
