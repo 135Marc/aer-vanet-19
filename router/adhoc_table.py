@@ -82,6 +82,15 @@ class Table:
                 newnode = row
         return newnode
 
+    def remove(self, nodo):   
+        newnode = None 
+        for row in self.rows:
+            if row[0] == nodo:
+                newnode = row
+        if newnode:
+            self.rows.remove(newnode)
+
+
 
     def printTable(self):
         print('-------------------------------------')
