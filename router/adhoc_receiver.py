@@ -65,9 +65,9 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                         info = '/'.join(cmd)
 
                         if value:
-                            rec_msg = get(method + '/' + info + '/' + value)
+                            rec_msg = get(method + '/' + info + '/' + value, port)
                         else:
-                            rec_msg = get(method + '/' + info)
+                            rec_msg = get(method + '/' + info, port)
 
                         # METHOD_REPLY caso o nodo procurado exista na tabela
                         pdutable = Table()

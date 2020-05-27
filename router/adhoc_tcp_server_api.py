@@ -3,11 +3,11 @@ import socket
 IPv6 = '::1'
 HEADERSIZE = 10
 
-def get(msg):
+def get(msg, port):
     #Pedido ao servidor tcp
     sok = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
     IPv6 = sok.getsockname()[0]
-    sok.connect((IPv6, 9985))
+    sok.connect((IPv6, port))
 
     sendString(sok, msg)
     rec_msg = receiveString(sok)
