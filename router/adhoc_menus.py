@@ -54,7 +54,7 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                     print(method)
                     newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', method + '/' + info, [name])
                     msgqueue.put(newpdu)
-
+                    print('Depois de posto na msg queue')
                     pdu = answers.get()
                     if pdu == 'C':
                         req_msg = 'Server unavailable.'
@@ -62,6 +62,7 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                         req_msg = pdu.getMsg()
                     sendString(clientsocket, req_msg)
                 elif method == 'PUT': 
+                    print(method)
                     newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', method + '/' + info + '/' + value, [name])
                     msgqueue.put(newpdu)
 
