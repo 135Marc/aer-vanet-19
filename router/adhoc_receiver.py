@@ -5,7 +5,7 @@ import queue
 import socket
 from adhoc_pdu import PDU
 from adhoc_table import Table
-from adhoc_querier import get
+from adhoc_tcp_server_api import get
 
 
 def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, rplyawait, answers):

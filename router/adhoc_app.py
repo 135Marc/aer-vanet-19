@@ -18,7 +18,8 @@ from adhoc_table import Table
 from adhoc_replyawait import ReplyWait
 from adhoc_sender import sender
 from adhoc_receiver import receiver
-from adhoc_menus import menus, tcpserver
+from adhoc_menus import menus
+from adhoc_tcp_client_api import get
 
 MYPORT = 9985
 MYGROUP_6 = 'ff02::1'
@@ -50,7 +51,7 @@ def main():
     
     if CLIENT:
         # Ligação TCP para o sistema de difusão de informação de transito
-        t = threading.Thread(target=tcpserver, args=(NAME, MYPORT, ROUTING, MSGQUEUE, ANSWERS,))
+        t = threading.Thread(target=get, args=(NAME, MYPORT, ROUTING, MSGQUEUE, ANSWERS,))
         t.start()
     else:
         # Menus
