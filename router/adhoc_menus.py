@@ -50,6 +50,7 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
             if method == 'PTR':  
                 req_msg = table.getStr()
                 sendString(clientsocket, table.getStr())
+                
             elif method == 'GET' or method == 'LST' or method == 'DEL':
                 newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', method + '/' + info, [name])
                 msgqueue.put(newpdu)
