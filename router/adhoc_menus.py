@@ -43,36 +43,36 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
 
         print(method)
         if len(method) != 0:
-            if not table.exists('C'):
-                newpdu = PDU(name, 'ROUTE_REQUEST', 5, None, 'C', '', [name])
-                msgqueue.put(newpdu)
-
             if method == 'PTR':  
                 req_msg = table.getStr()
                 sendString(clientsocket, table.getStr())
-
-            elif method == 'GET' or method == 'LST' or method == 'DEL':
-                newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', method + '/' + info, [name])
-                msgqueue.put(newpdu)
-
-                pdu = answers.get()
-                if pdu == 'C':
-                    req_msg = 'Server unavailable.'
-                else:   
-                    req_msg = pdu.getMsg()
-                sendString(clientsocket, req_msg)
-            elif method == 'PUT': 
-                newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', method + '/' + info + '/' + value, [name])
-                msgqueue.put(newpdu)
-
-                pdu = answers.get()
-                if pdu == 'C':
-                    req_msg = 'Server unavailable.'
-                else:   
-                    req_msg = pdu.getMsg()
-                sendString(clientsocket, req_msg)
             else:
-                print('[METHOD not found]')
+                if not table.exists('C'):
+                    newpdu = PDU(name, 'ROUTE_REQUEST', 5, None, 'C', '', [name])
+                    msgqueue.put(newpdu)
+
+                elif method == 'GET' or method == 'LST' or method == 'DEL':
+                    newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', method + '/' + info, [name])
+                    msgqueue.put(newpdu)
+
+                    pdu = answers.get()
+                    if pdu == 'C':
+                        req_msg = 'Server unavailable.'
+                    else:   
+                        req_msg = pdu.getMsg()
+                    sendString(clientsocket, req_msg)
+                elif method == 'PUT': 
+                    newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', method + '/' + info + '/' + value, [name])
+                    msgqueue.put(newpdu)
+
+                    pdu = answers.get()
+                    if pdu == 'C':
+                        req_msg = 'Server unavailable.'
+                    else:   
+                        req_msg = pdu.getMsg()
+                    sendString(clientsocket, req_msg)
+                else:
+                    print('[METHOD not found]')
         else:
             connected = False
             print("[CONNECTION closed] disconnected.")
