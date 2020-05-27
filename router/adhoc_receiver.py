@@ -52,24 +52,18 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
 
             # Processar pedido Method_REQUEST recebido.
             elif pdutype == 'METHOD_REQUEST':
-                # Verificar se a origem do datagrama não é este nodo;
-                # Verificar se o pdu ainda não tinha passado por este nodo.
-                if source != name and (name not in path):
-
-                    # Obter method and info name (case put collects value)
-                    cmd = pdu.getMsg().split('/')
-                    method = cmd[0]
-                    value = ''
-                    if method == 'PUT':
-                        value = cmd[-1]
-                        cmd.pop()
-                    cmd.pop(0)
-                    info = '/'.join(cmd)
-
-                    print('Target: ', pdu.getTarget())
-                    target = pdu.getTarget()
-
+                target = pdu.getTarget()
+                if not routing_table.exists(target):
                     if target == name:
+                        cmd = pdu.getMsg().split('/')
+                        method = cmd[0]
+                        value = ''
+                        if method == 'PUT':
+                            value = cmd[-1]
+                            cmd.pop()
+                        cmd.pop(0)
+                        info = '/'.join(cmd)
+
                         if value:
                             rec_msg = get(method + '/' + info + '/' + value)
                         else:
@@ -80,14 +74,49 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                         pdu.replyPDU(name, source, pdutable, 'METHOD_REPLY', rec_msg)
                         msgqueue.put(pdu)
                         print('[METHOD_REQUEST Encontrado] ', source, ' -> ', target[0])
-                    else:
-                        # METHOD_REQUEST caso o nodo procurado não exista na tabela
-                        pdu.forwardingPDU(name)
-                        msgqueue.put(pdu)
-                        print('[METHOD_REQUEST Reencaminhar] ', source, ' -> *')
 
                 else:
-                    print('[METHOD_REQUEST  Replicado] ', source, ' -> ', name)
+                    # METHOD_REQUEST caso o nodo procurado não exista na tabela
+                    pdu.forwardingPDU(name)
+                    msgqueue.put(pdu)
+                    print('[METHOD_REQUEST Reencaminhar] ', source, ' -> *')
+                    
+                # Verificar se a origem do datagrama não é este nodo;
+                # Verificar se o pdu ainda não tinha passado por este nodo.
+                # if source != name and (name not in path):
+
+                    # Obter method and info name (case put collects value)
+                    # cmd = pdu.getMsg().split('/')
+                    # method = cmd[0]
+                    # value = ''
+                    # if method == 'PUT':
+                    #     value = cmd[-1]
+                    #     cmd.pop()
+                    # cmd.pop(0)
+                    # info = '/'.join(cmd)
+
+                    # print('Target: ', pdu.getTarget())
+                    # target = pdu.getTarget()
+
+                    # if target == name:
+                    #     if value:
+                    #         rec_msg = get(method + '/' + info + '/' + value)
+                    #     else:
+                    #         rec_msg = get(method + '/' + info)
+
+                    #     # METHOD_REPLY caso o nodo procurado exista na tabela
+                    #     pdutable = Table()
+                    #     pdu.replyPDU(name, source, pdutable, 'METHOD_REPLY', rec_msg)
+                    #     msgqueue.put(pdu)
+                    #     print('[METHOD_REQUEST Encontrado] ', source, ' -> ', target[0])
+                    # else:
+                        # METHOD_REQUEST caso o nodo procurado não exista na tabela
+                        # pdu.forwardingPDU(name)
+                        # msgqueue.put(pdu)
+                        # print('[METHOD_REQUEST Reencaminhar] ', source, ' -> *')
+
+                # else:
+                #     print('[METHOD_REQUEST  Replicado] ', source, ' -> ', name)
 
             # Processar pedido METHOD_REPLY recebido.
             elif pdutype == 'METHOD_REPLY':
