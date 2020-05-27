@@ -51,7 +51,7 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                     newpdu = PDU(name, 'ROUTE_REQUEST', 5, None, 'C', '', [name])
                     msgqueue.put(newpdu)
 
-                elif method == 'GET' or method == 'LST' or method == 'DEL':
+                if method == 'GET' or method == 'LST' or method == 'DEL':
                     newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', method + '/' + info, [name])
                     msgqueue.put(newpdu)
 
