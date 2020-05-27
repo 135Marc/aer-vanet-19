@@ -41,7 +41,6 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
         except:
             method = ''
 
-        print(method)
         if len(method) != 0:
             if method == 'PTR':  
                 req_msg = table.getStr()
@@ -52,6 +51,7 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                     msgqueue.put(newpdu)
 
                 if method == 'GET' or method == 'LST' or method == 'DEL':
+                    print(method)
                     newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', method + '/' + info, [name])
                     msgqueue.put(newpdu)
 
