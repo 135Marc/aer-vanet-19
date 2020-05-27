@@ -44,7 +44,7 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
         print(method)
         if len(method) != 0:
             if not table.exists('C'):
-                newpdu = PDU(source, 'ROUTE_REQUEST', 5, None, nodo, '', [name])
+                newpdu = PDU(name, 'ROUTE_REQUEST', 5, None, 'C', '', [name])
                 msgqueue.put(newpdu)
 
             if method == 'PTR':  
