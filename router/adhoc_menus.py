@@ -51,7 +51,7 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                     msgqueue.put(newpdu)
 
                     up = answers.get()
-                    if up = 'not found':
+                    if up == 'not found':
                         req_msg = 'Server unavailable.'
                         sendString(clientsocket, req_msg)
                     else:
