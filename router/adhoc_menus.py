@@ -44,13 +44,13 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
         print(method)
         if len(method) != 0:
             if not table.exists('C'):
-                newpdu = PDU(source, 'ROUTE_REQUEST', 5, None, nodo, '', [source])
+                newpdu = PDU(source, 'ROUTE_REQUEST', 5, None, nodo, '', [name])
                 msgqueue.put(newpdu)
 
             if method == 'PTR':  
                 req_msg = table.getStr()
                 sendString(clientsocket, table.getStr())
-                
+
             elif method == 'GET' or method == 'LST' or method == 'DEL':
                 newpdu = PDU(name, 'METHOD_REQUEST', 5, None, 'C', method + '/' + info, [name])
                 msgqueue.put(newpdu)
