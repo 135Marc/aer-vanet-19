@@ -67,6 +67,7 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                             pdu = answers.get()
                             req_msg = pdu.getMsg()
                             sendString(clientsocket, req_msg)
+                            table.remove('C')
                         else:
                             print('[METHOD not found]')
                 elif method == 'GET' or method == 'LST' or method == 'DEL' or method == 'PUT':
