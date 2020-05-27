@@ -27,11 +27,10 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
             msg = receiveString(clientsocket)
 
             cmd = msg.split(' ')
-            method = cmd[0]
+            method = cmd[0].upper()
         except:
             method = ''
 
-        print(method)
         if len(method) != 0:
             if method == 'PTR':  
                 req_msg = table.getStr()

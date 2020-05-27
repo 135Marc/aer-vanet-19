@@ -47,20 +47,8 @@ while True:
     size = len(fields)
     if fields and len(fields[0]) == 3:
         method = fields[0]
-        if method.upper() == 'GET':
-            sendString(s, method.upper() + '/' + fields[1] + ' ' + fields[2])
-            rec_msg = receiveString(s)
-            print(rec_msg)
-        elif method.upper() == 'PUT':
-            sendString(s, method.upper() + '/' + fields[1] + '/' + fields[2] + ' ' + fields[3])
-            rec_msg = receiveString(s)
-            print(rec_msg)
-        elif method.upper() == 'DEL':
-            sendString(s, method.upper() + '/' + fields[1] + ' ' + fields[2])
-            rec_msg = receiveString(s)
-            print(rec_msg)
-        elif method.upper() == 'LST':
-            sendString(s, method.upper() + ' ' + fields[1])
+        if method.upper() == 'GET' or method.upper() == 'PUT' or method.upper() == 'DEL' or method.upper() == 'LST':
+            sendString(s, opt)
             rec_msg = receiveString(s)
             print(rec_msg)
         else:
