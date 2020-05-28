@@ -50,7 +50,7 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                         i += 1
 
                     print('client api ' + fields)
-                    newpdu = PDU(name, 'METHOD_REQUEST', 5, None, fields, [name])
+                    newpdu = PDU(name, 'METHOD_REQUEST', 5, None, str(fields), [name])
                     msgqueue.put(newpdu)
                     
                     pdu = answers.get()
