@@ -6,7 +6,7 @@ from adhoc_pdu import PDU
 from adhoc_table import Table
 from adhoc_pdutimer import rmAwaitPdu
 
-def sender(socket, name, port, groupipv6, routing_table, interval, msgqueue, rplyawait, answers, pit):
+def sender(socket, name, port, groupipv6, routing_table, interval, msgqueue, rplyawait, answers):
     sock = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
 
