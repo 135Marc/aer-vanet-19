@@ -30,10 +30,10 @@ def handleClient(clientsocket):
                 value = cmd[-1]
                 cmd.pop()
             cmd.pop(0)
-            info = '/'.join(cmd)
+            info = ' '.join(cmd)
         except:
             method = ''
-            
+
         if len(method) != 0:
             if method == 'GET':
                 try:

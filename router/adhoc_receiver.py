@@ -56,7 +56,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                 if not routing_table.exists(target):
                     if target == name:
                         opt = pdu.getMsg()
-                        print('receiver ' + opt)
+                        print('receiver ' + pdu.getMsg())
                         rec_msg = get(opt, port)
 
                         # METHOD_REPLY caso o nodo procurado exista na tabela
@@ -66,6 +66,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                         print('[METHOD_REQUEST Encontrado] ', source, ' -> ', target[0])
 
                 elif name not in path:
+                    print('receiver ' + pdu.getMsg())
                     # METHOD_REQUEST caso o nodo procurado não exista na tabela
                     pdu.forwardingPDU(name)
                     msgqueue.put(pdu)

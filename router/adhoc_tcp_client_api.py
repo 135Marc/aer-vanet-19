@@ -43,13 +43,10 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                 if answers.get() == 'not found':
                     sendString(clientsocket, 'Server unavailable.')
                 elif method == 'GET' or method == 'LST' or method == 'DEL' or method == 'PUT':
-                    fields = method
-                    i = 0
-                    while i < len(cmd)-2:
-                        if i == 0:
-                            fields += cmd[i].upper()
-                        else:
-                            fields += cmd[i]
+                    fields = method.upper()
+                    i = 1
+                    while i < len(cmd)-1:
+                        fields += cmd[i]
                         i += 1
 
                     print('client api ' + fields)
