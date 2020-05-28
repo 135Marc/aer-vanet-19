@@ -17,4 +17,4 @@ class PendingInterestTable:
         return self.tableOfPendingInterest[name]
 
     def rmInterest(self, name):
-        del tableOfPendingInterest[name]
+        del self.tableOfPendingInterest[name]
