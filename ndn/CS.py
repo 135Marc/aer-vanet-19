@@ -8,9 +8,9 @@ class ContentStore:
         return name in self.tableOfContents
 
     def addContent(self, name, value):
-        self.tableOfContent[name] = value
+        self.tableOfContents[name] = value
 
     def getContent(self, name):
-        return self.tableOfContent[name]
+        return self.tableOfContents[name]
 
         
