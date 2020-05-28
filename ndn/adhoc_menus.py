@@ -14,8 +14,8 @@ def menus(source, msgqueue, cs, pit):
 
         # Publicar informação
         if opt[0].upper() == 'PUB':
-            continue
-            ## TODO
+            cs.addContent(opt[1], opt[2])
+            print(opt)
         # Subscrever informação
         elif opt[0].upper() == 'SUB':
             content = pdu.getMsg()
