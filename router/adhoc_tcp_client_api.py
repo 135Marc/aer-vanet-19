@@ -36,45 +36,42 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                 req_msg = table.getStr()
                 sendString(clientsocket, table.getStr())
 
-            else:
-                if not table.exists(cmd[-1]):
-                    newpdu = PDU(name, 'ROUTE_REQUEST', 5, None, cmd[-1], '', [name])
-                    msgqueue.put(newpdu)
+            elif not table.exists(cmd[-1]):
+                newpdu = PDU(name, 'ROUTE_REQUEST', 5, None, cmd[-1], '', [name])
+                msgqueue.put(newpdu)
 
-                    up = answers.get()
-                    if up == 'not found':
-                        req_msg = 'Server unavailable.'
-                        sendString(clientsocket, req_msg)
-                    else:
-                        if method == 'GET' or method == 'LST' or method == 'DEL' or method == 'PUT':
-                            print(method)
-                            tmsg = method + '/' + cmd[1]
-                            if method == 'PUT':
-                                tmsg += '/' + cmd[2]
-
-                            newpdu = PDU(name, 'METHOD_REQUEST', 5, None, cmd[-1], tmsg, [name])
-                            msgqueue.put(newpdu)
-                            
-                            pdu = answers.get()
-                            req_msg = pdu.getMsg()
-                            sendString(clientsocket, req_msg)
-                            table.remove(cmd[-1])
-                        else:
-                            print('[METHOD not found]')
+                if answers.get() == 'not found':
+                    sendString(clientsocket, 'Server unavailable.')
                 elif method == 'GET' or method == 'LST' or method == 'DEL' or method == 'PUT':
-                    print(method)
-                    tmsg = method + '/' + cmd[1]
-                    if method == 'PUT':
-                        tmsg += '/' + cmd[2]
+                    fields = method
+                    i = 0
+                    while i < len(cmd)-1:
+                        if i == 0:
+                            fields += cmd[i].upper()
+                        else:
+                            fields += cmd[i]
 
-                    newpdu = PDU(name, 'METHOD_REQUEST', 5, None, cmd[-1], tmsg, [name])
+                    newpdu = PDU(name, 'METHOD_REQUEST', 5, None, fields, [name])
                     msgqueue.put(newpdu)
                     
                     pdu = answers.get()
                     req_msg = pdu.getMsg()
                     sendString(clientsocket, req_msg)
+                    table.remove(cmd[-1])
                 else:
+                    sendString(clientsocket, '[METHOD not found]')
                     print('[METHOD not found]')
+
+            elif method == 'GET' or method == 'LST' or method == 'DEL' or method == 'PUT':
+                newpdu = PDU(name, 'METHOD_REQUEST', 5, None, ' '.join(cmd.pop()), tmsg, [name])
+                msgqueue.put(newpdu)
+                
+                pdu = answers.get()
+                req_msg = pdu.getMsg()
+                sendString(clientsocket, req_msg)
+            else:
+                print('[METHOD not found]')
+
         else:
             connected = False
             print("[CONNECTION closed] disconnected.")

@@ -23,7 +23,7 @@ def handleClient(clientsocket):
     while connected:
         try:
             msg = receiveString(clientsocket)
-            cmd = msg.split('/')
+            cmd = msg.split(' ')
             method = cmd[0]
             value = ''
             if method == 'PUT':
