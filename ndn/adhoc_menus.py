@@ -1,7 +1,7 @@
 import queue
 from adhoc_pdu import PDU
 
-def menus(source, msgqueue, cs, pit):
+def menus(source, msgqueue, answers, cs, pit):
     while True:
         print('Nodo: ' + source)
         print('---------Pedidos-----------')
@@ -27,7 +27,8 @@ def menus(source, msgqueue, cs, pit):
                 msgqueue.put(newpdu)
             else:
                 print('Conteudo já procurado')
-
+            ans = answers.get()
+            print(ans)
         # Operação padrão
         else:
             print('Opção inválida.')

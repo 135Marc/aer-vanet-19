@@ -64,7 +64,7 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
                 if pit.checkInterest(content):
                     interested = pit.getInterested(content)
                     pit.rmInterest(content)
-                    cs.addInformation(content, value)
+                    cs.addContent(content, value)
                     for i in interested:
                         if i == name:
                             answers.put(content + ' ' + value)

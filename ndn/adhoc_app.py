@@ -42,7 +42,7 @@ def main():
         print('-i: intervalo')
     
     # Menus
-    m = threading.Thread(target=menus, args=(NAME, MSGQUEUE, CS, PIT,))
+    m = threading.Thread(target=menus, args=(NAME, MSGQUEUE, ANSWERS, CS, PIT,))
     m.start()
     # Obter datagramas UDP para o protocaolo HELLO e ROUTE_REQUEST
     r = threading.Thread(target=receiver, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL, MSGQUEUE, RPLYAWAIT, ANSWERS, CS, PIT, FIB, ))
