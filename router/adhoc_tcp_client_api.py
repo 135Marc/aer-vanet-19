@@ -46,7 +46,7 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                     fields = method.upper()
                     i = 1
                     while i < len(cmd)-1:
-                        fields += cmd[i]
+                        fields += ' ' + cmd[i]
                         i += 1
 
                     newpdu = PDU(name, 'METHOD_REQUEST', 5, None, cmd[-1], fields, [name])
