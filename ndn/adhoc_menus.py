@@ -10,14 +10,14 @@ def menus(source, msgqueue, cs, pit):
         print('---------------------------')
 
         opt = input()
-        opt.split(' ')
+        directive = opt.split(' ')
 
         # Publicar informação
-        if opt[0].upper() == 'PUB':
-            cs.addContent(opt[1], opt[2])
+        if directive[0].upper() == 'PUB':
+            cs.addContent(directive[1], directive[2])
             print(opt)
         # Subscrever informação
-        elif opt[0].upper() == 'SUB':
+        elif directive[0].upper() == 'SUB':
             content = pdu.getMsg()
             if cs.checkContent(content):
                 print('Conteudo: ', cs.getContent(content))
