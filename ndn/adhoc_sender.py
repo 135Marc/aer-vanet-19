@@ -24,6 +24,7 @@ def dispatch(sock, msgqueue, groupipv6, port, rplyawait, interval, name, answers
     while True:
         # Obter proxima mensagem
         pdu = msgqueue.get()
+        print(pdu.getType(), pdu.getMsg())
 
         # Adicionar elemento há lista de espera por respostas 
         if(pdu.getType() == 'ROUTE_REQUEST'):
