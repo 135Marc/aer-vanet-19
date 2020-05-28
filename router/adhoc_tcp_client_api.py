@@ -45,7 +45,7 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                 elif method == 'GET' or method == 'LST' or method == 'DEL' or method == 'PUT':
                     fields = method
                     i = 0
-                    while i < len(cmd)-1:
+                    while i < len(cmd)-2:
                         if i == 0:
                             fields += cmd[i].upper()
                         else:
