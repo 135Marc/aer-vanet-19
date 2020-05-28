@@ -15,7 +15,7 @@ class PDU:
         self.ttl = givenTTL
         if givenType == 'HELLO':
             self.table = Table(givenTable.getRows(), givenTable.getNeighbours())
-        if givenType == 'ROUTE_REQUEST' or givenType == 'ROUTE_REPLY' or givenType == 'METHOD_REQUEST':
+        if givenType == 'ROUTE_REQUEST' or givenType == 'ROUTE_REPLY' or givenType == 'METHOD_REQUEST' or givenType == 'SUB_REQUEST' or 'SUB_DATA':
             self.target = givenTarget
             self.msg = givenMSG
             self.path = []
