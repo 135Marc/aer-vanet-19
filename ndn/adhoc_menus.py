@@ -14,6 +14,7 @@ def menus(source, msgqueue, cs, pit):
 
         # Publicar informação
         if opt[0].upper() == 'PUB':
+            continue
             ## TODO
         # Subscrever informação
         elif opt[0].upper() == 'SUB':
@@ -26,7 +27,7 @@ def menus(source, msgqueue, cs, pit):
                 msgqueue.put(newpdu)
             else:
                 print('Conteudo já procurado')
-                
+
         # Operação padrão
         else:
             print('Opção inválida.')
