@@ -13,7 +13,7 @@ class PendingInterestTable:
         else:
             self.tableOfPendingInterest[name] = [source]
 
-    def getInterested(self, name)
+    def getInterested(self, name):
         return self.tableOfPendingInterest[name]
 
     def rmInterest(self, name):
