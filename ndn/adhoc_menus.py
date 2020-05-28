@@ -18,12 +18,12 @@ def menus(source, msgqueue, cs, pit):
             print(opt)
         # Subscrever informação
         elif directive[0].upper() == 'SUB':
-            content = pdu.getMsg()
+            content = directive[1]
             if cs.checkContent(content):
                 print('Conteudo: ', cs.getContent(content))
             elif not pit.checkInterest(content):
-                pit.addInterest(pdu.getMsg())
-                newpdu = PDU(source, 'SUB_REQUEST', 10, None, None, opt[1], [source])
+                pit.addInterest(content, source)
+                newpdu = PDU(source, 'SUB_REQUEST', 10, None, None, content, [source])
                 msgqueue.put(newpdu)
             else:
                 print('Conteudo já procurado')
