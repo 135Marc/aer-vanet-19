@@ -21,6 +21,8 @@ MSGQUEUE = queue.Queue(15)
 ANSWERS = queue.Queue(15)
 RPLYAWAIT = ReplyWait()
 PIT = PendingInterestTable()
+CS = ContentStore()
+FIB = ForwardingInformationBase()
 
 def main():
     INTERVAL = 10
