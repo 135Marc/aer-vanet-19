@@ -23,8 +23,8 @@ def menus(source, msgqueue, cs, pit):
                 print('Conteudo: ', cs.getContent(content))
             elif not pit.checkInterest(content):
                 pit.addInterest(content, source)
-                print('SUB_REQUEST enviado: ', content)
-                newpdu = PDU(source, 'SUB_REQUEST', 10, None, None, content)
+                print('SUB_REQUEST enviado:', content)
+                newpdu = PDU(source, 'SUB_REQUEST', 10, None, 'None', content, [])
                 msgqueue.put(newpdu)
             else:
                 print('Conteudo já procurado')
