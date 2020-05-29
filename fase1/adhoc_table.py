@@ -33,14 +33,14 @@ class Table:
         row = (nome, nome, endereco, timestamp)
         self.neighbours.add(row)
 
-    def mergeTable(self, source, name, content, table, timestamp):
+    def mergeTable(self, source, name, table, timestamp):
         # Descobrir nodos de nivel dois que ainda não existem
         actual_nodes = set()
         incoming_nodes = set()
         for node in self.rows:
-            actual_nodes.add(node[0])
+            actual_nodes.add((node[0], node[2]))
         for node in table.getNeighbours():
-            incoming_nodes.add(node[0])
+            incoming_nodes.add((node[0], node[2]))
 
         # Nos para adicionar
         toadd_nodes = incoming_nodes - actual_nodes
@@ -50,7 +50,7 @@ class Table:
 
         #Adicionar nodos de nivel dois que ainda não existem
         for node in toadd_nodes:
-            self.rows.add((node, source, content, timestamp))
+            self.rows.add((node[0], source, node[2], timestamp))
 
     def verifyTimes(self, dead_imterval):
         actual_time = time.time()
