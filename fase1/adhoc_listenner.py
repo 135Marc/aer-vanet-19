@@ -26,8 +26,8 @@ def listenner(socket, port, groupipv6, name, routing_table, dead_interval):
         data, sender = s.recvfrom(4096)
         pdu = pickle.loads(data)
         
-        pdu.printPDU()
-        
+        # pdu.printPDU()
+
         # Obter tipo do pdu e ttl
         pdutype = pdu.getType()
         ttl = pdu.getTTL()
