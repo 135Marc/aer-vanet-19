@@ -29,7 +29,7 @@ def main():
     st.start()
 
     # Host a escuta
-    print('[HOST]', NAME + ':' + PORT)
+    print('[HOST]', NAME + ':' + str(PORT))
 
 def updateHostParams():
     if len(sys.argv) > 1:
