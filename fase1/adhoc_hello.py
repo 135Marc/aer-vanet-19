@@ -2,7 +2,7 @@ import time
 from adhoc_pdu import PDU
 from adhoc_table import Table
 
-def hello(pdu, routing_table, dead_interval):
+def hello(name, pdu, routing_table, dead_interval):
     # Get pdu data
     source = pdu.getSource()
     table = pdu.getTable()

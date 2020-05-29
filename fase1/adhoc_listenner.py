@@ -36,7 +36,7 @@ def listenner(socket, port, groupipv6, name, routing_table, dead_interval):
         if ttl <= 0:
             print('[TTL expired]', pdutype)
         elif pdutype == 'HELLO':
-            hello(pdu, routing_table, dead_interval)
+            hello(name, pdu, routing_table, dead_interval)
         else:
             print('[PDU TYPE unknown]', pdutype)
         routing_table.printTable()
