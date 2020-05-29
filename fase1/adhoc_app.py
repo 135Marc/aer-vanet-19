@@ -11,7 +11,7 @@ PORT = 9999
 GROUPIPv6 = 'ff02::1'
 
 # Host params
-NAME = ''
+NAME = 'df_name'
 ROUTING_TABLE = Table()
 HELLO_INTERVAL = 10
 DEAD_INTERVAL = 10
@@ -23,6 +23,7 @@ def main():
     # Obter e tratar datagramas UDP
     lt = threading.Thread(target=listenner, args=(socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, DEAD_INTERVAL,))
     lt.start()
+
     # Enviar datagramas UDP
     st = threading.Thread(target=sender, args=(socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL,))
     st.start()
@@ -32,7 +33,9 @@ def updateHostParams():
         for i in range(1, len(sys.argv)):
             # Nome do nodo
             if(sys.argv[i] == '-n'):
+                print(sys.argv[i+1])
                 NAME = sys.argv[i+1]
+                print(NAME)
             # Defenir dead interval
             if(sys.argv[i] == '-di'):
                 DEAD_INTERVAL = int(sys.argv[i+1])
