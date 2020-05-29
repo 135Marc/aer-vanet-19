@@ -70,7 +70,6 @@ class PDU:
         if self.pdu_type == 'METHOD_REQUEST':
             self.path.append(node)
         if self.pdu_type == 'METHOD_REPLY':
-            self.source = node
             self.path.pop()
         if self.pdu_type == 'ROUTE_REQUEST':
             self.path.append(node)

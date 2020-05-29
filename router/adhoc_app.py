@@ -62,7 +62,7 @@ def main():
     r = threading.Thread(target=receiver, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL, MSGQUEUE, RPLYAWAIT, ANSWERSR, ANSWERSM,))
     r.start()
     # Despachar datagramas UDP para o protocolo HELLO e de datagramas de travessia
-    s = threading.Thread(target=sender, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL, MSGQUEUE, RPLYAWAIT, ANSWERSR,))
+    s = threading.Thread(target=sender, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL, MSGQUEUE, RPLYAWAIT, ANSWERSR, ANSWERSM))
     s.start()
 
 if __name__ == '__main__':
