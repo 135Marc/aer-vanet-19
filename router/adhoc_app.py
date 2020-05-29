@@ -21,7 +21,7 @@ from adhoc_receiver import receiver
 from adhoc_menus import menus
 from adhoc_tcp_client_api import get
 
-MYPORT = 9999
+MYPORT = 9919
 MYGROUP_6 = 'ff02::1'
 NAME = ''
 ROUTING = Table()
