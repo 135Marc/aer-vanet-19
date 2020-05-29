@@ -9,7 +9,7 @@ def sender(socket, port, groupipv6, name, routing_table, zone, hello_interval):
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
 
     # Enviar pdu's HELLO a cada hello_interval
-    ht = threading.Thread(target=hello, args=(zone, name, routing_table, hello_interval,))
+    ht = threading.Thread(target=hello, args=(port, groupipv6, zone, name, routing_table, hello_interval,))
     ht.start()
 
 def hello(port, groupipv6, zone, source, routing_table, hello_interval):
