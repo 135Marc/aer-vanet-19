@@ -19,6 +19,7 @@ ZONE = 'df_zone'
 
 def main():
     updateHostParams()
+    print(NAME)
     # Obter e tratar datagramas UDP
     lt = threading.Thread(target=listenner, args=(socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, DEAD_INTERVAL,))
     lt.start()
