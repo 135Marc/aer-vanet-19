@@ -19,6 +19,7 @@ ZONE = 'df_zone'
 
 def main():
     updateHostParams()
+    
     # Obter e tratar datagramas UDP
     lt = threading.Thread(target=listenner, args=(socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, DEAD_INTERVAL,))
     lt.start()
@@ -26,6 +27,9 @@ def main():
     # Enviar datagramas UDP
     st = threading.Thread(target=sender, args=(socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL,))
     st.start()
+
+    # Host a escuta
+    print('[HOST]', NAME + ':' + PORT')
 
 def updateHostParams():
     if len(sys.argv) > 1:
