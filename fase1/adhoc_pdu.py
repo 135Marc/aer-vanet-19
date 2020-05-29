@@ -17,7 +17,7 @@ class PDU:
         if table:
             self.table = Table(table.getRows(), table.getNeighbours())
         self.directive = directive
-        for n in givenPath:
+        for n in path:
             self.path.append(n)
 
     def getSource(self):
