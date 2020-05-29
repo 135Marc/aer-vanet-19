@@ -3,7 +3,7 @@ import sys
 
 HEADERSIZE = 10
 IPv6 = '::1'
-PORT = 9919
+PORT = 9999
         
 def receiveString(s):
     #Receber tamanho do datagrama
