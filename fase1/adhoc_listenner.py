@@ -26,9 +26,11 @@ def listenner(socket, port, groupipv6, name, routing_table, dead_interval):
         data, sender = s.recvfrom(4096)
         pdu = pickle.loads(data)
         
+        pdu.printPDU()
+        
         # Obter tipo do pdu e ttl
         pdutype = pdu.getType()
-        ttl = int(pdu.getTTL())
+        ttl = pdu.getTTL()
 
         # Verificar tempo de vida do pdu caso seja positivo verifica o tipo de pdu.
         if ttl <= 0:
