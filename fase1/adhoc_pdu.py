@@ -9,7 +9,7 @@ class PDU:
     directive = 'None'
     path = []
 
-    def __init__(self, pdu_type, source, ttl, target, table, directive, path):
+    def __init__(self, pdu_type, source, target, ttl, table, directive, path):
         self.pdu_type = pdu_type 
         self.source = source
         self.target = target
