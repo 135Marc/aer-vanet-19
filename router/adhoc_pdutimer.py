@@ -6,7 +6,7 @@ def rmAwaitPdu(rplyawait, elem, interval, answersr,answersm, ty):
     if rplyawait.checkElem(elem):
         rplyawait.rmElem(elem)
         print('Response timeout for ', elem)
-        if ty == 'ROUTE_REQUEST'
+        if ty == 'ROUTE_REQUEST':
             answersr.put('not found')
         else:
             answersm.put(elem, 'not found.')
