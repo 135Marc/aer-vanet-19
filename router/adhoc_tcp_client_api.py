@@ -6,7 +6,7 @@ from adhoc_pdu import PDU
 
 HEADERSIZE = 10
 
-def get(name, port, table, msgqueue, answers):
+def get(name, port, table, msgqueue, answersr, answersm):
     s = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
     s.bind((s.getsockname()[0], port))
     s.listen(5)
@@ -16,10 +16,10 @@ def get(name, port, table, msgqueue, answers):
         # now our endpoint knows about the OTHER endpoint.
         clientsocket, address = s.accept()
 
-        h = threading.Thread(target=handleClient, args=(name, clientsocket, table, msgqueue, answers ))
+        h = threading.Thread(target=handleClient, args=(name, clientsocket, table, msgqueue, answersr, answersm ))
         h.start()
 
-def handleClient(name, clientsocket, table, msgqueue, answers):
+def handleClient(name, clientsocket, table, msgqueue, answersr, answersm):
     msg = '-'
     connected = True
     while connected:
@@ -40,7 +40,7 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                 newpdu = PDU(name, 'ROUTE_REQUEST', 5, None, cmd[-1], '', [name])
                 msgqueue.put(newpdu)
 
-                if answers.get() == 'not found':
+                if answersr.get() == 'not found':
                     sendString(clientsocket, 'Server unavailable.')
                 elif method == 'GET' or method == 'LST' or method == 'DEL' or method == 'PUT':
                     fields = method.upper()
@@ -52,7 +52,7 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                     newpdu = PDU(name, 'METHOD_REQUEST', 5, None, cmd[-1], fields, [name])
                     msgqueue.put(newpdu)
                     
-                    pdu = answers.get()
+                    pdu = answersm.get()
                     req_msg = pdu.getMsg()
                     sendString(clientsocket, req_msg)
                     table.remove(cmd[-1])
@@ -70,7 +70,7 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                 newpdu = PDU(name, 'METHOD_REQUEST', 5, None, cmd[-1], fields, [name])
                 msgqueue.put(newpdu)
                 
-                pdu = answers.get()
+                pdu = answersm.get()
                 req_msg = pdu.getMsg()
                 sendString(clientsocket, req_msg)
             else:

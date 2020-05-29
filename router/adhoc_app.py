@@ -26,7 +26,8 @@ MYGROUP_6 = 'ff02::1'
 NAME = ''
 ROUTING = Table()
 MSGQUEUE = queue.Queue(15)
-ANSWERS = queue.Queue(15)
+ANSWERSR = queue.Queue(15)
+ANSWERSM = queue.Queue(15)
 RPLYAWAIT = ReplyWait()
 
 def main():
@@ -51,17 +52,17 @@ def main():
     
     if CLIENT:
         # Ligação TCP para o sistema de difusão de informação de transito
-        t = threading.Thread(target=get, args=(NAME, MYPORT, ROUTING, MSGQUEUE, ANSWERS,))
+        t = threading.Thread(target=get, args=(NAME, MYPORT, ROUTING, MSGQUEUE, ANSWERSR, ANSWERSM))
         t.start()
     else:
         # Menus
         m = threading.Thread(target=menus, args=(NAME, MSGQUEUE, ROUTING,))
         m.start()
     # Obter datagramas UDP para o protocaolo HELLO e ROUTE_REQUEST
-    r = threading.Thread(target=receiver, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL, MSGQUEUE, RPLYAWAIT, ANSWERS,))
+    r = threading.Thread(target=receiver, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL, MSGQUEUE, RPLYAWAIT, ANSWERSR, ANSWERSM,))
     r.start()
     # Despachar datagramas UDP para o protocolo HELLO e de datagramas de travessia
-    s = threading.Thread(target=sender, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL, MSGQUEUE, RPLYAWAIT, ANSWERS,))
+    s = threading.Thread(target=sender, args=(socket, NAME, MYPORT, MYGROUP_6, ROUTING, INTERVAL, MSGQUEUE, RPLYAWAIT, ANSWERSR,))
     s.start()
 
 if __name__ == '__main__':
