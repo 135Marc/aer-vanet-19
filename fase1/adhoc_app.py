@@ -19,7 +19,6 @@ ZONE = 'df_zone'
 
 def main():
     updateHostParams()
-    print(NAME)
     # Obter e tratar datagramas UDP
     lt = threading.Thread(target=listenner, args=(socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, DEAD_INTERVAL,))
     lt.start()
@@ -33,14 +32,15 @@ def updateHostParams():
         for i in range(1, len(sys.argv)):
             # Nome do nodo
             if(sys.argv[i] == '-n'):
-                print(sys.argv[i+1])
+                global NAME
                 NAME = sys.argv[i+1]
-                print(NAME)
             # Defenir dead interval
             if(sys.argv[i] == '-di'):
+                global DEAD_INTERVAL
                 DEAD_INTERVAL = int(sys.argv[i+1])
             # Defenir hello interval
             if(sys.argv[i] == '-hi'):
+                global HELLO_INTERVAL
                 HELLO_INTERVAL = int(sys.argv[i+1])
     else:
         print('Configurações do nodo:')
