@@ -2,13 +2,13 @@ import queue
 from adhoc_pdu import PDU
 
 def menus(source, msgqueue, answers, cs, pit):
-    while True:
-        print('Nodo: ' + source)
-        print('---------Pedidos-----------')
-        print('Publicar: pub data_name data_value')
-        print('Subscrever: sub data_name')
-        print('---------------------------')
+    print('Nodo: ' + source)
+    print('---------Pedidos-----------')
+    print('Publicar: pub data_name data_value')
+    print('Subscrever: sub data_name')
+    print('---------------------------')
 
+    while True:
         opt = input()
         directive = opt.split(' ')
 

@@ -61,7 +61,13 @@ def handleClient(name, clientsocket, table, msgqueue, answers):
                     print('[METHOD not found]')
 
             elif method == 'GET' or method == 'LST' or method == 'DEL' or method == 'PUT':
-                newpdu = PDU(name, 'METHOD_REQUEST', 5, None, ' '.join(cmd.pop()), tmsg, [name])
+                fields = method.upper()
+                i = 1
+                while i < len(cmd)-1:
+                    fields += ' ' + cmd[i]
+                    i += 1
+
+                newpdu = PDU(name, 'METHOD_REQUEST', 5, None, cmd[-1], fields, [name])
                 msgqueue.put(newpdu)
                 
                 pdu = answers.get()
