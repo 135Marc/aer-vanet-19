@@ -74,11 +74,13 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
 
             # Processar pedido METHOD_REPLY recebido.
             elif pdutype == 'METHOD_REPLY':
+                awaited = path[-1]
                 poped = path[-1:]
                 
                 # Verificar se é o próximo elemento do caminho e se estava a espera de resposta
                 if len(poped) == 1:
-                    if poped[0] == name:
+                    if poped[0] == name and rplyawait.checkElem(awaited):
+                        rplyawait.rmElem(awaited)
 
                         # Verificar se este é o destino da informação
                         if pdu.getTarget() == name:
