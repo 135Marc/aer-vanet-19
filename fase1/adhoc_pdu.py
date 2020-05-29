@@ -20,18 +20,18 @@ class PDU:
         for n in path:
             self.path.append(n)
 
-    def getSource(self):
-        return self.source
     def getType(self):
         return self.pdu_type
+    def getSource(self):
+        return self.source
+    def getTarget(self):
+        return self.target
     def getTTL(self):
         return self.ttl
     def getTable(self):
         return self.table
-    def getTarget(self):
-        return self.target
-    def getMsg(self):
-        return self.msg
+    def getDirective(self):
+        return self.diretive
     def getPath(self):
         pathcopy = []
         for n in self.path:
