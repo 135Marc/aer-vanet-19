@@ -61,6 +61,12 @@ class Table:
                 
         self.neighbours.difference_update(rmset)
         self.rows.difference_update(rmset)
+    
+    def getRows(self):
+        return self.rows
+
+    def getNeighbours(self):
+        return self.neighbours
 
     def exists(self, nodo):
         newnode = None

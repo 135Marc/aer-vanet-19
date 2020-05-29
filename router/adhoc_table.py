@@ -33,12 +33,6 @@ class Table:
         row = (nome, vizinho, endereco, time)
         self.neighbours.add(row)
 
-    def getRows(self):
-        return self.rows
-
-    def getNeighbours(self):
-        return self.neighbours
-
     def mergeTable(self, table, source, time, this):
         #Descobrir nodos de nivel dois que ainda não existem
         actual_nodes = set()
