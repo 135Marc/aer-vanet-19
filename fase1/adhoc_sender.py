@@ -14,6 +14,8 @@ def sender(socket, port, groupipv6, name, routing_table, zone, hello_interval):
 
 def hello(sock, groupipv6, port, zone, source, routing_table, hello_interval):
     while True:
+        print(source)
+        print(zone)
         pdu = PDU('HELLO', source, None , 1, routing_table, zone, [source])
         pdu.printPDU()
         sock.sendto(pickle.dumps(pdu), (groupipv6, port))
