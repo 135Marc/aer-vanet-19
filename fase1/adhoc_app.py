@@ -42,6 +42,10 @@ def updateHostParams():
             if(sys.argv[i] == '-hi'):
                 global HELLO_INTERVAL
                 HELLO_INTERVAL = int(sys.argv[i+1])
+            # Zona onde o veiculo se encontra
+            if(sys.argv[i] == '-z'):
+                global ZONE
+                ZONE = sys.argv[i+1]
     else:
         print('Configurações do nodo:')
         print('-n: nome')

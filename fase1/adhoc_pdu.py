@@ -32,7 +32,7 @@ class PDU:
     def getTable(self):
         return self.table
     def getDirective(self):
-        return self.diretive
+        return self.directive
     def getPath(self):
         pathcopy = []
         for n in self.path:
