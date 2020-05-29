@@ -28,7 +28,7 @@ def listenner(socket, port, groupipv6, name, routing_table, dead_interval):
         
         # Obter tipo do pdu e ttl
         pdutype = pdu.getType()
-        ttl = pdu.getTTL()
+        ttl = int(pdu.getTTL())
 
         # Verificar tempo de vida do pdu caso seja positivo verifica o tipo de pdu.
         if ttl <= 0:
