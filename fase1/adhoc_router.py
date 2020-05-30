@@ -14,7 +14,7 @@ class Router:
     pendingTable = Pending()
     forwardingTable = {}
 
-    def __init__(self, zone, name, routing_table, radius, timeout):
+    def __init__(self, zone, name, routing_table, radius, timeout, dispatch_queue):
         self.zone = zone
         self.name = name
         self.routingTable = routing_table
@@ -59,17 +59,20 @@ class Router:
                 print('[ROUTE_REQUEST] forward')
 
         elif pdu_type == 'ROUTE_REPLY':
-            print('route_reply')
-            # if self.pendingTable.check((source, 'ROUTE_REPLAY')):
-            #    faces = self.pendingTable.get((source, 'ROUTE_REPLAY'))
-            #    self.pendingTable.rm((source, 'ROUTE_REPLAY'))
-            #    if self.name in faces:
-            
-            #   update own routingTable
-            #   generate PDUs for pending face
-            # else:
-            #   continue 
+            row = strrow.split(' ')
+            if self.pendingTable.check((row[0], 'ROUTE_REPLAY')):
+                faces = self.pendingTable.get((row[0], 'ROUTE_REPLAY'))
+                self.pendingTable.rm((row[0], 'ROUTE_REPLAY'))
+                if self.name in faces:
+                    self.routingTable.addNode(row[0], source, row[2], time.time())
+                    faces.remove(self.name)
+                    print('[ROUTE_REPLY] tabela de routing atualizada')
+                
+                for face in faces:
+                    newpdu = PDU('ROUTE_REPLY', self.name, source, self.radius, None, strrow, [self.name])
+                    dispatch_queue.put(newpdu)
+                print('[ROUTE_REPLY] forward')
+                newpdu = None
         else:
             print('[PDU TYPE unknown]', pdu_type)
-
         return newpdu

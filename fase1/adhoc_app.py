@@ -25,7 +25,7 @@ ZONE = 'df_zone'
 
 def main():
     updateHostParams()
-    ROUTER = Router(ZONE, NAME, ROUTING_TABLE, RADIUS, TIMEOUT)
+    ROUTER = Router(ZONE, NAME, ROUTING_TABLE, RADIUS, TIMEOUT, DISPATCH_QUEUE)
     
     # Menus
     m = threading.Thread(target=menus, args=(NAME, ROUTER, RADIUS, DISPATCH_QUEUE))
