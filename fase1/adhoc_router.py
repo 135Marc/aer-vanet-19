@@ -59,7 +59,7 @@ class Router:
                 print('[ROUTE_REQUEST] forward')
 
         elif pdu_type == 'ROUTE_REPLY':
-            row = directive.split(' ')
+            row = directive
             if self.pendingTable.check((row[0], 'ROUTE_REPLAY')):
                 faces = self.pendingTable.get((row[0], 'ROUTE_REPLAY'))
                 self.pendingTable.rm((row[0], 'ROUTE_REPLAY'))
