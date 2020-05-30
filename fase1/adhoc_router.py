@@ -70,6 +70,7 @@ class Router:
                     print('[ROUTE_REPLY] tabela de routing atualizada')
                 
                 newpdu = PDU('ROUTE_REPLY', self.name, None, self.radius, None, directive, [self.name])
+                newpdu.printPDU()
                 print('[ROUTE_REPLY] forward')
         else:
             print('[PDU TYPE unknown]', pdu_type)
