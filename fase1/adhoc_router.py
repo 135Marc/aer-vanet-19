@@ -69,7 +69,7 @@ class Router:
                     faces.remove(self.name)
                     print('[ROUTE_REPLY] tabela de routing atualizada')
                 
-                newpdu = PDU('ROUTE_REPLY', self.name, 'None', self.radius, None, directive, [self.name])
+                newpdu = PDU('ROUTE_REPLY', self.name, faces[0], self.radius, None, directive, [self.name])
                 newpdu.printPDU()
                 print('[ROUTE_REPLY] forward')
         else:
