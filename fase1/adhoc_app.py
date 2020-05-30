@@ -15,7 +15,6 @@ GROUPIPv6 = 'ff02::1'
 # Host params
 NAME = 'df_name'
 ROUTING_TABLE = Table()
-DISPATCH_QUEUE = Queue(15)
 HELLO_INTERVAL = 10
 DEAD_INTERVAL = 10
 TIMEOUT = 1
@@ -25,6 +24,7 @@ LOCK = Lock()
 
 def main():
     updateHostParams()
+    DISPATCH_QUEUE = Queue(15)
     ROUTER = Router(ZONE, NAME, ROUTING_TABLE, RADIUS, TIMEOUT,)
     
     # Menus
