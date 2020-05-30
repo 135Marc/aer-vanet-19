@@ -42,7 +42,7 @@ class Router:
         elif pdu_type == 'ROUTE_REQUEST':
             found = self.routingTable.exists(directive)
             if found:
-                strrow = found[0] + ' ' + found[1] + ' ' + found[2],
+                strrow = str(found[0]) + ' ' + str(found[2]),
                 newpdu = PDU('ROUTE_REPLY', self.name, source, self.radius, None, strrow, [self.name])
                 print('[ROUTE_REQUEST] found')
             elif self.pendingTable.check((directive, 'ROUTE_REPLY')):
@@ -60,12 +60,12 @@ class Router:
 
         elif pdu_type == 'ROUTE_REPLY':
             print(directive)
-            row = directive
+            row = directive.split(' ')
             if self.pendingTable.check((row[0], 'ROUTE_REPLAY')):
                 faces = self.pendingTable.get((row[0], 'ROUTE_REPLAY'))
                 self.pendingTable.rm((row[0], 'ROUTE_REPLAY'))
                 if self.name in faces:
-                    self.routingTable.addNode(row[0], source, row[2], time.time())
+                    self.routingTable.addNode(row[0], source, row[1], time.time())
                     faces.remove(self.name)
                     print('[ROUTE_REPLY] tabela de routing atualizada')
                 
