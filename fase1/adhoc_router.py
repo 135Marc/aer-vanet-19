@@ -33,7 +33,7 @@ class Router:
         elif pdu_type == 'HELLO':
             hello(self.zone, self.name, pdu, self.routingTable)
         elif pdu_type == 'ROUTE_REQUEST':
-            found = self.routingTable.exists(target)
+            found = self.routingTable.exists(directive)
             if found:
                 strrow = found[0] + ' ' + found[1] + ' ' + found[2],
                 newpdu = PDU('ROUTE_REPLAY', self.name, source, self.radius, None, strrow, [self.name])
