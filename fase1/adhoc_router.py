@@ -22,7 +22,7 @@ class Router:
         self.timeout = timeout
 
 
-    def route(self, pdu, dispatch_queue):
+    def route(self, pdu):
         newpdu = None
 
         # Obter tipo do pdu, ttl e target
