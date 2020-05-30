@@ -52,15 +52,16 @@ class Table:
         for node in toadd_nodes:
             self.rows.add((node[0], source, node[1], timestamp))
 
-    def verifyTimes(self, dead_imterval):
-        actual_time = time.time()
-        rmset = set()
-        for row in self.rows:
-            if actual_time - row[3] > dead_imterval:
-                rmset.add(row)
-                
-        self.neighbours.difference_update(rmset)
-        self.rows.difference_update(rmset)
+        while True:
+            time.sleep(dead_interval)
+            actual_time = time.time()
+            rmset = set()
+            for row in self.rows:
+                if actual_time - row[3] > dead_imterval:
+                    rmset.add(row)
+                    
+            self.neighbours.difference_update(rmset)
+            self.rows.difference_update(rmset)
     
     def getRows(self):
         return self.rows
