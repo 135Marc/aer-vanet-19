@@ -55,7 +55,7 @@ class Router:
             #   generate PDUs for pending face
             # else:
             #   continue 
-            continue
+            # continue
         else:
             print('[PDU TYPE unknown]', pdu_type)
 
