@@ -5,7 +5,7 @@ from adhoc_pdu import PDU
 from adhoc_hello import hello
 from adhoc_table import Table
 
-def listenner(socket, port, groupipv6, name, routing_table, dead_interval):
+def listenner(socket, port, groupipv6, zone, name, routing_table, dead_interval):
     # Look up multicast group address in name server and find out IP version
     addrinfo = socket.getaddrinfo(groupipv6, None)[0]
 
@@ -36,7 +36,7 @@ def listenner(socket, port, groupipv6, name, routing_table, dead_interval):
         if ttl <= 0:
             print('[TTL expired]', pdutype)
         elif pdutype == 'HELLO':
-            hello(name, pdu, routing_table, dead_interval)
+            hello(zone, name, pdu, routing_table, dead_interval)
         else:
             print('[PDU TYPE unknown]', pdutype)
         routing_table.printTable()

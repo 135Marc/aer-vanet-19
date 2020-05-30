@@ -33,7 +33,7 @@ class Table:
         row = (nome, nome, endereco, timestamp)
         self.neighbours.add(row)
 
-    def mergeTable(self, source, name, table, timestamp):
+    def mergeTable(self, zone, source, name, table, timestamp):
         # Descobrir nodos de nivel dois que ainda não existem
         actual_nodes = set()
         incoming_nodes = set()
@@ -46,7 +46,7 @@ class Table:
         toadd_nodes = incoming_nodes - actual_nodes
 
         # Remover este mesmo nodo da lista de nodos a adicionar
-        toadd_nodes.discard(name)
+        toadd_nodes.discard((name, zone))
 
         #Adicionar nodos de nivel dois que ainda não existem
         for node in toadd_nodes:
