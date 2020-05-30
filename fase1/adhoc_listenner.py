@@ -24,7 +24,7 @@ def listenner(socket, port, groupipv6, zone, name, router, dispatch_queue):
         # Obter o pdu recebido
         data, sender = s.recvfrom(4096)
         pdu = pickle.loads(data)
-        pdu = router.route(pdu)
+        pdu = router.route(pdu, dispatch_queue)
 
         if pdu:
             dispatch_queue.put(pdu)

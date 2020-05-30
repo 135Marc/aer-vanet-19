@@ -24,7 +24,7 @@ class Router:
         self.dispatchQueue = dispatch_queue
 
 
-    def route(self, pdu):
+    def route(self, pdu, dispatch_queue):
         newpdu = None
 
         # Obter tipo do pdu, ttl e target
@@ -72,7 +72,7 @@ class Router:
                 
                 for face in faces:
                     newpdu = PDU('ROUTE_REPLY', self.name, face, self.radius, None, directive, [self.name])
-                    self.dispatchQueue.put(newpdu)
+                    dispatch_queue.put(newpdu)
                 print('[ROUTE_REPLY] forward')
                 newpdu = None
         else:
