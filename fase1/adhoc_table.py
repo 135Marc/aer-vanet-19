@@ -50,7 +50,7 @@ class Table:
 
         #Adicionar nodos de nivel dois que ainda não existem
         for node in toadd_nodes:
-            self.rows.add((node[0], source, node[2], timestamp))
+            self.rows.add((node[0], source, node[1], timestamp))
 
     def verifyTimes(self, dead_imterval):
         actual_time = time.time()
