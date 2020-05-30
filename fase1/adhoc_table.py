@@ -46,6 +46,7 @@ class Table:
         toadd_nodes = incoming_nodes - actual_nodes
 
         # Remover este mesmo nodo da lista de nodos a adicionar
+        print('(',name,',',zone)
         toadd_nodes.discard((name, zone))
 
         #Adicionar nodos de nivel dois que ainda não existem
