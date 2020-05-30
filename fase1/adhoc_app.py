@@ -24,7 +24,7 @@ ZONE = 'df_zone'
 
 def main():
     updateHostParams()
-    DISPATCH_QUEUE = Queue(15)
+    DISPATCH_QUEUE = Queue()
     ROUTER = Router(ZONE, NAME, ROUTING_TABLE, RADIUS, TIMEOUT,)
     LOCK = Lock()
     
