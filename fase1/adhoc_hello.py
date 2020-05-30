@@ -18,7 +18,7 @@ def hello(zone, name, pdu, routing_table, dead_interval):
     routing_table.addNode(source, source, content, timestamp)
 
     # Juntar a tabelas geral e a tabela de vizinhos do originador do pdu 
-    routing_table.mergeTable(source, name, zone, table, timestamp)
+    routing_table.mergeTable(zone, source, name,  table, timestamp)
 
     # Remover nodos da tabla pelo tempo de expiração.
     routing_table.verifyTimes(dead_interval)
