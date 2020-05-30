@@ -38,13 +38,13 @@ class Router:
             found = self.routingTable.exists(directive)
             if found:
                 strrow = found[0] + ' ' + found[1] + ' ' + found[2],
-                newpdu = PDU('ROUTE_REPLAY', self.name, source, self.radius, None, strrow, [self.name])
+                newpdu = PDU('ROUTE_REPLY', self.name, source, self.radius, None, strrow, [self.name])
                 print('[ROUTE_REQUEST] found')
-            elif self.pendingTable.check((directive, 'ROUTE_REPLAY')):
+            elif self.pendingTable.check((directive, 'ROUTE_REPLY')):
                 self.pendingTable.add((directive,'ROUTE_REPLAY'), source)
                 print('[ROUTE_REQUEST] already requested')
             else:
-                self.pendingTable.add((directive,'ROUTE_REPLAY'), source)
+                self.pendingTable.add((directive,'ROUTE_REPLY'), source)
                 newpdu = PDU('ROUTE_REQUEST', source, None, ttl-1, None, directive, [self.name])
                 print('[ROUTE_REQUEST] forward')
 
