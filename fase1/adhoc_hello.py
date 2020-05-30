@@ -2,7 +2,7 @@ import time
 from adhoc_pdu import PDU
 from adhoc_table import Table
 
-def hello(zone, name, pdu, routing_table, dead_interval):
+def hello(zone, name, pdu, routing_table):
     # Get pdu data
     source = pdu.getSource()
     table = pdu.getTable()
@@ -19,7 +19,4 @@ def hello(zone, name, pdu, routing_table, dead_interval):
 
     # Juntar a tabelas geral e a tabela de vizinhos do originador do pdu 
     routing_table.mergeTable(zone, source, name,  table, timestamp)
-
-    # Remover nodos da tabla pelo tempo de expiração.
-    routing_table.verifyTimes(dead_interval)
 
