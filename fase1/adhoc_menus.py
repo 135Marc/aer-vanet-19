@@ -17,7 +17,7 @@ def menus(name, router, radius, dispatch_queue):
         
         # Encontrar novo nodo
         elif cmd[0] == 'find':
-            pdu = PDU('ROUTE_REQUEST', name, cmd[1], radius, None, '', [source])
+            pdu = PDU('ROUTE_REQUEST', name, cmd[1], radius, None, '', [name])
             pdu = router.route(pdu)
             # Verificar se existe, ou não, um pdu para enviar. 
             if pdu:
