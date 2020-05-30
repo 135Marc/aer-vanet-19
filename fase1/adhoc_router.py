@@ -13,6 +13,7 @@ class Router:
     routingTable = None
     pendingTable = Pending()
     forwardingTable = {}
+    dispatchQueue = None
 
     def __init__(self, zone, name, routing_table, radius, timeout, dispatch_queue):
         self.zone = zone
@@ -20,6 +21,7 @@ class Router:
         self.routingTable = routing_table
         self.radius = radius
         self.timeout = timeout
+        self.dispatchQueue = dispatch_queue
 
 
     def route(self, pdu):
@@ -70,7 +72,7 @@ class Router:
                 
                 for face in faces:
                     newpdu = PDU('ROUTE_REPLY', self.name, source, self.radius, None, directive, [self.name])
-                    self.dispatch_queue.put(newpdu)
+                    self.dispatchQueue.put(newpdu)
                 print('[ROUTE_REPLY] forward')
                 newpdu = None
         else:
