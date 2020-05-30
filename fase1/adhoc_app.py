@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import sys
 import socket
+import queue
 import multiprocessing as mp
 from adhoc_listenner import listenner
 from adhoc_sender import sender
@@ -15,7 +16,7 @@ GROUPIPv6 = 'ff02::1'
 # Host params
 NAME = 'df_name'
 ROUTING_TABLE = Table()
-DISPATCH_QUEUE = mp.Queue()
+DISPATCH_QUEUE = queue.Queue()
 HELLO_INTERVAL = 10
 DEAD_INTERVAL = 10
 TIMEOUT = 1
