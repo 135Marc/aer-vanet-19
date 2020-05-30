@@ -21,12 +21,12 @@ DEAD_INTERVAL = 10
 TIMEOUT = 1
 RADIUS = 10
 ZONE = 'df_zone'
-LOCK = Lock()
 
 def main():
     updateHostParams()
     DISPATCH_QUEUE = Queue(15)
     ROUTER = Router(ZONE, NAME, ROUTING_TABLE, RADIUS, TIMEOUT,)
+    LOCK = Lock()
     
     # Menus
     Process(target=menus, args=(LOCK, NAME, ROUTER, RADIUS, DISPATCH_QUEUE)).start()
