@@ -20,7 +20,6 @@ class Router:
         self.routingTable = routing_table
         self.radius = radius
         self.timeout = timeout
-        self.dispatchQueue = dispatch_queue
 
 
     def route(self, pdu, dispatch_queue):
