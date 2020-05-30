@@ -42,7 +42,7 @@ class Router:
         elif pdu_type == 'ROUTE_REQUEST':
             found = self.routingTable.exists(directive)
             if found:
-                strrow = str(found[0]) + ' ' + str(found[2]),
+                strrow = str(found[0]) + ' ' + str(found[2])
                 newpdu = PDU('ROUTE_REPLY', self.name, source, self.radius, None, strrow, [self.name])
                 print('[ROUTE_REQUEST] found')
             elif self.pendingTable.check((directive, 'ROUTE_REPLY')):
