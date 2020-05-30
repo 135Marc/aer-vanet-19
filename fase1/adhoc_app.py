@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 import sys
 import socket
-from multiprocessing import Process, Queue
-from multiprocessing import Process, Lock
+import multiprocessing as mp
 from adhoc_listenner import listenner
 from adhoc_sender import sender
 from adhoc_menus import menus
@@ -24,18 +23,18 @@ ZONE = 'df_zone'
 
 def main():
     updateHostParams()
-    DISPATCH_QUEUE = Queue()
+    DISPATCH_QUEUE = mp.Queue()
     ROUTER = Router(ZONE, NAME, ROUTING_TABLE, RADIUS, TIMEOUT,)
-    LOCK = Lock()
+    LOCK = multiprocessing.Lock()
     
     # Menus
-    Process(target=menus, args=(LOCK, NAME, ROUTER, RADIUS, DISPATCH_QUEUE)).start()
+    mp.Process(target=menus, args=(LOCK, NAME, ROUTER, RADIUS, DISPATCH_QUEUE)).start()
 
     # Obter e tratar datagramas UDP
-    Process(target=listenner, args=(LOCK, socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER, DISPATCH_QUEUE,)).start()
+    # Process(target=listenner, args=(LOCK, socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER, DISPATCH_QUEUE,)).start()
 
     # Enviar datagramas UDP
-    Process(target=sender, args=(LOCK, socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL, DISPATCH_QUEUE)).start()
+    # Process(target=sender, args=(LOCK, socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL, DISPATCH_QUEUE)).start()
 
     # Host a escuta
     print('[HOST]', NAME + ':' + str(PORT))
@@ -75,7 +74,7 @@ def updateHostParams():
 
 
 # Ativar operação de limpesa das tabelas por tempo
-Process(target=ROUTING_TABLE.tableTimes, args=(DEAD_INTERVAL,)).start()
+# Process(target=ROUTING_TABLE.tableTimes, args=(DEAD_INTERVAL,)).start()
 
 if __name__ == '__main__':
     main()

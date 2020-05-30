@@ -20,6 +20,7 @@ class Router:
         self.routingTable = routing_table
         self.radius = radius
         self.timeout = timeout
+        
 
 
     def route(self, pdu):
@@ -53,7 +54,7 @@ class Router:
                 newpdu = PDU('ROUTE_REQUEST', source, None, ttl-1, None, directive, [self.name])
 
                 #Criar thread para remover elemento da pendingTable depois do passar o tempo de timeout
-                Process(target=pendingTimeout, args=(self.timeout, self.pendingTable, (directive,'ROUTE_REPLY'),)).start()
+                # Process(target=pendingTimeout, args=(self.timeout, self.pendingTable, (directive,'ROUTE_REPLY'),)).start()
 
                 print('[ROUTE_REQUEST] forward')
 
