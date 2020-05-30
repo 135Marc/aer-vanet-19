@@ -46,10 +46,10 @@ class Router:
                 print('[ROUTE_REQUEST] forward')
 
         elif pdu_type == 'ROUTE_REPLY':
-            if self.pendingTable.check((source, 'ROUTE_REPLAY')):
-                faces = self.pendingTable.get((source, 'ROUTE_REPLAY'))
-                self.pendingTable.rm((source, 'ROUTE_REPLAY'))
-                if self.name in faces:
+            # if self.pendingTable.check((source, 'ROUTE_REPLAY')):
+            #    faces = self.pendingTable.get((source, 'ROUTE_REPLAY'))
+            #    self.pendingTable.rm((source, 'ROUTE_REPLAY'))
+            #    if self.name in faces:
             
             #   update own routingTable
             #   generate PDUs for pending face
