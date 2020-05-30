@@ -25,7 +25,7 @@ class Router:
         if ttl <= 0:
             print('[TTL expired]', pdu_type)
         elif pdu_type == 'HELLO':
-            hello(zone, name, pdu, routingTable)
+            hello(self.zone, self.name, pdu, routingTable)
         elif pdu_type.split('_') == 'ROUTE':
             print(ROUTE_REQUEST)
         else:
