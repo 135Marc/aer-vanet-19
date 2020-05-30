@@ -64,7 +64,6 @@ class Router:
             row = directive.split(' ')
             if self.pendingTable.check((row[0], 'ROUTE_REPLY')):
                 faces = self.pendingTable.get((row[0], 'ROUTE_REPLY'))
-                print(faces)
                 self.pendingTable.rm((row[0], 'ROUTE_REPLY'))
                 if self.name in faces:
                     self.routingTable.addNode(row[0], source, row[1], time.time())
@@ -72,7 +71,7 @@ class Router:
                     print('[ROUTE_REPLY] tabela de routing atualizada')
                 
                 for face in faces:
-                    newpdu = PDU('ROUTE_REPLY', self.name, source, self.radius, None, directive, [self.name])
+                    newpdu = PDU('ROUTE_REPLY', self.name, face, self.radius, None, directive, [self.name])
                     self.dispatchQueue.put(newpdu)
                 print('[ROUTE_REPLY] forward')
                 newpdu = None
