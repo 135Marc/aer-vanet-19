@@ -18,7 +18,14 @@ def menus(name, router, radius, dispatch_queue):
         # Encontrar novo nodo
         elif cmd[0] == 'find':
             pdu = PDU('ROUTE_REQUEST', name, cmd[1], radius, None, '', [source])
-            dispatch_queue.put(pdu)
+            pdu = router.route(pdu)
+            # Verificar se existe, ou não, um pdu para enviar. 
+            if pdu:
+                dispatch_queue.put(pdu)
+            else:
+                print('Face | Neighbour | Content ')
+                row = router.routingTable.exists(cmd[1])
+                print(row[0] , row[1], row[2])
         
         # Operação padrão
         else:
