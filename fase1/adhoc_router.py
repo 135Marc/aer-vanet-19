@@ -70,7 +70,7 @@ class Router:
                 
                 for face in faces:
                     newpdu = PDU('ROUTE_REPLY', self.name, source, self.radius, None, directive, [self.name])
-                    dispatch_queue.put(newpdu)
+                    self.dispatch_queue.put(newpdu)
                 print('[ROUTE_REPLY] forward')
                 newpdu = None
         else:
