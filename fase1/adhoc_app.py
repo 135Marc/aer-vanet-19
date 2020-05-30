@@ -58,7 +58,7 @@ def updateHostParams():
 
 
 # Ativar operação de limpesa das tabelas por tempo
-tt = threading.Thread(target=ROUTING_TABLE.tableTimes, args=(dead_interval,))
+tt = threading.Thread(target=ROUTING_TABLE.tableTimes, args=(DEAD_INTERVAL,))
 tt.start()
 
 if __name__ == '__main__':
