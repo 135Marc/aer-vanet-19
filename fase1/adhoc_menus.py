@@ -3,8 +3,8 @@ from adhoc_pdu import PDU
 
 def menus(name, table):
     print('---------Opções:-----------')
-    print('Encontrar nodo: find')
-    print('Imprimir tabela: print')
+    print('Encontrar nodo: fnd')
+    print('Imprimir tabela: prt')
     print('---------------------------')
 
     while True:
@@ -12,6 +12,7 @@ def menus(name, table):
         cmd = opt.split(' ')
 
         # Imprimir tabela
+        print(opt[0])
         if opt[0] == 'prt':
             table.printTable()
         
