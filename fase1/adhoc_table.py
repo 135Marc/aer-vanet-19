@@ -58,7 +58,7 @@ class Table:
             actual_time = time.time()
             rmset = set()
             for row in self.rows:
-                if actual_time - row[3] > dead_imterval:
+                if actual_time - row[3] > dead_interval:
                     rmset.add(row)
                     
             self.neighbours.difference_update(rmset)
