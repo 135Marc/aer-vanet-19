@@ -59,11 +59,10 @@ class Router:
                 print('[ROUTE_REQUEST] forward')
 
         elif pdu_type == 'ROUTE_REPLY':
-            print(directive)
             row = directive.split(' ')
-            if self.pendingTable.check((row[0], 'ROUTE_REPLAY')):
-                faces = self.pendingTable.get((row[0], 'ROUTE_REPLAY'))
-                self.pendingTable.rm((row[0], 'ROUTE_REPLAY'))
+            if self.pendingTable.check((row[0], 'ROUTE_REPLY')):
+                faces = self.pendingTable.get((row[0], 'ROUTE_REPLY'))
+                self.pendingTable.rm((row[0], 'ROUTE_REPLY'))
                 if self.name in faces:
                     self.routingTable.addNode(row[0], source, row[1], time.time())
                     faces.remove(self.name)
