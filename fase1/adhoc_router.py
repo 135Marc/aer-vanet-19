@@ -46,6 +46,7 @@ class Router:
                 print('[ROUTE_REQUEST] forward')
 
         elif pdu_type == 'ROUTE_REPLY':
+            print('route_reply')
             # if self.pendingTable.check((source, 'ROUTE_REPLAY')):
             #    faces = self.pendingTable.get((source, 'ROUTE_REPLAY'))
             #    self.pendingTable.rm((source, 'ROUTE_REPLAY'))
@@ -55,7 +56,6 @@ class Router:
             #   generate PDUs for pending face
             # else:
             #   continue 
-            # continue
         else:
             print('[PDU TYPE unknown]', pdu_type)
 
