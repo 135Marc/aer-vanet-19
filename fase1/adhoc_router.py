@@ -73,4 +73,5 @@ class Router:
                 print('[ROUTE_REPLY] forward')
         else:
             print('[PDU TYPE unknown]', pdu_type)
+        newpdu.printPDU()
         return newpdu
