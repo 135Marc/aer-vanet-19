@@ -21,6 +21,7 @@ class Router:
         newpdu = None
 
         # Obter tipo do pdu, ttl e target
+        pdu.printPDU()
         pdu_type = pdu.getType()
         ttl = pdu.getTTL()
         source = pdu.getSource()
