@@ -27,7 +27,6 @@ def listenner(socket, port, groupipv6, zone, name, router, dispatch_queue):
         pdu = router.route(pdu)
 
         if pdu:
+            pdu.printPDU()
             dispatch_queue.put(pdu)
-        else:
-            continue
 
