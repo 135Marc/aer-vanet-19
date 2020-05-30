@@ -4,7 +4,7 @@ from adhoc_hello import hello
 class Router:
     zone = ''
     name = ''
-    routingTable = Table()
+    routingTable = None
     pendingTable = {}
     forwardingTable = {}
 

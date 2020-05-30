@@ -31,7 +31,7 @@ def main():
     m.start()
 
     # Obter e tratar datagramas UDP
-    lt = threading.Thread(target=listenner, args=(socket, PORT, GROUPIPv6, ZONE, NAME, ROUTING_TABLE,))
+    lt = threading.Thread(target=listenner, args=(socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER,))
     lt.start()
 
     # Enviar datagramas UDP
