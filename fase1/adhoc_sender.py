@@ -9,8 +9,7 @@ def sender(lock, socket, port, groupipv6, name, routing_table, zone, hello_inter
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
 
     # Enviar pdu's HELLO a cada hello_interval
-    ht = Pocess(target=hello, args=(sock, groupipv6, port, zone, name, routing_table, hello_interval,))
-    ht.start()
+    Pocess(target=hello, args=(sock, groupipv6, port, zone, name, routing_table, hello_interval,)).start()
 
     while True:
         lock.acquire()

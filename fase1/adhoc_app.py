@@ -28,16 +28,13 @@ def main():
     ROUTER = Router(ZONE, NAME, ROUTING_TABLE, RADIUS, TIMEOUT,)
     
     # Menus
-    m = Process(target=menus, args=(LOCK, NAME, ROUTER, RADIUS, DISPATCH_QUEUE))
-    m.start()
+    Process(target=menus, args=(LOCK, NAME, ROUTER, RADIUS, DISPATCH_QUEUE)).start()
 
     # Obter e tratar datagramas UDP
-    lt = Process(target=listenner, args=(LOCK, socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER, DISPATCH_QUEUE,))
-    lt.start()
+    Process(target=listenner, args=(LOCK, socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER, DISPATCH_QUEUE,)).start()
 
     # Enviar datagramas UDP
-    st = Process(target=sender, args=(LOCK, socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL, DISPATCH_QUEUE))
-    st.start()
+    Process(target=sender, args=(LOCK, socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL, DISPATCH_QUEUE)).start()
 
     # Host a escuta
     print('[HOST]', NAME + ':' + str(PORT))
@@ -77,8 +74,7 @@ def updateHostParams():
 
 
 # Ativar operação de limpesa das tabelas por tempo
-tt = Process(target=ROUTING_TABLE.tableTimes, args=(DEAD_INTERVAL,))
-tt.start()
+Process(target=ROUTING_TABLE.tableTimes, args=(DEAD_INTERVAL,)).start()
 
 if __name__ == '__main__':
     main()
