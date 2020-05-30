@@ -52,6 +52,7 @@ class Table:
         for node in toadd_nodes:
             self.rows.add((node[0], source, node[1], timestamp))
 
+    def tableTimes(self, dead_interval):
         while True:
             time.sleep(dead_interval)
             actual_time = time.time()
