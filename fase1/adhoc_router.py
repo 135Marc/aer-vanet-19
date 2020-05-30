@@ -1,6 +1,6 @@
 from adhoc_table import Table
 from adhoc_hello import hello
-from adhoc_Pending import Pending
+from adhoc_pending import Pending
 
 class Router:
     zone = ''
