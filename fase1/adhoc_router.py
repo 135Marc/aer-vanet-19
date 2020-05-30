@@ -46,15 +46,15 @@ class Router:
                 newpdu = PDU('ROUTE_REPLY', self.name, source, self.radius, None, strrow, [self.name])
                 print('[ROUTE_REQUEST] found')
             elif self.pendingTable.check((directive, 'ROUTE_REPLY')):
-                self.pendingTable.add((directive,'ROUTE_REPLAY'), source)
+                self.pendingTable.add((directive,'ROUTE_REPLY'), source)
                 print('[ROUTE_REQUEST] already requested')
             else:
                 self.pendingTable.add((directive,'ROUTE_REPLY'), source)
                 newpdu = PDU('ROUTE_REQUEST', source, None, ttl-1, None, directive, [self.name])
 
                 #Criar thread para remover elemento da pendingTable depois do passar o tempo de timeout
-                #pt = threading.Thread(target=pendingTimeout, args=(self.timeout, self.pendingTable, (directive,'ROUTE_REPLY'),))
-                #pt.start()
+                pt = threading.Thread(target=pendingTimeout, args=(self.timeout, self.pendingTable, (directive,'ROUTE_REPLY'),))
+                pt.start()
 
                 print('[ROUTE_REQUEST] forward')
 
@@ -72,3 +72,4 @@ class Router:
         else:
             print('[PDU TYPE unknown]', pdu_type)
 
+        return newpdu
