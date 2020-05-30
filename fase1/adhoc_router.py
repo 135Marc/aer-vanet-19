@@ -69,7 +69,7 @@ class Router:
                     print('[ROUTE_REPLY] tabela de routing atualizada')
                 
                 for face in faces:
-                    newpdu = PDU('ROUTE_REPLY', self.name, source, self.radius, None, strrow, [self.name])
+                    newpdu = PDU('ROUTE_REPLY', self.name, source, self.radius, None, directive, [self.name])
                     dispatch_queue.put(newpdu)
                 print('[ROUTE_REPLY] forward')
                 newpdu = None
