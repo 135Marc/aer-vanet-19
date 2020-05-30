@@ -19,13 +19,13 @@ ROUTING_TABLE = Table()
 DISPATCH_QUEUE = queue.Queue(15)
 HELLO_INTERVAL = 10
 DEAD_INTERVAL = 10
-TIMEOUT = 10
+TIMEOUT = 1
 RADIUS = 10
 ZONE = 'df_zone'
 
 def main():
     updateHostParams()
-    ROUTER = Router(ZONE, NAME, ROUTING_TABLE, RADIUS)
+    ROUTER = Router(ZONE, NAME, ROUTING_TABLE, RADIUS, TIMEOUT)
     
     # Menus
     m = threading.Thread(target=menus, args=(NAME, ROUTER, RADIUS, DISPATCH_QUEUE))

@@ -1,5 +1,7 @@
+import threading
 from adhoc_table import Table
 from adhoc_hello import hello
+from adhoc_pending_timer import pendingTimeout
 from adhoc_pending import Pending
 from adhoc_pdu import PDU
 
@@ -7,15 +9,18 @@ class Router:
     zone = ''
     name = ''
     radius = 0
+    timeout = 0
     routingTable = None
     pendingTable = Pending()
     forwardingTable = {}
 
-    def __init__(self, zone, name, routing_table, radius):
+    def __init__(self, zone, name, routing_table, radius, timeout):
         self.zone = zone
         self.name = name
         self.routingTable = routing_table
         self.radius = radius
+        self.timeout = timeout
+
 
     def route(self, pdu):
         newpdu = None
@@ -46,6 +51,11 @@ class Router:
             else:
                 self.pendingTable.add((directive,'ROUTE_REPLY'), source)
                 newpdu = PDU('ROUTE_REQUEST', source, None, ttl-1, None, directive, [self.name])
+
+                #Criar tread para remover elemento do array ao fim de um periodo de tempo
+                pt = threading.Thread(target=pendingTimeout, args=(timeout, self.pendingTable, (directive,'ROUTE_REPLY'),))
+                pt.start()
+
                 print('[ROUTE_REQUEST] forward')
 
         elif pdu_type == 'ROUTE_REPLY':
@@ -61,5 +71,4 @@ class Router:
             #   continue 
         else:
             print('[PDU TYPE unknown]', pdu_type)
-            
-        return newpdu
+
