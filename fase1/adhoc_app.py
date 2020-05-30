@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 import sys
-import threading
 import socket
-import queue
+from multiprocessing import Process, Queue
 from adhoc_listenner import listenner
 from adhoc_sender import sender
 from adhoc_menus import menus
@@ -16,7 +15,7 @@ GROUPIPv6 = 'ff02::1'
 # Host params
 NAME = 'df_name'
 ROUTING_TABLE = Table()
-DISPATCH_QUEUE = queue.Queue(15)
+DISPATCH_QUEUE = Queue.Queue(15)
 HELLO_INTERVAL = 10
 DEAD_INTERVAL = 10
 TIMEOUT = 1
@@ -28,15 +27,15 @@ def main():
     ROUTER = Router(ZONE, NAME, ROUTING_TABLE, RADIUS, TIMEOUT,)
     
     # Menus
-    m = threading.Thread(target=menus, args=(NAME, ROUTER, RADIUS, DISPATCH_QUEUE))
+    m = Process(target=menus, args=(NAME, ROUTER, RADIUS, DISPATCH_QUEUE))
     m.start()
 
     # Obter e tratar datagramas UDP
-    lt = threading.Thread(target=listenner, args=(socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER, DISPATCH_QUEUE,))
+    lt = Process(target=listenner, args=(socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER, DISPATCH_QUEUE,))
     lt.start()
 
     # Enviar datagramas UDP
-    st = threading.Thread(target=sender, args=(socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL, DISPATCH_QUEUE))
+    st = Process(target=sender, args=(socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL, DISPATCH_QUEUE))
     st.start()
 
     # Host a escuta
@@ -77,7 +76,7 @@ def updateHostParams():
 
 
 # Ativar operação de limpesa das tabelas por tempo
-tt = threading.Thread(target=ROUTING_TABLE.tableTimes, args=(DEAD_INTERVAL,))
+tt = Process(target=ROUTING_TABLE.tableTimes, args=(DEAD_INTERVAL,))
 tt.start()
 
 if __name__ == '__main__':

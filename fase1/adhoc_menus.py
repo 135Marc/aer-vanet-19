@@ -1,4 +1,3 @@
-import queue
 from adhoc_pdu import PDU
 
 def menus(name, router, radius, dispatch_queue):

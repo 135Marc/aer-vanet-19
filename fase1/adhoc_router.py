@@ -1,4 +1,4 @@
-import threading
+from multiprocessing import Process
 from adhoc_table import Table
 from adhoc_hello import hello
 from adhoc_pending_timer import pendingTimeout
@@ -53,7 +53,7 @@ class Router:
                 newpdu = PDU('ROUTE_REQUEST', source, None, ttl-1, None, directive, [self.name])
 
                 #Criar thread para remover elemento da pendingTable depois do passar o tempo de timeout
-                pt = threading.Thread(target=pendingTimeout, args=(self.timeout, self.pendingTable, (directive,'ROUTE_REPLY'),))
+                pt = Process(target=pendingTimeout, args=(self.timeout, self.pendingTable, (directive,'ROUTE_REPLY'),))
                 pt.start()
 
                 print('[ROUTE_REQUEST] forward')
@@ -64,11 +64,11 @@ class Router:
                 faces = self.pendingTable.get((row[0], 'ROUTE_REPLY'))
                 self.pendingTable.rm((row[0], 'ROUTE_REPLY'))
                 print(self.name, faces[0])
-                # if self.name in faces:
-                #     print('[ROUTE_REPLY] tabela de routing atualizada')
-                #     self.routingTable.addNode(row[0], source, row[1], time.time())
-                #     faces.remove(self.name)
-                #     print('[ROUTE_REPLY] tabela de routing atualizada')
+                if self.name in faces:
+                    print('[ROUTE_REPLY] tabela de routing atualizada')
+                    self.routingTable.addNode(row[0], source, row[1], time.time())
+                    faces.remove(self.name)
+                    print('[ROUTE_REPLY] tabela de routing atualizada')
                 
                 if faces != []:
                     newpdu = PDU('ROUTE_REPLY', self.name, faces[0], self.radius, None, directive, [self.name])

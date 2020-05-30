@@ -1,6 +1,6 @@
 import pickle
 import time
-import threading
+from multiprocessing import Process
 from adhoc_pdu import PDU
 from adhoc_table import Table
 
@@ -9,7 +9,7 @@ def sender(socket, port, groupipv6, name, routing_table, zone, hello_interval, d
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
 
     # Enviar pdu's HELLO a cada hello_interval
-    ht = threading.Thread(target=hello, args=(sock, groupipv6, port, zone, name, routing_table, hello_interval,))
+    ht = Pocess(target=hello, args=(sock, groupipv6, port, zone, name, routing_table, hello_interval,))
     ht.start()
 
     while True:
