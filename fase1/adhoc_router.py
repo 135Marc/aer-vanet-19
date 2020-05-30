@@ -57,6 +57,7 @@ class Router:
                 pt.start()
 
                 print('[ROUTE_REQUEST] forward')
+            newpdu.printPDU()
 
         elif pdu_type == 'ROUTE_REPLY':
             row = directive.split(' ')
@@ -71,7 +72,7 @@ class Router:
                 
                 newpdu = PDU('ROUTE_REPLY', self.name, None, self.radius, None, directive, [self.name])
                 print('[ROUTE_REPLY] forward')
+            newpdu.printPDU()
         else:
             print('[PDU TYPE unknown]', pdu_type)
-        newpdu.printPDU()
         return newpdu
