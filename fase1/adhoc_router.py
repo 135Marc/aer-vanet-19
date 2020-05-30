@@ -13,9 +13,8 @@ class Router:
     routingTable = None
     pendingTable = Pending()
     forwardingTable = {}
-    dispatchQueue = None
 
-    def __init__(self, zone, name, routing_table, radius, timeout, dispatch_queue):
+    def __init__(self, zone, name, routing_table, radius, timeout):
         self.zone = zone
         self.name = name
         self.routingTable = routing_table
@@ -71,10 +70,8 @@ class Router:
                     faces.remove(self.name)
                     print('[ROUTE_REPLY] tabela de routing atualizada')
                 
-                facepdu = PDU('ROUTE_REPLY', self.name, None, self.radius, None, directive, [self.name])
-                dispatch_queue.put(facepdu)
+                newpdu = PDU('ROUTE_REPLY', self.name, None, self.radius, None, directive, [self.name])
                 print('[ROUTE_REPLY] forward')
-                newpdu = None
         else:
             print('[PDU TYPE unknown]', pdu_type)
         return newpdu
