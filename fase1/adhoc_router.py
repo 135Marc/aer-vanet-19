@@ -13,7 +13,7 @@ class Router:
         self.name = name
         self.routingTable = routing_table
 
-    def route(pdu):
+    def route(self, pdu):
         newpdu = None
 
         # Obter tipo do pdu, ttl e target
