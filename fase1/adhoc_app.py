@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys
 import socket
-from multiprocessing import Process, Queue
+from multiprocessing import Process, Queue, Lock
 from adhoc_listenner import listenner
 from adhoc_sender import sender
 from adhoc_menus import menus
@@ -21,21 +21,22 @@ DEAD_INTERVAL = 10
 TIMEOUT = 1
 RADIUS = 10
 ZONE = 'df_zone'
+LOCK = Lock()
 
 def main():
     updateHostParams()
     ROUTER = Router(ZONE, NAME, ROUTING_TABLE, RADIUS, TIMEOUT,)
     
     # Menus
-    m = Process(target=menus, args=(NAME, ROUTER, RADIUS, DISPATCH_QUEUE))
+    m = Process(target=menus, args=(LOCK, NAME, ROUTER, RADIUS, DISPATCH_QUEUE))
     m.start()
 
     # Obter e tratar datagramas UDP
-    lt = Process(target=listenner, args=(socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER, DISPATCH_QUEUE,))
+    lt = Process(target=listenner, args=(LOCK, socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER, DISPATCH_QUEUE,))
     lt.start()
 
     # Enviar datagramas UDP
-    st = Process(target=sender, args=(socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL, DISPATCH_QUEUE))
+    st = Process(target=sender, args=(LOCK, socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL, DISPATCH_QUEUE))
     st.start()
 
     # Host a escuta
