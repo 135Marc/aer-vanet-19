@@ -65,14 +65,15 @@ class Router:
                 self.pendingTable.rm((row[0], 'ROUTE_REPLY'))
                 print(self.name, faces[0])
                 if self.name in faces:
+                    print('[ROUTE_REPLY] tabela de routing atualizada')
                     self.routingTable.addNode(row[0], source, row[1], time.time())
                     faces.remove(self.name)
                     print('[ROUTE_REPLY] tabela de routing atualizada')
                 
                 if faces != []:
                     newpdu = PDU('ROUTE_REPLY', self.name, faces[0], self.radius, None, directive, [self.name])
-                    newpdu.printPDU()
                     print('[ROUTE_REPLY] forward')
         else:
             print('[PDU TYPE unknown]', pdu_type)
+
         return newpdu
