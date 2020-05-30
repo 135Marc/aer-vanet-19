@@ -39,5 +39,4 @@ def listenner(socket, port, groupipv6, zone, name, routing_table):
             hello(zone, name, pdu, routing_table)
         else:
             print('[PDU TYPE unknown]', pdutype)
-        routing_table.printTable()
 

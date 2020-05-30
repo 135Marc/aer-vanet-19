@@ -4,6 +4,7 @@ import threading
 import socket
 from adhoc_listenner import listenner
 from adhoc_sender import sender
+from adhoc_menus import menus
 from adhoc_table import Table
 
 # Network params
@@ -20,6 +21,10 @@ ZONE = 'df_zone'
 def main():
     updateHostParams()
     
+    # Menus
+    m = threading.Thread(target=menus, args=(NAME, ROUTING_TABLE,))
+    m.start()
+
     # Obter e tratar datagramas UDP
     lt = threading.Thread(target=listenner, args=(socket, PORT, GROUPIPv6, ZONE, NAME, ROUTING_TABLE,))
     lt.start()
