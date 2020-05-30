@@ -12,12 +12,11 @@ def menus(name, table):
         cmd = opt.split(' ')
 
         # Imprimir tabela
-        print(opt[0])
-        if opt[0] == 'prt':
+        if cmd[0] == 'prt':
             table.printTable()
         
         # Encontrar novo nodo
-        # elif opt[0] == 'fnd':
+        # elif cmd[0] == 'fnd':
             # print('Nome do nodo:')
             # nodo = input()
             # newpdu = PDU(name, 'ROUTE_REQUEST', 5, None, nodo, '', [source])
