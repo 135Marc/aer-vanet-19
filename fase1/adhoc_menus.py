@@ -1,10 +1,10 @@
 import queue
 from adhoc_pdu import PDU
 
-def menus(name, table):
+def menus(name, router, radius, dispatch_queue):
     print('---------Opções:-----------')
-    print('Encontrar nodo: fnd')
-    print('Imprimir tabela: prt')
+    print('Encontrar nodo: find')
+    print('Imprimir tabela: print')
     print('---------------------------')
 
     while True:
@@ -12,15 +12,13 @@ def menus(name, table):
         cmd = opt.split(' ')
 
         # Imprimir tabela
-        if cmd[0] == 'prt':
-            table.printTable()
+        if cmd[0] == 'print':
+            router.routingTable.printTable()
         
         # Encontrar novo nodo
-        # elif cmd[0] == 'fnd':
-            # print('Nome do nodo:')
-            # nodo = input()
-            # newpdu = PDU(name, 'ROUTE_REQUEST', 5, None, nodo, '', [source])
-            # msgqueue.put(newpdu)
+        elif cmd[0] == 'find':
+            pdu = PDU('ROUTE_REQUEST', name, cmd[1], radius, None, '', [source])
+            dispatch_queue.put(pdu)
         
         # Operação padrão
         else:

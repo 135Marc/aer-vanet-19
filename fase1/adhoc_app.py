@@ -2,10 +2,11 @@
 import sys
 import threading
 import socket
+import queue
 from adhoc_listenner import listenner
 from adhoc_sender import sender
 from adhoc_menus import menus
-from adhoc_table import Table
+from adhoc_router import Router
 
 # Network params
 PORT = 9999
@@ -14,15 +15,19 @@ GROUPIPv6 = 'ff02::1'
 # Host params
 NAME = 'df_name'
 ROUTING_TABLE = Table()
+DISPATCH_QUEUE = queue.Queue(15)
 HELLO_INTERVAL = 10
 DEAD_INTERVAL = 10
+TIMEOUT = 10
+RADIUS = 10
 ZONE = 'df_zone'
 
 def main():
     updateHostParams()
+    ROUTER = Router(ZONE, NAME, ROUTING_TABLE)
     
     # Menus
-    m = threading.Thread(target=menus, args=(NAME, ROUTING_TABLE,))
+    m = threading.Thread(target=menus, args=(NAME, ROUTER, RADIUS, DISPATCH_QUEUE))
     m.start()
 
     # Obter e tratar datagramas UDP
@@ -30,7 +35,7 @@ def main():
     lt.start()
 
     # Enviar datagramas UDP
-    st = threading.Thread(target=sender, args=(socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL,))
+    st = threading.Thread(target=sender, args=(socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL, DISPATCH_QUEUE))
     st.start()
 
     # Host a escuta
@@ -51,6 +56,14 @@ def updateHostParams():
             if(sys.argv[i] == '-hi'):
                 global HELLO_INTERVAL
                 HELLO_INTERVAL = int(sys.argv[i+1])
+            # Zona onde o veiculo se encontra
+            if(sys.argv[i] == '-r'):
+                global RADIUS
+                RADIUS = sys.argv[i+1]
+            # Zona onde o veiculo se encontra
+            if(sys.argv[i] == '-t'):
+                global TIMEOUT
+                TIMEOUT = sys.argv[i+1]
             # Zona onde o veiculo se encontra
             if(sys.argv[i] == '-z'):
                 global ZONE

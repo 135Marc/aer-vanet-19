@@ -2,10 +2,9 @@ import socket
 import pickle
 import struct
 from adhoc_pdu import PDU
-from adhoc_hello import hello
-from adhoc_table import Table
+from adhoc_router import Router
 
-def listenner(socket, port, groupipv6, zone, name, routing_table):
+def listenner(socket, port, groupipv6, zone, name, router):
     # Look up multicast group address in name server and find out IP version
     addrinfo = socket.getaddrinfo(groupipv6, None)[0]
 
@@ -25,18 +24,6 @@ def listenner(socket, port, groupipv6, zone, name, routing_table):
         # Obter o pdu recebido
         data, sender = s.recvfrom(4096)
         pdu = pickle.loads(data)
-        
-        # pdu.printPDU()
 
-        # Obter tipo do pdu e ttl
-        pdutype = pdu.getType()
-        ttl = pdu.getTTL()
-
-        # Verificar tempo de vida do pdu caso seja positivo verifica o tipo de pdu.
-        if ttl <= 0:
-            print('[TTL expired]', pdutype)
-        elif pdutype == 'HELLO':
-            hello(zone, name, pdu, routing_table)
-        else:
-            print('[PDU TYPE unknown]', pdutype)
+        router.route(pdu)
 
