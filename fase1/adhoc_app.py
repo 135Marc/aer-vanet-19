@@ -15,17 +15,17 @@ GROUPIPv6 = 'ff02::1'
 # Host params
 NAME = 'df_name'
 ROUTING_TABLE = Table()
+DISPATCH_QUEUE = mp.Queue()
 HELLO_INTERVAL = 10
 DEAD_INTERVAL = 10
 TIMEOUT = 1
 RADIUS = 10
 ZONE = 'df_zone'
+LOCK = mp.Lock()
 
 def main():
     updateHostParams()
-    DISPATCH_QUEUE = mp.Queue()
     ROUTER = Router(ZONE, NAME, ROUTING_TABLE, RADIUS, TIMEOUT,)
-    LOCK = multiprocessing.Lock()
     
     # Menus
     #mp.Process(target=menus, args=(LOCK, NAME, ROUTER, RADIUS, DISPATCH_QUEUE)).start()
