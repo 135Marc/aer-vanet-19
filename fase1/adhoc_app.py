@@ -28,7 +28,7 @@ def main():
     LOCK = multiprocessing.Lock()
     
     # Menus
-    mp.Process(target=menus, args=(LOCK, NAME, ROUTER, RADIUS, DISPATCH_QUEUE)).start()
+    #mp.Process(target=menus, args=(LOCK, NAME, ROUTER, RADIUS, DISPATCH_QUEUE)).start()
 
     # Obter e tratar datagramas UDP
     # Process(target=listenner, args=(LOCK, socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER, DISPATCH_QUEUE,)).start()
