@@ -15,7 +15,7 @@ GROUPIPv6 = 'ff02::1'
 # Host params
 NAME = 'df_name'
 ROUTING_TABLE = Table()
-DISPATCH_QUEUE = Queue.Queue(15)
+DISPATCH_QUEUE = Queue(15)
 HELLO_INTERVAL = 10
 DEAD_INTERVAL = 10
 TIMEOUT = 1
