@@ -23,9 +23,11 @@ def menus(name, router, radius, dispatch_queue):
             if pdu:
                 dispatch_queue.put(pdu)
             else:
+                print('----------------------------')
                 print('Face | Neighbour | Content ')
                 row = router.routingTable.exists(cmd[1])
-                print(row[0] , row[1], row[2])
+                print(row[0], ' ', row[1], ' ', row[2])
+                print('----------------------------')
         
         # Operação padrão
         else:

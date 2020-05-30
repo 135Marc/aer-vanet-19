@@ -27,7 +27,8 @@ class Router:
         elif pdu_type == 'HELLO':
             hello(self.zone, self.name, pdu, self.routingTable)
         elif pdu_type.split('_') == 'ROUTE':
-            print(ROUTE_REQUEST)
+            print(pdu_type)
+            return pdu
         else:
             print('[PDU TYPE unknown]', pdu_type)
 
