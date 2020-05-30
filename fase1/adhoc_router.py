@@ -34,17 +34,23 @@ class Router:
         elif pdu_type == 'ROUTE_REQUEST':
             found = self.routingTable.exists(target)
             if found:
-                newpdu = PDU('ROUTE_REPLAY', target, source, self.radius, None, found[2], [self.name])
-            elif self.pendingTable.check((target, pdu_type)):
-                self.pendingTable.add((target,pdu_type), source)
+                strrow = found[0] + ' ' + found[1] + ' ' + found[2],
+                newpdu = PDU('ROUTE_REPLAY', self.name, source, self.radius, None, strrow, [self.name])
+                print('[ROUTE_REQUEST] found')
+            elif self.pendingTable.check((directive, 'ROUTE_REPLAY')):
+                self.pendingTable.add((directive,'ROUTE_REPLAY'), source)
+                print('[ROUTE_REQUEST] already requested')
             else:
-                newpdu = PDU('ROUTE_REQUEST', source, target, ttl-1, None, directive, [self.name]) 
-
+                self.pendingTable.add((directive,'ROUTE_REPLAY'), source)
+                newpdu = PDU('ROUTE_REQUEST', source, None, ttl-1, None, directive, [self.name])
+                print('[ROUTE_REQUEST] forward')
 
         elif pdu_type == 'ROUTE_REPLY':
-            # if replay on pendingTable:
-            #   get pending faces of this target
-            #   remove from pending
+            if self.pendingTable.check((source, 'ROUTE_REPLAY')):
+                faces = self.pendingTable.get((source, 'ROUTE_REPLAY'))
+                self.pendingTable.rm((source, 'ROUTE_REPLAY'))
+                if self.name in faces:
+            
             #   update own routingTable
             #   generate PDUs for pending face
             # else:
