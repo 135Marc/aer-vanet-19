@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 import sys
 import socket
-from multiprocessing import Process, Queue, Lock
+from multiprocessing import Process, Queue
+from multiprocessing import Process, Lock
 from adhoc_listenner import listenner
 from adhoc_sender import sender
 from adhoc_menus import menus
