@@ -19,7 +19,7 @@ def menus(name, router, radius, dispatch_queue):
         elif cmd[0] == 'find':
             # Verificar se existe, ou não, um pdu para enviar. 
             if not router.routingTable.exists(cmd[1]):
-                pdu = PDU('ROUTE_REQUEST', name, '', radius, None, cmd[1], [name])
+                pdu = PDU('ROUTE_REQUEST', name, None, radius, None, cmd[1], [name])
                 pdu = router.route(pdu)
                 dispatch_queue.put(pdu)
             else:
