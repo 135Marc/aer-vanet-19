@@ -32,7 +32,7 @@ def main():
     m.start()
 
     # Obter e tratar datagramas UDP
-    lt = threading.Thread(target=listenner, args=(socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER,))
+    lt = threading.Thread(target=listenner, args=(socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER, DISPATCH_QUEUE,))
     lt.start()
 
     # Enviar datagramas UDP
