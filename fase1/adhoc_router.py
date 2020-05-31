@@ -33,18 +33,10 @@ class Router:
         directive = pdu.getDirective()
         target = pdu.getTarget()
 
-        print('-------listenner after data---------')
-        pdu.printPDU()
-        print('-------listenner after data---------')
-
         # Verificar tempo de vida do pdu caso seja positivo verifica o tipo de pdu.
         if ttl <= 0 :
             print('[TTL expired]', pdu_type)
         elif source == self.name :
-
-            print('-------listenner own---------')
-            pdu.printPDU()
-            print('-------listenner own---------')
             newpdu = None
         elif pdu_type == 'HELLO':
             hello(self.zone, self.name, pdu, self.routingTable)
@@ -67,11 +59,11 @@ class Router:
                 print('[ROUTE_REQUEST] forward')
 
         elif pdu_type == 'ROUTE_REPLY':
-            print('-------listenner REPLY---------')
-            pdu.printPDU()
-            print('-------listenner REPLY---------')
             row = directive.split(' ')
             if self.pendingTable.check((row[0], 'ROUTE_REPLY')):
+                print('-------listenner REPLY---------')
+                pdu.printPDU()
+                print('-------listenner REPLY---------')
                 faces = self.pendingTable.get((row[0], 'ROUTE_REPLY'))
                 self.pendingTable.rm((row[0], 'ROUTE_REPLY'))
                 if self.name in faces:
