@@ -101,6 +101,11 @@ class Router:
                     self.contentStore.addContent(row[0], row[1])
                     faces.remove(self.name)
                     print('[CONTENT_REPLY] tabela de routing atualizada')
+                    print('-----------------------')
+                    print('Content | Value ')
+                    content = router.contentStore.getContent(cmd[1])
+                    print(cmd[1], '  ', content)
+                    print('-----------------------')
                 
                 if faces != []:
                     newpdu = PDU('CONTENT_REPLY', self.name, faces[0], self.radius, None, directive, [self.name])

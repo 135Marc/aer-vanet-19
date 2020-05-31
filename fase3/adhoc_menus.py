@@ -18,7 +18,7 @@ def menus(name, router, radius, timeout, dispatch_queue):
         if cmd[0] == 'print':
             if cmd[1] == 'tb':
                 router.routingTable.printTable()
-            if cmd[1] == 'tb':
+            if cmd[1] == 'cs':
                 router.contentStore.printCS()
         
         # Encontrar novo nodo
@@ -37,11 +37,11 @@ def menus(name, router, radius, timeout, dispatch_queue):
                     threading.Thread(target=pendingTimeout, args=(timeout, router.pendingTable, (cmd[1],'ROUTE_REPLY'),)).start()
 
             else:
-                print('----------------------------')
+                print('-----------------------')
                 print('Face | Neighbour | Content ')
                 row = router.routingTable.exists(cmd[1])
                 print(row[0], '  ', row[1], '  ', row[2])
-                print('----------------------------')
+                print('-----------------------')
         
         elif cmd[0].upper() == 'PUB':
             router.contentStore.addContent(cmd[1], cmd[2])
@@ -66,11 +66,11 @@ def menus(name, router, radius, timeout, dispatch_queue):
                     threading.Thread(target=pendingTimeout, args=(timeout, router.pendingInterestTable, (cmd[1],'CONTENT_REPLY'),)).start()
 
             else:
-                print('----------------------------')
-                print('Face | Neighbour | Content ')
+                print('-----------------------')
+                print('Content | Value ')
                 content = router.contentStore.getContent(cmd[1])
                 print(cmd[1], '  ', content)
-                print('----------------------------')
+                print('-----------------------')
         # Operação padrão
         else:
             print('Opção inválida.')
