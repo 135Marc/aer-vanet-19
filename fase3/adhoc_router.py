@@ -116,7 +116,11 @@ class Router:
 
         elif pdu_type == 'TARGET_REQUEST':
             if target == self.name:
-                strrow = directive + ' ' + self.contentStore.getContent(directive)
+                strrow = ''
+                if self.contentStore.checkContent(directive):
+                    strrow = directive + ' ' + self.contentStore.getContent(directive)
+                else:
+                    strrow = directive + ' ' + self.contentStore.getContent(directive.split('/')[0])
                 newpdu = PDU('TARGET_REPLY', self.name, source, self.radius, None, strrow, [self.name])
                 print('[TARGET_REQUEST] found')
             elif self.routingTable.exists(target) and ttl == 2:
