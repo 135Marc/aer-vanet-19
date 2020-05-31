@@ -134,7 +134,7 @@ class Router:
                 print(row[0], '  ', content)
                 print('-----------------------')
                 print('[TARGET_REPLY] found')
-            else self.routingTable.exists(target):
+            elif self.routingTable.exists(target):
                 self.contentStore.addContent(row[0], row[1])
                 newpdu = PDU('TARGET_REPLY', source, target, ttl-1, None, directive, [self.name])
                 print('[TARGET_REPLY] forward')
