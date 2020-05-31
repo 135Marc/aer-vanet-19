@@ -12,9 +12,8 @@ def menus(lock, name, router, radius, dispatch_queue):
 
         # Imprimir tabela
         if cmd[0] == 'print':
-            lock.acquire()
             router.routingTable.printTable()
-            lock.release()
+
         
         # Encontrar novo nodo
         elif cmd[0] == 'find':
@@ -23,10 +22,9 @@ def menus(lock, name, router, radius, dispatch_queue):
             print('1-------')
             if not router.routingTable.exists(cmd[1]):
                 pdu = PDU('ROUTE_REQUEST', name, None, radius, None, cmd[1], [name])
-                lock.acquire()
+                
                 print('2-------')
                 dispatch_queue.put(pdu)
-                lock.release()
                 print('3-------')
             else:
                 print('----------------------------')

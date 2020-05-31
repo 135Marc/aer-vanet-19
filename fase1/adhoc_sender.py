@@ -12,10 +12,8 @@ def sender(lock, socket, port, groupipv6, name, routing_table, zone, hello_inter
     # threading.Thread(target=hello, args=(sock, groupipv6, port, zone, name, routing_table, hello_interval,)).start()
 
     while True:
-        lock.acquire()
         # Obter proximo pdu
         pdu = dispatch_queue.get()
-        lock.release()
         sock.sendto(pickle.dumps(pdu), (groupipv6, port))
 
 def hello(sock, groupipv6, port, zone, name, routing_table, hello_interval):
