@@ -59,7 +59,7 @@ def menus(name, router, radius, timeout, dispatch_queue):
                 else:
                     # Adicionar estratégia de comunicação direta.
                     # Para fazer pedidos diretos
-                    content = cmd[1].split(' ')[0]
+                    content = cmd[1].split('/')[0]
                     found = router.routingTable.existsContent(content)
                     if not found:
                         router.pendingInterestTable.add(cmd[1], name)
