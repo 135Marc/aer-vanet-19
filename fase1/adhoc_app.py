@@ -31,8 +31,8 @@ def main():
     ROUTER = Router(ZONE, NAME, ROUTING_TABLE, RADIUS, TIMEOUT,)
     
     # Menus
-    # m = threading.Thread(target=menus, args=(NAME, ROUTER, RADIUS, DISPATCH_QUEUE))
-    # m.start()
+    m = threading.Thread(target=menus, args=(NAME, ROUTER, RADIUS, DISPATCH_QUEUE))
+    m.start()
 
     # Obter e tratar datagramas UDP
     lt = threading.Thread(target=listenner, args=(socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER, FORWARD_QUEUE,))
@@ -41,43 +41,6 @@ def main():
     # Enviar datagramas UDP
     st = threading.Thread(target=sender, args=(socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL, DISPATCH_QUEUE, FORWARD_QUEUE,))
     st.start()
-
-    # Host a escuta
-    print('[HOST]', NAME + ':' + str(PORT))
-    print('---------Opções:-----------')
-    print('Encontrar nodo: find')
-    print('Imprimir tabela: print')
-    print('---------------------------')
-
-    while True:
-        opt = input()
-        cmd = opt.split(' ')
-
-        # Imprimir tabela
-        if cmd[0] == 'print':
-            ROUTER.routingTable.printTable()
-        
-        # Encontrar novo nodo
-        elif cmd[0] == 'find':
-            print('0-------')
-            # Verificar se existe, ou não, um pdu para enviar. 
-            print('1-------')
-            if not ROUTER.routingTable.exists(cmd[1]):
-                pdu = PDU('ROUTE_REQUEST', NAME, None, RADIUS, None, cmd[1], [NAME])
-                
-                print('2-------')
-                DISPATCH_QUEUE.put(pdu)
-                print('3-------')
-            else:
-                print('----------------------------')
-                print('Face | Neighbour | Content ')
-                row = ROUTER.routingTable.exists(cmd[1])
-                print(row[0], '  ', row[1], '  ', row[2])
-                print('----------------------------')
-        
-        # Operação padrão
-        else:
-            print('Opção inválida.')
 
 def updateHostParams():
     if len(sys.argv) > 1:
