@@ -29,15 +29,15 @@ def main():
     ROUTER = Router(ZONE, NAME, ROUTING_TABLE, RADIUS, TIMEOUT,)
     
     # Menus
-    m = threading.Thread(target=menus, args=(LOCK, NAME, ROUTER, RADIUS, DISPATCH_QUEUE))
+    m = threading.Thread(target=menus, args=(NAME, ROUTER, RADIUS, DISPATCH_QUEUE))
     m.start()
 
     # Obter e tratar datagramas UDP
-    # lt = threading.Thread(target=listenner, args=(LOCK, socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER, DISPATCH_QUEUE,))
-    # lt.start()
+    lt = threading.Thread(target=listenner, args=(socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER, DISPATCH_QUEUE,))
+    lt.start()
 
     # Enviar datagramas UDP
-    st = threading.Thread(target=sender, args=(LOCK, socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL, DISPATCH_QUEUE))
+    st = threading.Thread(target=sender, args=(socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL, DISPATCH_QUEUE))
     st.start()
 
     # Host a escuta
@@ -78,8 +78,8 @@ def updateHostParams():
 
 
 # Ativar operação de limpesa das tabelas por tempo
-# tt = threading.Thread(target=ROUTING_TABLE.tableTimes, args=(DEAD_INTERVAL,))
-# tt.start()
+tt = threading.Thread(target=ROUTING_TABLE.tableTimes, args=(DEAD_INTERVAL,))
+tt.start()
 
 if __name__ == '__main__':
     main()
