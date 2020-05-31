@@ -104,7 +104,7 @@ class Router:
                     print('[CONTENT_REPLY] tabela de routing atualizada')
                     print('-----------------------')
                     print('Content | Value ')
-                    content = router.contentStore.getContent(cmd[1])
+                    content = self.contentStore.getContent(row[0])
                     print(cmd[1], '  ', content)
                     print('-----------------------')
                 
