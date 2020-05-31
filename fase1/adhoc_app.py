@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 import sys
+import threading
 import socket
 import queue
-import multiprocessing as mp
 from adhoc_listenner import listenner
 from adhoc_sender import sender
 from adhoc_menus import menus
@@ -16,26 +16,29 @@ GROUPIPv6 = 'ff02::1'
 # Host params
 NAME = 'df_name'
 ROUTING_TABLE = Table()
-DISPATCH_QUEUE = queue.Queue()
+DISPATCH_QUEUE = queue.Queue(15)
 HELLO_INTERVAL = 10
 DEAD_INTERVAL = 10
 TIMEOUT = 1
 RADIUS = 10
 ZONE = 'df_zone'
-LOCK = mp.Lock()
+lock = threading.Lock()
 
 def main():
     updateHostParams()
     ROUTER = Router(ZONE, NAME, ROUTING_TABLE, RADIUS, TIMEOUT,)
     
     # Menus
-    #mp.Process(target=menus, args=(LOCK, NAME, ROUTER, RADIUS, DISPATCH_QUEUE)).start()
+    m = threading.Thread(target=menus, args=(LOCK, NAME, ROUTER, RADIUS, DISPATCH_QUEUE))
+    m.start()
 
     # Obter e tratar datagramas UDP
-    # Process(target=listenner, args=(LOCK, socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER, DISPATCH_QUEUE,)).start()
+    lt = threading.Thread(target=listenner, args=(LOCK, socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER, DISPATCH_QUEUE,))
+    lt.start()
 
     # Enviar datagramas UDP
-    # Process(target=sender, args=(LOCK, socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL, DISPATCH_QUEUE)).start()
+    st = threading.Thread(target=sender, args=(LOCK, socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL, DISPATCH_QUEUE))
+    st.start()
 
     # Host a escuta
     print('[HOST]', NAME + ':' + str(PORT))
@@ -75,7 +78,8 @@ def updateHostParams():
 
 
 # Ativar operação de limpesa das tabelas por tempo
-# Process(target=ROUTING_TABLE.tableTimes, args=(DEAD_INTERVAL,)).start()
+tt = threading.Thread(target=ROUTING_TABLE.tableTimes, args=(DEAD_INTERVAL,))
+tt.start()
 
 if __name__ == '__main__':
     main()
