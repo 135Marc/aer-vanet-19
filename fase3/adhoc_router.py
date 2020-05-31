@@ -125,7 +125,7 @@ class Router:
                 print('[TARGET_REQUEST] forward')
 
                 # Criar thread para remover elemento da pendingTable depois do passar o tempo de timeout
-                threading.Thread(target=pendingTimeout, args=(timeout, self.pendingInterestTable, (directive,'TARGET_REPLY'),)).start()
+                threading.Thread(target=pendingTimeout, args=(self.timeout, self.pendingInterestTable, (directive,'TARGET_REPLY'),)).start()
 
 
         elif pdu_type == 'TARGET_REPLY':
