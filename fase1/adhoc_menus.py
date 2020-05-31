@@ -19,7 +19,7 @@ def menus(name, router, radius, dispatch_queue):
             # Verificar se existe, ou não, um pdu para enviar. 
             if not router.routingTable.exists(cmd[1]):
                 if router.pendingTable.check((cmd[1], 'ROUTE_REPLY')):
-                    router.pendingTable.add((cmd[1],'ROUTE_REPLY'), source)
+                    router.pendingTable.add((cmd[1],'ROUTE_REPLY'), name)
                     print('[ROUTE_REQUEST] already requested')
                 else:
                     router.pendingTable.add((cmd[1],'ROUTE_REPLY'), name)
