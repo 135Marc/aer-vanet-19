@@ -14,8 +14,10 @@ def menus(name, router, radius, timeout, dispatch_queue):
         opt = input()
         cmd = opt.split(' ')
 
+        if len(cmd) > 1:
+            print('Faltam argumentos.')
         # Imprimir tabela
-        if cmd[0] == 'print':
+        elif cmd[0] == 'print':
             if cmd[1] == 'tb':
                 router.routingTable.printTable()
             if cmd[1] == 'cs':

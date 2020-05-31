@@ -8,7 +8,7 @@ class ContentStore:
         return name in self.tableOfContents
 
     def addContent(self, name, value):
-        if not name in tableOfContents:
+        if not name in self.tableOfContents:
             self.tableOfContents[name] = value
 
     def getContent(self, name):
