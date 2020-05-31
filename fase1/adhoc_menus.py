@@ -29,7 +29,7 @@ def menus(name, router, radius, timeout, dispatch_queue):
                     dispatch_queue.put(pdu)
 
                     # Criar thread para remover elemento da pendingTable depois do passar o tempo de timeout
-                    threading.Thread(target=pendingTimeout, args=(timeout, router.pendingTable, (cmd,'ROUTE_REPLY'),)).start()
+                    threading.Thread(target=pendingTimeout, args=(timeout, router.pendingTable, (cmd[1],'ROUTE_REPLY'),)).start()
 
             else:
                 print('----------------------------')
