@@ -34,11 +34,11 @@ def main():
     m.start()
 
     # Obter e tratar datagramas UDP
-    lt = threading.Thread(target=listenner, args=(socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER, DISPATCH_QUEUE, FORWARD_QUEUE,))
+    lt = threading.Thread(target=listenner, args=(socket, PORT, GROUPIPv6, ZONE, NAME, ROUTER, FORWARD_QUEUE,))
     lt.start()
 
     # Enviar datagramas UDP
-    st = threading.Thread(target=sender, args=(socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL, FORWARD_QUEUE,))
+    st = threading.Thread(target=sender, args=(socket, PORT, GROUPIPv6, NAME, ROUTING_TABLE, ZONE, HELLO_INTERVAL, DISPATCH_QUEUE, FORWARD_QUEUE,))
     st.start()
 
     # Host a escuta
