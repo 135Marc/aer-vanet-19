@@ -6,6 +6,8 @@ def menus(name, router, radius, timeout, dispatch_queue):
     print('---------Opções:-----------')
     print('Encontrar nodo: find')
     print('Imprimir tabela: print')
+    print('Publicar: pub data_name data_value')
+    print('Subscrever: sub data_name')
     print('---------------------------')
 
     while True:
@@ -38,10 +40,10 @@ def menus(name, router, radius, timeout, dispatch_queue):
                 print(row[0], '  ', row[1], '  ', row[2])
                 print('----------------------------')
         
-        elif cmd[0].upper() == 'pub':
+        elif cmd[0].upper() == 'PUB':
             router.contentStore.addContent(cmd[1], cmd[2])
             print('[CONTENT] added')
-        elif cmd[0].upper() == 'sub':
+        elif cmd[0].upper() == 'SUB':
             # Verificar se existe, ou não, um pdu para enviar. 
             if not router.contentStore.checkContent(cmd[1]):
                 if router.pendingInterestTable.check(cmd[1]):
@@ -58,8 +60,8 @@ def menus(name, router, radius, timeout, dispatch_queue):
             else:
                 print('----------------------------')
                 print('Face | Neighbour | Content ')
-                row = router.routingTable.exists(cmd[1])
-                print(row[0], '  ', row[1], '  ', row[2])
+                content = router.contentStore.getContent(cmd[1])
+                print(cmd[1], '  ', content)
                 print('----------------------------')
         # Operação padrão
         else:
