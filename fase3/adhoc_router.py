@@ -119,13 +119,14 @@ class Router:
                 strrrow = directive + ' ' + self.contentStore.getContent(directive)
                 newpdu = PDU('TARGET_REPLY', self.name, source, self.radius, None, strrow, [self.name])
                 print('[TARGET_REQUEST] found')
-            else:
+            elif self.routingTable.exists(target):
                 newpdu = PDU('TARGET_REQUEST', source, target, ttl-1, None, directive, [self.name])
                 print('[TARGET_REQUEST] forward')
 
         elif pdu_type == 'TARGET_REPLY':
             row = directive.split(' ')
             if target == self.name:
+                self.pendingInterestTable.rm(row[0])
                 self.contentStore.addContent(row[0], row[1])
                 print('-----------------------')
                 print('Content | Value ')
@@ -133,7 +134,7 @@ class Router:
                 print(row[0], '  ', content)
                 print('-----------------------')
                 print('[TARGET_REPLY] found')
-            else:
+            else self.routingTable.exists(target):
                 self.contentStore.addContent(row[0], row[1])
                 newpdu = PDU('TARGET_REPLY', source, target, ttl-1, None, directive, [self.name])
                 print('[TARGET_REPLY] forward')
