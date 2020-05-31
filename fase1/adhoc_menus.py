@@ -1,6 +1,8 @@
 from adhoc_pdu import PDU
+from adhoc_pending_timer import pendingTimeout
+import threading
 
-def menus(name, router, radius, dispatch_queue):
+def menus(name, router, radius, timeout, dispatch_queue):
     print('---------Opções:-----------')
     print('Encontrar nodo: find')
     print('Imprimir tabela: print')
@@ -25,6 +27,10 @@ def menus(name, router, radius, dispatch_queue):
                     router.pendingTable.add((cmd[1],'ROUTE_REPLY'), name)
                     pdu = PDU('ROUTE_REQUEST', name, None, radius, None, cmd[1], [name])
                     dispatch_queue.put(pdu)
+
+                    # Criar thread para remover elemento da pendingTable depois do passar o tempo de timeout
+                    threading.Thread(target=pendingTimeout, args=(timeout, router.pendingTable, (cmd,'ROUTE_REPLY'),)).start()
+
             else:
                 print('----------------------------')
                 print('Face | Neighbour | Content ')

@@ -31,7 +31,7 @@ def main():
     ROUTER = Router(ZONE, NAME, ROUTING_TABLE, RADIUS, TIMEOUT,)
     
     # Menus
-    m = threading.Thread(target=menus, args=(NAME, ROUTER, RADIUS, DISPATCH_QUEUE))
+    m = threading.Thread(target=menus, args=(NAME, ROUTER, RADIUS, TIMEOUT, DISPATCH_QUEUE))
     m.start()
 
     # Obter e tratar datagramas UDP
