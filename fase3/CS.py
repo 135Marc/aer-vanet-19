@@ -5,7 +5,7 @@ class ContentStore:
     }
 
     def __init__(self, zone):
-        self.tableOfContents[zone] = 'oficial', zone
+        self.tableOfContents[zone] = 'oficial' + zone
 
     def checkContent(self, name):
         return name in self.tableOfContents
