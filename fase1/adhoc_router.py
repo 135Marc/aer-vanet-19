@@ -21,8 +21,6 @@ class Router:
         self.radius = radius
         self.timeout = timeout
         
-
-
     def route(self, pdu):
         newpdu = None
 
