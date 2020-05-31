@@ -4,7 +4,7 @@ import struct
 from adhoc_pdu import PDU
 from adhoc_router import Router
 
-def listenner(socket, port, groupipv6, zone, name, router, dispatch_queue):
+def listenner(socket, port, groupipv6, zone, name, router, forward_queue):
     # Look up multicast group address in name server and find out IP version
     addrinfo = socket.getaddrinfo(groupipv6, None)[0]
 
@@ -27,5 +27,5 @@ def listenner(socket, port, groupipv6, zone, name, router, dispatch_queue):
         pdu = router.route(pdu)
 
         if pdu:
-            dispatch_queue.put(pdu)
+            forward_queue.put(pdu)
 
