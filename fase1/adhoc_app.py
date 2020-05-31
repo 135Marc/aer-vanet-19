@@ -54,14 +54,14 @@ def main():
 
         # Imprimir tabela
         if cmd[0] == 'print':
-            router.routingTable.printTable()
+            ROUTER.routingTable.printTable()
         
         # Encontrar novo nodo
         elif cmd[0] == 'find':
             print('0-------')
             # Verificar se existe, ou não, um pdu para enviar. 
             print('1-------')
-            if not router.routingTable.exists(cmd[1]):
+            if not ROUTER.routingTable.exists(cmd[1]):
                 pdu = PDU('ROUTE_REQUEST', name, None, radius, None, cmd[1], [name])
                 
                 print('2-------')
@@ -70,7 +70,7 @@ def main():
             else:
                 print('----------------------------')
                 print('Face | Neighbour | Content ')
-                row = router.routingTable.exists(cmd[1])
+                row = ROUTER.routingTable.exists(cmd[1])
                 print(row[0], '  ', row[1], '  ', row[2])
                 print('----------------------------')
         
