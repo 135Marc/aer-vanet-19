@@ -63,10 +63,6 @@ class Router:
                 faces = self.pendingTable.get((row[0], 'ROUTE_REPLY'))
                 self.pendingTable.rm((row[0], 'ROUTE_REPLY'))
                 if self.name in faces:
-
-                    print('-------listenner REPLY---------')
-                    pdu.printPDU()
-                    print('-------listenner REPLY---------')
                     self.routingTable.addNode(row[0], source, row[1], time.time())
                     faces.remove(self.name)
                     print('[ROUTE_REPLY] tabela de routing atualizada')
