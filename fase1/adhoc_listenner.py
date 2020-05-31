@@ -28,5 +28,4 @@ def listenner(socket, port, groupipv6, zone, name, router, dispatch_queue):
 
         if pdu:
             dispatch_queue.put(pdu)
-        lock.release()
 

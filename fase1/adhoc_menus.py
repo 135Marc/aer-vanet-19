@@ -13,7 +13,6 @@ def menus(name, router, radius, dispatch_queue):
         # Imprimir tabela
         if cmd[0] == 'print':
             router.routingTable.printTable()
-
         
         # Encontrar novo nodo
         elif cmd[0] == 'find':
