@@ -26,6 +26,11 @@ class Router:
     def route(self, pdu):
         newpdu = None
 
+
+        print('-------listenner---------')
+        pdu.printPDU()
+        print('-------listenner---------')
+        
         # Obter tipo do pdu, ttl e target
         pdu_type = pdu.getType()
         ttl = pdu.getTTL()
