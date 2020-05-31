@@ -1,6 +1,6 @@
 from adhoc_pdu import PDU
 
-def menus(lock, name, router, radius, dispatch_queue):
+def menus(name, router, radius, dispatch_queue):
     print('---------Opções:-----------')
     print('Encontrar nodo: find')
     print('Imprimir tabela: print')
