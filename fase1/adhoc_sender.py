@@ -19,7 +19,7 @@ def sender(socket, port, groupipv6, name, routing_table, zone, hello_interval, d
         pdu = dispatch_queue.get()
         sock.sendto(pickle.dumps(pdu), (groupipv6, port))
 
-def forward(sock, groupipv6, port, forward_queue)
+def forward(sock, groupipv6, port, forward_queue):
     while True:
         # Obter proximo pdu
         pdu = forward_queue.get()
