@@ -120,8 +120,13 @@ class Router:
                 newpdu = PDU('TARGET_REPLY', self.name, source, self.radius, None, strrow, [self.name])
                 print('[TARGET_REQUEST] found')
             elif self.routingTable.exists(target):
+                self.pendingInterestTable.add(directive, source)
                 newpdu = PDU('TARGET_REQUEST', source, target, ttl-1, None, directive, [self.name])
                 print('[TARGET_REQUEST] forward')
+
+                # Criar thread para remover elemento da pendingTable depois do passar o tempo de timeout
+                threading.Thread(target=pendingTimeout, args=(timeout, self.pendingInterestTable, (directive,'TARGET_REPLY'),)).start()
+
 
         elif pdu_type == 'TARGET_REPLY':
             row = directive.split(' ')
@@ -134,7 +139,8 @@ class Router:
                 print(row[0], '  ', content)
                 print('-----------------------')
                 print('[TARGET_REPLY] found')
-            elif self.routingTable.exists(target):
+            elif self.pendingInterestTable.check(row[0]):
+                self.pendingInterestTable.rm(row[0])
                 self.contentStore.addContent(row[0], row[1])
                 newpdu = PDU('TARGET_REPLY', source, target, ttl-1, None, directive, [self.name])
                 print('[TARGET_REPLY] forward')
