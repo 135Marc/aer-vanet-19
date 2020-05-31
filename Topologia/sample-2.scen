@@ -1,0 +1,12 @@
+$node_(1) set X_ 115.0 
+$node_(1) set Y_ 150.0
+$node_(2) set X_ 111.0
+$node_(2) set Y_ 208.0
+$node_(3) set X_ 404.0
+$node_(3) set Y_ 95.0
+$node_(5) set X_ 458.0
+$node_(5) set Y_ 97.0
+$ns_ at 0.0 "$node_(1) setdest	548.0 155.0 5.0"
+$ns_ at 0.0 "$node_(2) setdest	558.0 209.0 5.0"
+$ns_ at 0.0 "$node_(3) setdest	403.0 569.0 5.0"
+$ns_ at 0.0 "$node_(5) setdest	452.0 570.0 5.0"
