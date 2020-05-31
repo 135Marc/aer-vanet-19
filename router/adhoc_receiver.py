@@ -52,8 +52,8 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
 
             # Processar pedido Method_REQUEST recebido.
             elif pdutype == 'METHOD_REQUEST':
+                target = pdu.getTarget()
                 if not rplyawait.checkElem(target):
-                    target = pdu.getTarget()
                     if not routing_table.exists(target):
                         if target == name:
                             opt = pdu.getMsg()
