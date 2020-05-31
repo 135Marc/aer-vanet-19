@@ -16,7 +16,10 @@ def menus(name, router, radius, timeout, dispatch_queue):
 
         # Imprimir tabela
         if cmd[0] == 'print':
-            router.routingTable.printTable()
+            if cmd[1] == 'tb':
+                router.routingTable.printTable()
+            if cmd[1] == 'tb':
+                router.contentStore.printCS()
         
         # Encontrar novo nodo
         elif cmd[0] == 'find':
@@ -50,6 +53,11 @@ def menus(name, router, radius, timeout, dispatch_queue):
                     router.pendingInterestTable.add(cmd[1], name)
                     print('[CONTENT] already requested')
                 else:
+                    # Adicionar estratégia de comunicação direta.
+                    # Para fazer pedidos diretos
+                    # 
+                    # 
+                    #   
                     router.pendingInterestTable.add(cmd[1], name)
                     pdu = PDU('CONTENT_REQUEST', name, None, radius, None, cmd[1], [name])
                     dispatch_queue.put(pdu)

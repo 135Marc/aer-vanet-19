@@ -13,4 +13,11 @@ class ContentStore:
     def getContent(self, name):
         return self.tableOfContents[name]
 
+    def printCS(self):
+        print('---------------Contents-----------------')
+        for k in self.tableOfContents.keys():
+            print(k)
+        print('-------------------------------------')
+
+
         

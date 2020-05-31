@@ -74,6 +74,37 @@ class Router:
                 if faces != []:
                     newpdu = PDU('ROUTE_REPLY', self.name, faces[0], self.radius, None, directive, [self.name])
                     print('[ROUTE_REPLY] forward')
+
+        elif pdu_type == 'CONTENT_REQUEST':
+            if self.contentStore.checkContent(directive):
+                strrow = directive + ' ' + self.contentStore.getContent(directive)
+                newpdu = PDU('CONTENT_REPLY', self.name, source, self.radius, None, strrow, [self.name])
+                print('[CONTENT_REQUEST] found')
+            elif self.pendingInterestTable.check(directive):
+                self.pendingInterestTable.add(directive, source)
+                print('[CONTENT_REQUEST] already requested')
+            else:
+                self.pendingInterestTable.add(directive, source)
+                newpdu = PDU('CONTENT_REQUEST', source, None, ttl-1, None, directive, [self.name])
+
+                # Criar thread para remover elemento da pendingTable depois do passar o tempo de timeout
+                threading.Thread(target=pendingTimeout, args=(self.timeout, self.pendingInterestTable, (directive, 'CONTENT_REPLY'),)).start()
+
+                print('[CONTENT_REQUEST] forward')
+
+        elif pdu_type == 'CONTENT_REPLY':
+            row = directive.split(' ')
+            if self.pendingInterestTable.check(row[0]):
+                faces = self.pendingInterestTable.get(row[0])
+                self.pendingInterestTable.rm(row[0])
+                if self.name in faces:
+                    self.contentStore.addContent(row[0], row[1])
+                    faces.remove(self.name)
+                    print('[CONTENT_REPLY] tabela de routing atualizada')
+                
+                if faces != []:
+                    newpdu = PDU('CONTENT_REPLY', self.name, faces[0], self.radius, None, directive, [self.name])
+                    print('[CONTENT_REPLY] forward')
         else:
             print('[PDU TYPE unknown]', pdu_type)
 
