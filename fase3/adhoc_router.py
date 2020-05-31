@@ -72,6 +72,7 @@ class Router:
                     print('[ROUTE_REPLY] tabela de routing atualizada')
                 
                 if faces != []:
+                    self.routingTable.addNode(row[0], source, row[1], time.time())
                     newpdu = PDU('ROUTE_REPLY', self.name, faces[0], self.radius, None, directive, [self.name])
                     print('[ROUTE_REPLY] forward')
 
@@ -108,6 +109,7 @@ class Router:
                     print('-----------------------')
                 
                 if faces != []:
+                    self.contentStore.addContent(row[0], row[1])
                     newpdu = PDU('CONTENT_REPLY', self.name, faces[0], self.radius, None, directive, [self.name])
                     print('[CONTENT_REPLY] forward')
         else:
