@@ -4,7 +4,7 @@ import threading
 from adhoc_pdu import PDU
 from adhoc_table import Table
 
-def sender(socket, port, groupipv6, name, routing_table, zone, hello_interval, dispatch_queue, forward_queue):
+def sender(socket, port, groupipv6, name, routing_table, zone, hello_interval, forward_queue):
     sock = socket.socket(socket.AF_INET6, socket.SOCK_DGRAM)
     sock.setsockopt(socket.IPPROTO_IPV6, socket.IPV6_MULTICAST_LOOP, 0)
 
