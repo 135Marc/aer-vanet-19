@@ -115,24 +115,25 @@ class Router:
                     print('[CONTENT_REPLY] forward')
 
         elif pdu_type == 'TARGET_REQUEST':
-            if target == self.name:
-                strrow = directive + ' ' + self.contentStore.getContent(directive)
-                newpdu = PDU('TARGET_REPLY', self.name, source, self.radius, None, strrow, [self.name])
-                print('[TARGET_REQUEST] found')
-            elif self.routingTable.exists(target):
-                self.pendingInterestTable.add(directive, source)
-                newpdu = PDU('TARGET_REQUEST', source, target, ttl-1, None, directive, [self.name])
-                print('[TARGET_REQUEST] forward')
+            if not self.pendingInterestTable.check(directive):
+                if target == self.name:
+                    strrow = directive + ' ' + self.contentStore.getContent(directive)
+                    newpdu = PDU('TARGET_REPLY', self.name, source, self.radius, None, strrow, [self.name])
+                    print('[TARGET_REQUEST] found')
+                elif self.routingTable.exists(target):
+                    self.pendingInterestTable.add(directive, source)
+                    newpdu = PDU('TARGET_REQUEST', source, target, ttl-1, None, directive, [self.name])
+                    print('[TARGET_REQUEST] forward')
 
-                # Criar thread para remover elemento da pendingTable depois do passar o tempo de timeout
-                threading.Thread(target=pendingTimeout, args=(self.timeout, self.pendingInterestTable, (directive,'TARGET_REPLY'),)).start()
+                    # Criar thread para remover elemento da pendingTable depois do passar o tempo de timeout
+                    threading.Thread(target=pendingTimeout, args=(self.timeout, self.pendingInterestTable, (directive,'TARGET_REPLY'),)).start()
 
 
         elif pdu_type == 'TARGET_REPLY':
             row = directive.split(' ')
             if self.pendingInterestTable.check(row[0]):
+                self.pendingInterestTable.rm(row[0])
                 if target == self.name:
-                    self.pendingInterestTable.rm(row[0])
                     self.contentStore.addContent(row[0], row[1])
                     print('-----------------------')
                     print('Content | Value ')
@@ -141,7 +142,6 @@ class Router:
                     print('-----------------------')
                     print('[TARGET_REPLY] found')
                 else:
-                    self.pendingInterestTable.rm(row[0])
                     self.contentStore.addContent(row[0], row[1])
                     newpdu = PDU('TARGET_REPLY', source, target, ttl-1, None, directive, [self.name])
                     print('[TARGET_REPLY] forward')
