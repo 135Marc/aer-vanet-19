@@ -13,7 +13,7 @@ class Router:
     name = ''
     radius = 0
     timeout = 0
-    contentStore = ContentStore()
+    contentStore = None
     pendingInterestTable = PendingInterestTable()
     routingTable = None
     pendingTable = Pending()
@@ -23,6 +23,7 @@ class Router:
         self.zone = zone
         self.name = name
         self.routingTable = routing_table
+        self.contentStore = ContentStore(zone)
         self.radius = radius
         self.timeout = timeout
         
@@ -112,7 +113,32 @@ class Router:
                     self.contentStore.addContent(row[0], row[1])
                     newpdu = PDU('CONTENT_REPLY', self.name, faces[0], self.radius, None, directive, [self.name])
                     print('[CONTENT_REPLY] forward')
+
+        elif pdu_type == 'TARGET_REQUEST':
+            if target == self.name:
+                strrrow = directive + ' ' + self.contentStore.getContent(directive)
+                newpdu = PDU('TARGET_REPLY', self.name, source, self.radius, None, strrow, [self.name])
+                print('[TARGET_REQUEST] found')
+            else:
+                newpdu = PDU('TARGET_REQUEST', source, target, ttl-1, None, directive, [self.name])
+                print('[TARGET_REQUEST] forward')
+
+        elif pdu_type == 'TARGET_REPLY':
+            row = directive.split(' ')
+            if target == self.name:
+                self.contentStore.addContent(row[0], row[1])
+                print('-----------------------')
+                print('Content | Value ')
+                content = self.contentStore.getContent(row[0])
+                print(row[0], '  ', content)
+                print('-----------------------')
+                print('[TARGET_REPLY] found')
+            else:
+                self.contentStore.addContent(row[0], row[1])
+                newpdu = PDU('TARGET_REPLY', source, target, ttl-1, None, directive, [self.name])
+                print('[TARGET_REPLY] forward')
         else:
             print('[PDU TYPE unknown]', pdu_type)
+
 
         return newpdu

@@ -4,6 +4,9 @@ class ContentStore:
         'default/state': 'CS inicial state.' 
     }
 
+    def __init__(self, zone):
+        self.tableOfContents[zone] = 'oficial', zone
+
     def checkContent(self, name):
         return name in self.tableOfContents
 

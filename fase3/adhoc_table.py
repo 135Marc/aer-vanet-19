@@ -77,6 +77,13 @@ class Table:
                 newnode = row
         return newnode
 
+    def existsContent(self, nodo):
+        newnode = None
+        for row in self.rows:
+            if row[2] == nodo:
+                newnode = row
+        return newnode
+
     def remove(self, nodo):   
         newnode = None 
         for row in self.rows:

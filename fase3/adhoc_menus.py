@@ -22,7 +22,9 @@ def menus(name, router, radius, timeout, dispatch_queue):
                 router.routingTable.printTable()
             if cmd[1] == 'cs':
                 router.contentStore.printCS()
-        
+            else:
+                print('Não é possivel imprimir a tabela fornecida.')
+
         # Encontrar novo nodo
         elif cmd[0] == 'find':
             # Verificar se existe, ou não, um pdu para enviar. 
@@ -57,15 +59,20 @@ def menus(name, router, radius, timeout, dispatch_queue):
                 else:
                     # Adicionar estratégia de comunicação direta.
                     # Para fazer pedidos diretos
-                    # 
-                    # 
-                    #   
-                    router.pendingInterestTable.add(cmd[1], name)
-                    pdu = PDU('CONTENT_REQUEST', name, None, radius, None, cmd[1], [name])
-                    dispatch_queue.put(pdu)
+                    content = cmd[1].split(' ')[0]
+                    found = not router.routingTable.existsContent(content)
+                    if found:
+                        router.pendingInterestTable.add(cmd[1], name)
+                        pdu = PDU('CONTENT_REQUEST', name, None, radius, None, cmd[1], [name])
+                        dispatch_queue.put(pdu)
 
-                    # Criar thread para remover elemento da pendingTable depois do passar o tempo de timeout
-                    threading.Thread(target=pendingTimeout, args=(timeout, router.pendingInterestTable, (cmd[1],'CONTENT_REPLY'),)).start()
+                        # Criar thread para remover elemento da pendingTable depois do passar o tempo de timeout
+                        threading.Thread(target=pendingTimeout, args=(timeout, router.pendingInterestTable, (cmd[1],'CONTENT_REPLY'),)).start()
+                    else:
+                        pdu = PDU('TARGET_REQUEST', name, found[0], radius, None, cmd[1], [name])
+                        dispatch_queue.put(pdu)
+
+
 
             else:
                 print('-----------------------')
