@@ -26,11 +26,6 @@ class Router:
     def route(self, pdu):
         newpdu = None
 
-
-        print('-------listenner---------')
-        pdu.printPDU()
-        print('-------listenner---------')
-        
         # Obter tipo do pdu, ttl e target
         pdu_type = pdu.getType()
         ttl = pdu.getTTL()
@@ -38,10 +33,16 @@ class Router:
         directive = pdu.getDirective()
         target = pdu.getTarget()
 
+        pdu.printPDU()
+
         # Verificar tempo de vida do pdu caso seja positivo verifica o tipo de pdu.
         if ttl <= 0 :
             print('[TTL expired]', pdu_type)
         elif source == self.name :
+
+            print('-------listenner own---------')
+            pdu.printPDU()
+            print('-------listenner own---------')
             newpdu = None
         elif pdu_type == 'HELLO':
             hello(self.zone, self.name, pdu, self.routingTable)
