@@ -66,7 +66,7 @@ def main():
                 pdu = PDU('ROUTE_REQUEST', NAME, None, RADIUS, None, cmd[1], [NAME])
                 
                 print('2-------')
-                dispatch_queue.put(pdu)
+                DISPATCH_QUEUE.put(pdu)
                 print('3-------')
             else:
                 print('----------------------------')
