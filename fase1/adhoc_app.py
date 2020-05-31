@@ -22,7 +22,7 @@ DEAD_INTERVAL = 10
 TIMEOUT = 1
 RADIUS = 10
 ZONE = 'df_zone'
-lock = threading.Lock()
+LOCK = threading.Lock()
 
 def main():
     updateHostParams()
