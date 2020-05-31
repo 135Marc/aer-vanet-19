@@ -105,7 +105,7 @@ class Router:
                     print('-----------------------')
                     print('Content | Value ')
                     content = self.contentStore.getContent(row[0])
-                    print(cmd[1], '  ', content)
+                    print(row[0], '  ', content)
                     print('-----------------------')
                 
                 if faces != []:
