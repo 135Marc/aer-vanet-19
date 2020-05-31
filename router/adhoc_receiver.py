@@ -52,25 +52,24 @@ def receiver(socket, name, port, groupipv6, routing_table, interval, msgqueue, r
 
             # Processar pedido Method_REQUEST recebido.
             elif pdutype == 'METHOD_REQUEST':
-                target = pdu.getTarget()
-                if not routing_table.exists(target):
-                    if target == name:
-                        opt = pdu.getMsg()
-                        print('receiver ' + pdu.getMsg())
-                        rec_msg = get(opt, port)
+                if not rplyawait.checkElem(target):
+                    target = pdu.getTarget()
+                    if not routing_table.exists(target):
+                        if target == name:
+                            opt = pdu.getMsg()
+                            rec_msg = get(opt, port)
 
-                        # METHOD_REPLY caso o nodo procurado exista na tabela
-                        pdutable = Table()
-                        pdu.replyPDU(name, source, pdutable, 'METHOD_REPLY', rec_msg)
+                            # METHOD_REPLY caso o nodo procurado exista na tabela
+                            pdutable = Table()
+                            pdu.replyPDU(name, source, pdutable, 'METHOD_REPLY', rec_msg)
+                            msgqueue.put(pdu)
+                            print('[METHOD_REQUEST Encontrado] ', source, ' -> ', target[0])
+
+                    elif name not in path:
+                        # METHOD_REQUEST caso o nodo procurado não exista na tabela
+                        pdu.forwardingPDU(name)
                         msgqueue.put(pdu)
-                        print('[METHOD_REQUEST Encontrado] ', source, ' -> ', target[0])
-
-                elif name not in path:
-                    print('receiver ' + pdu.getMsg())
-                    # METHOD_REQUEST caso o nodo procurado não exista na tabela
-                    pdu.forwardingPDU(name)
-                    msgqueue.put(pdu)
-                    print('[METHOD_REQUEST Reencaminhar] ', source, ' -> *')
+                        print('[METHOD_REQUEST Reencaminhar] ', source, ' -> *')
 
             # Processar pedido METHOD_REPLY recebido.
             elif pdutype == 'METHOD_REPLY':
