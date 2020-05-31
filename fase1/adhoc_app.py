@@ -8,6 +8,7 @@ from adhoc_sender import sender
 from adhoc_menus import menus
 from adhoc_table import Table
 from adhoc_router import Router
+from adhoc_pdu import PDU
 
 # Network params
 PORT = 9999
@@ -62,7 +63,7 @@ def main():
             # Verificar se existe, ou não, um pdu para enviar. 
             print('1-------')
             if not ROUTER.routingTable.exists(cmd[1]):
-                pdu = PDU('ROUTE_REQUEST', name, None, radius, None, cmd[1], [name])
+                pdu = PDU('ROUTE_REQUEST', NAME, None, RADIUS, None, cmd[1], [NAME])
                 
                 print('2-------')
                 dispatch_queue.put(pdu)
