@@ -14,7 +14,7 @@ def menus(name, router, radius, timeout, dispatch_queue):
         opt = input()
         cmd = opt.split(' ')
 
-        if len(cmd) > 1:
+        if len(cmd) <= 1:
             print('Faltam argumentos.')
         # Imprimir tabela
         elif cmd[0] == 'print':
