@@ -130,20 +130,21 @@ class Router:
 
         elif pdu_type == 'TARGET_REPLY':
             row = directive.split(' ')
-            if target == self.name:
-                self.pendingInterestTable.rm(row[0])
-                self.contentStore.addContent(row[0], row[1])
-                print('-----------------------')
-                print('Content | Value ')
-                content = self.contentStore.getContent(row[0])
-                print(row[0], '  ', content)
-                print('-----------------------')
-                print('[TARGET_REPLY] found')
-            elif self.pendingInterestTable.check(row[0]):
-                self.pendingInterestTable.rm(row[0])
-                self.contentStore.addContent(row[0], row[1])
-                newpdu = PDU('TARGET_REPLY', source, target, ttl-1, None, directive, [self.name])
-                print('[TARGET_REPLY] forward')
+            if self.pendingInterestTable.check(row[0]):
+                if target == self.name:
+                    self.pendingInterestTable.rm(row[0])
+                    self.contentStore.addContent(row[0], row[1])
+                    print('-----------------------')
+                    print('Content | Value ')
+                    content = self.contentStore.getContent(row[0])
+                    print(row[0], '  ', content)
+                    print('-----------------------')
+                    print('[TARGET_REPLY] found')
+                else:
+                    self.pendingInterestTable.rm(row[0])
+                    self.contentStore.addContent(row[0], row[1])
+                    newpdu = PDU('TARGET_REPLY', source, target, ttl-1, None, directive, [self.name])
+                    print('[TARGET_REPLY] forward')
         else:
             print('[PDU TYPE unknown]', pdu_type)
 
