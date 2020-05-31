@@ -20,19 +20,20 @@ def menus(lock, name, router, radius, dispatch_queue):
         elif cmd[0] == 'find':
             print('0-------')
             # Verificar se existe, ou não, um pdu para enviar. 
-            lock.acquire()
             print('1-------')
             if not router.routingTable.exists(cmd[1]):
                 pdu = PDU('ROUTE_REQUEST', name, None, radius, None, cmd[1], [name])
-                dispatch_queue.put(pdu)
+                lock.acquire()
                 print('2-------')
+                dispatch_queue.put(pdu)
+                lock.release()
+                print('3-------')
             else:
                 print('----------------------------')
                 print('Face | Neighbour | Content ')
                 row = router.routingTable.exists(cmd[1])
                 print(row[0], '  ', row[1], '  ', row[2])
                 print('----------------------------')
-            lock.release()
         
         # Operação padrão
         else:
