@@ -12,7 +12,7 @@ def sender(socket, port, groupipv6, name, routing_table, zone, hello_interval, d
     threading.Thread(target=hello, args=(sock, groupipv6, port, zone, name, routing_table, hello_interval,)).start()
 
     # Enviar pdu's reencaminhados
-    threading.Thread(target=forward, args=(sock, groupipv6, port,)).start()
+    threading.Thread(target=forward, args=(sock, groupipv6, port, forward_queue,)).start()
 
     while True:
         # Obter proximo pdu
