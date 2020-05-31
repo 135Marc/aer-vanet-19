@@ -18,11 +18,14 @@ def menus(lock, name, router, radius, dispatch_queue):
         
         # Encontrar novo nodo
         elif cmd[0] == 'find':
+            print('0-------')
             # Verificar se existe, ou não, um pdu para enviar. 
             lock.acquire()
+            print('1-------')
             if not router.routingTable.exists(cmd[1]):
                 pdu = PDU('ROUTE_REQUEST', name, None, radius, None, cmd[1], [name])
                 dispatch_queue.put(pdu)
+                print('2-------')
             else:
                 print('----------------------------')
                 print('Face | Neighbour | Content ')
