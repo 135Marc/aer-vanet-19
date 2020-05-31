@@ -22,7 +22,7 @@ def menus(name, router, radius, dispatch_queue):
                     router.pendingTable.add((cmd[1],'ROUTE_REPLY'), source)
                     print('[ROUTE_REQUEST] already requested')
                 else:
-                    self.pendingTable.add((cmd[1],'ROUTE_REPLY'), source)
+                    router.pendingTable.add((cmd[1],'ROUTE_REPLY'), source)
                     pdu = PDU('ROUTE_REQUEST', name, None, radius, None, cmd[1], [name])
                     dispatch_queue.put(pdu)
             else:
