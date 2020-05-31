@@ -119,7 +119,7 @@ class Router:
                 strrow = directive + ' ' + self.contentStore.getContent(directive)
                 newpdu = PDU('TARGET_REPLY', self.name, source, self.radius, None, strrow, [self.name])
                 print('[TARGET_REQUEST] found')
-            elif self.routingTable.exists(target) and ttl == 1:
+            elif self.routingTable.exists(target) and ttl == 2:
                 self.pendingInterestTable.add(directive, source)
                 newpdu = PDU('TARGET_REQUEST', source, target, ttl-1, None, directive, [self.name])
                 print('[TARGET_REQUEST] forward')
